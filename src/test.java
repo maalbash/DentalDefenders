@@ -1,9 +1,23 @@
+
 /**
  * Created by KinshukBasu on 02-Mar-17.
  */
-public class test {
 
-    public static  void main(String args[]){
-        System.out.println("Hello");
+import processing.core.PApplet;
+
+public class test extends PApplet{
+
+    public static void main(String[] args){
+        PApplet.main("test", args);
     }
+
+    public void settings(){
+
+    }
+
+    public void setup(){
+
+    }
+
+    public void draw(){}
 }
