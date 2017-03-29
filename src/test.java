@@ -4,6 +4,8 @@
  */
 
 import processing.core.PApplet;
+import processing.core.PShape;
+import processing.core.PVector;
 
 public class test extends PApplet{
 
@@ -11,13 +13,22 @@ public class test extends PApplet{
         PApplet.main("test", args);
     }
 
-    public void settings(){
 
+    public void settings(){
+        size(1024,768);
     }
 
     public void setup(){
 
     }
 
-    public void draw(){}
+
+
+    public void draw(){
+        background(255);
+        stroke(0);
+        fill(0);
+        ellipse(width/2, height/2, 40,40);
+
+    }
 }
