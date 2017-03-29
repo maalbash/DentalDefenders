@@ -1,4 +1,4 @@
-
+package engine;
 /**
  * Created by KinshukBasu on 02-Mar-17.
  */
@@ -7,10 +7,10 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
 
-public class test extends PApplet{
+public class Engine extends PApplet{
 
     public static void main(String[] args){
-        PApplet.main("test", args);
+        PApplet.main("engine.Engine", args);
     }
 
 
