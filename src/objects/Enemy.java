@@ -8,10 +8,16 @@ import processing.core.PVector;
  */
 public abstract class Enemy extends GameObject
 {
+    protected int RoPursue;
 
-    public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life)
+    public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int RoPursue)
     {
         super (app, color, size, posX, posY, orientation, life);
+        this.RoPursue = RoPursue;
+    }
+
+    public enum mode{
+        ATTACK, FINDTOOTH, WANDER
     }
 
 }

@@ -21,7 +21,8 @@ public class Engine extends PApplet{
     }
 
     public void setup(){
-        //Enemy_lactus badguy = new Enemy_lactus();
+        PApplet temp = new PApplet();
+        Enemy_lactus badguy = new Enemy_lactus(temp,300,500,0);
 
     }
 

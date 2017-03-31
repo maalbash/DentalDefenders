@@ -102,6 +102,7 @@ public class GameObject extends AbstractObject
     {
         makeShape();
 
+        //TODO Should life be a default? I don't think so - Kinshuk
         this.life = GameConstants.DEFAULT_LIFE;
         this.maxVel = GameConstants.DEFAULT_MAX_VEL;
         this.maxAcc = GameConstants.DEFAULT_MAX_linearACC;
