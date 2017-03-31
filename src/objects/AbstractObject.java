@@ -8,9 +8,11 @@ import processing.core.PVector;
 
 @SuppressWarnings("WeakerAccess")
 
-public abstract class AbstractObject {
-    PVector position, velocity, linear;
-    float rotation;
+public abstract class AbstractObject
+{
+    public PVector position, velocity, linearAcc;
+    public float rotation, orientation, angularAcc;
+
 
     public PVector getPosition() {
         return position;
@@ -20,6 +22,7 @@ public abstract class AbstractObject {
         this.position = position;
     }
 
+
     public PVector getVelocity() {
         return velocity;
     }
@@ -28,13 +31,24 @@ public abstract class AbstractObject {
         this.velocity = velocity;
     }
 
-    public PVector getLinear() {
-        return linear;
+
+    public PVector getLinearAcc() {
+        return linearAcc;
     }
 
     public void setLinear(PVector linear) {
-        this.linear = linear;
+        this.linearAcc = linear;
     }
+
+
+    public float getAngularAcc() {
+        return angularAcc;
+    }
+
+    public void setAngular(float angular) {
+        this.angularAcc = angular;
+    }
+
 
     public float getRotation() {
         return rotation;
@@ -44,6 +58,7 @@ public abstract class AbstractObject {
         this.rotation = rotation;
     }
 
+
     public float getOrientation() {
         return orientation;
     }
@@ -52,20 +67,12 @@ public abstract class AbstractObject {
         this.orientation = orientation;
     }
 
-    float orientation;
 
-    public AbstractObject(){
-        this.position = new PVector();
-        this.velocity = new PVector();
-        this.linear = new PVector();
-    }
-
-    public AbstractObject(PVector position, PVector velocity, PVector linear, float rotation, float orientation) {
+    public AbstractObject(PVector position, float orientation)
+    {
         this.position = position;
-        this.velocity = velocity;
-        this.linear = linear;
-        this.rotation = rotation;
         this.orientation = orientation;
     }
+
 
 }
