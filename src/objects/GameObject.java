@@ -4,7 +4,6 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
 import utility.Constants;
-import utility.Utility;
 
 /**
  * Created by KinshukBasu on 29-Mar-17.
@@ -18,6 +17,9 @@ public class GameObject extends AbstractObject
     private PApplet app;
     private PShape shape;
     private PVector color;
+
+    private BreadCrumbs crumbs;
+    private boolean crumbTrail;
 
     public GameObject(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life)
     {
@@ -41,7 +43,15 @@ public class GameObject extends AbstractObject
         position.y += velocity.y;
         orientation += rotation;
 
+        if (crumbs != null)
+            crumbs.drawCrumbs(crumbTrail);
+
         drawShape();
+    }
+
+    public void initCrumbs()
+    {
+        crumbs = new BreadCrumbs(this.app, this);
     }
 
 
@@ -74,7 +84,6 @@ public class GameObject extends AbstractObject
     public PVector getColor() { return color;}
 
 
-
     public void setDefaults()
     {
         makeShape();
@@ -88,6 +97,12 @@ public class GameObject extends AbstractObject
         this.angularROS = Constants.DEFAULT_angularROS;
         this.linearROD = Constants.DEFAULT_linearROD;
         this.angularROD = Constants.DEFAULT_angularROD;
+    }
+
+
+    public void setCrumbTrail(boolean crumbTrail)
+    {
+        this.crumbTrail = crumbTrail;
     }
 
 
