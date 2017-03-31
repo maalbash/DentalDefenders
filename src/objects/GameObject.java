@@ -13,40 +13,66 @@ public class GameObject extends AbstractObject
 {
 
     private int life;
-
-    public float maxVel, maxAcc, maxRot, maxAngularAcc, linearROS, linearROD, angularROS, angularROD, size;
+    private float size;
 
     private PApplet app;
     private PShape shape;
     private PVector color;
 
-
-    public GameObject(PApplet app, PVector position, float orientation, PVector color, float size)
+    public GameObject(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life)
     {
-        super(position, orientation);
+        super(new PVector(posX, posY), orientation);
 
         this.app = app;
-        this.color = color;
-        this.size = size;
+        setColor(color.x, color.y, color.z);
+        setSize(size);
+        setLife(life);
 
         setDefaults();
-
     }
 
     public void update()
     {
         velocity.x += linearAcc.x;
         velocity.y += linearAcc.y;
-
         rotation += angularAcc;
 
         position.x += velocity.x;
         position.y += velocity.y;
-
         orientation += rotation;
 
         drawShape();
     }
+
+
+    /* Getters and Setters */
+
+    public void setLife(int life)
+    {
+        this.life = life;
+    }
+
+    public int getLife()
+    {
+        return life;
+    }
+
+
+    public void setSize(float size)
+    {
+        this.size = size;
+        makeShape();
+    }
+
+    public float getSize() { return size; }
+
+
+    public void setColor(float colorX, float colorY, float colorZ) {
+        color = new PVector(colorX, colorY, colorZ);
+    }
+
+    public PVector getColor() { return color;}
+
 
 
     public void setDefaults()
@@ -63,7 +89,10 @@ public class GameObject extends AbstractObject
         this.linearROD = Constants.DEFAULT_linearROD;
         this.angularROD = Constants.DEFAULT_angularROD;
     }
-    
+
+
+    /* Helper methods */
+
     public void makeShape()
     {
         PShape circle, triangle;
