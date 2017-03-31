@@ -3,11 +3,12 @@ package objects;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
-import utility.Constants;
+import utility.GameConstants;
 
 /**
  * Created by KinshukBasu on 29-Mar-17.
  */
+
 public class GameObject extends AbstractObject
 {
 
@@ -52,10 +53,23 @@ public class GameObject extends AbstractObject
     public void initCrumbs()
     {
         crumbs = new BreadCrumbs(this.app, this);
+    }       // Initialize breadcrumbs
+
+    public boolean outOfBounds()
+    {
+        return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
+                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
     }
 
 
     /* Getters and Setters */
+
+
+    public PVector getGridLocation()
+    {
+        return new PVector((int) (position.x/GameConstants.TILE_SIZE.x), (int)(position.y/GameConstants.TILE_SIZE.y));
+    }
+
 
     public void setLife(int life)
     {
@@ -88,15 +102,15 @@ public class GameObject extends AbstractObject
     {
         makeShape();
 
-        this.life = Constants.DEFAULT_LIFE;
-        this.maxVel = Constants.DEFAULT_MAX_VEL;
-        this.maxAcc = Constants.DEFAULT_MAX_linearACC;
-        this.maxRot = Constants.DEFAULT_MAX_ROTATION;
-        this.maxAngularAcc = Constants.DEFAULT_MAX_angularACC;
-        this.linearROS = Constants.DEFAULT_linearROS;
-        this.angularROS = Constants.DEFAULT_angularROS;
-        this.linearROD = Constants.DEFAULT_linearROD;
-        this.angularROD = Constants.DEFAULT_angularROD;
+        this.life = GameConstants.DEFAULT_LIFE;
+        this.maxVel = GameConstants.DEFAULT_MAX_VEL;
+        this.maxAcc = GameConstants.DEFAULT_MAX_linearACC;
+        this.maxRot = GameConstants.DEFAULT_MAX_ROTATION;
+        this.maxAngularAcc = GameConstants.DEFAULT_MAX_angularACC;
+        this.linearROS = GameConstants.DEFAULT_linearROS;
+        this.angularROS = GameConstants.DEFAULT_angularROS;
+        this.linearROD = GameConstants.DEFAULT_linearROD;
+        this.angularROD = GameConstants.DEFAULT_angularROD;
     }
 
 
