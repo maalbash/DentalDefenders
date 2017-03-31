@@ -13,6 +13,7 @@ public abstract class AbstractObject
     protected PVector position, velocity, linearAcc;
     protected float rotation, orientation, angularAcc;
     protected float maxVel, maxAcc, maxRot, maxAngularAcc, linearROS, linearROD, angularROS, angularROD;
+    protected float timeToTargetVel, timeToTargetRot;
 
     public AbstractObject(PVector position, float orientation)
     {
@@ -135,6 +136,15 @@ public abstract class AbstractObject
     }
 
 
+    public void setLinearROD(float linearROD) {
+        this.linearROD = linearROD;
+    }
+
+    public float getLinearROD() {
+        return linearROD;
+    }
+
+
     public void setAngularROD(float angularROD) {
         this.angularROD = angularROD;
     }
@@ -144,4 +154,22 @@ public abstract class AbstractObject
     }
 
 
+
+
+    public void setTimeToTargetVel(float timeToTargetVel) {
+        this.timeToTargetVel = timeToTargetVel;
+    }
+
+    public float getTimeToTargetVel() {
+        return timeToTargetVel;
+    }
+
+
+    public void setTimeToTargetRot(float timeToTargetRot) {
+        this.timeToTargetRot = timeToTargetRot;
+    }
+
+    public float getTimeToTargetRot() {
+        return timeToTargetRot;
+    }
 }
