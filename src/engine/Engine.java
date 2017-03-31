@@ -3,6 +3,8 @@ package engine;
  * Created by KinshukBasu on 02-Mar-17.
  */
 
+import objects.Enemy;
+import objects.Enemy_lactus;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
@@ -19,6 +21,7 @@ public class Engine extends PApplet{
     }
 
     public void setup(){
+        //Enemy_lactus badguy = new Enemy_lactus();
 
     }
 
