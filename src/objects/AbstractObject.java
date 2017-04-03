@@ -10,6 +10,7 @@ import processing.core.PVector;
 
 public abstract class AbstractObject
 {
+
     protected PVector position, velocity, linearAcc;
     protected float rotation, orientation, angularAcc;
     protected float maxVel, maxAcc, maxRot, maxAngularAcc, linearROS, linearROD, angularROS, angularROD;

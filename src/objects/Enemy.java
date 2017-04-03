@@ -8,6 +8,8 @@ import processing.core.PVector;
  */
 public abstract class Enemy extends GameObject
 {
+    public static final int DEFAULT_ENEMY_LIFE = 100;
+
     protected int RoPursue;
 
     public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int RoPursue)

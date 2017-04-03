@@ -5,34 +5,37 @@ package engine;
 
 import objects.Enemy;
 import objects.Enemy_lactus;
+import objects.Player;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
 
-public class Engine extends PApplet{
+public class Engine extends PApplet
+{
+
+    Player player;
 
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
     }
 
 
-    public void settings(){
+    public void settings()
+    {
         size(1024,768);
     }
 
-    public void setup(){
-        PApplet temp = new PApplet();
-        Enemy_lactus badguy = new Enemy_lactus(temp,300,500,0);
-
+    public void setup()
+    {
+        player = new Player(this);
     }
 
 
 
-    public void draw(){
-        background(255);
-        stroke(0);
-        fill(0);
-        ellipse(width/2, height/2, 40,40);
+    public void draw()
+    {
+        background(105, 183, 219);
+        player.update();
 
     }
 }

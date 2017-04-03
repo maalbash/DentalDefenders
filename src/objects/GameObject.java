@@ -103,7 +103,13 @@ public class GameObject extends AbstractObject
         makeShape();
 
         //TODO Should life be a default? I don't think so - Kinshuk
-        this.life = GameConstants.DEFAULT_LIFE;
+        //CHANGED - Ujan
+
+        this.velocity = GameConstants.DEFAULT_VEL;
+        this.rotation = GameConstants.DEFAULT_ROT;
+        this.linearAcc = GameConstants.DEFAULT_LINEAR_ACC;
+        this.angularAcc = GameConstants.DEFAULT_ANGULAR_ACC;
+
         this.maxVel = GameConstants.DEFAULT_MAX_VEL;
         this.maxAcc = GameConstants.DEFAULT_MAX_linearACC;
         this.maxRot = GameConstants.DEFAULT_MAX_ROTATION;
@@ -126,10 +132,12 @@ public class GameObject extends AbstractObject
     public void makeShape()
     {
         PShape circle, triangle;
+        float posX = 0, posY = 0;
+
         shape = app.createShape(app.GROUP);
-        circle = app.createShape(app.ELLIPSE, position.x, position.y, size, size);
-        triangle = app.createShape(app.TRIANGLE, position.x + size/5f, position.y - size/2f,
-                position.x + size/5f, position.y + size/2f, position.x + size, position.y);
+        circle = app.createShape(app.ELLIPSE, posX, posY, size, size);
+        triangle = app.createShape(app.TRIANGLE, posX + size/5f, posY - size/2f,
+                posX + size/5f, posY + size/2f, posX + size, posY);
 
         shape.addChild(circle);
         shape.addChild(triangle);

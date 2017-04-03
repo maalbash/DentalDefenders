@@ -17,6 +17,11 @@ public class GameConstants
 
     public static final PVector DEFAULT_OBSTACLE_COLOR = new PVector(123, 116, 214);
 
+    public static final PVector DEFAULT_VEL = new PVector(0,0);
+    public static final PVector DEFAULT_LINEAR_ACC = new PVector(0,0);
+    public static final float DEFAULT_ANGULAR_ACC = 0;
+    public static final float DEFAULT_ROT = 0;
+
     public static final float DEFAULT_MAX_VEL = 3;
     public static final float DEFAULT_MAX_linearACC = 1;
 
@@ -29,7 +34,10 @@ public class GameConstants
     public static final float DEFAULT_angularROS = 1.5f;
     public static final float DEFAULT_angularROD = 2.5f;
 
-    public static final int DEFAULT_LIFE = 100;
+    public static final float DEFAULT_TTTVEL = 10f;
+    public static final float DEFAULT_TTTROT = 0.1f;
+
+
 
     public static final heuristic DEFAULT_HEURISTIC = heuristic.EUCLIDEAN;
 
