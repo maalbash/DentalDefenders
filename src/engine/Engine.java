@@ -6,14 +6,17 @@ package engine;
 import objects.Enemy;
 import objects.Enemy_lactus;
 import objects.Player;
+import objects.Tooth;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
+import utility.GameConstants;
 
 public class Engine extends PApplet
 {
 
     Player player;
+    Tooth tooth;
 
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
@@ -22,12 +25,13 @@ public class Engine extends PApplet
 
     public void settings()
     {
-        size(1024,768);
+        size(GameConstants.SCR_WIDTH, GameConstants.SCR_HEIGHT);
     }
 
     public void setup()
     {
         player = new Player(this);
+        tooth = new Tooth(this);
     }
 
 
@@ -35,7 +39,8 @@ public class Engine extends PApplet
     public void draw()
     {
         background(105, 183, 219);
-        player.update();
+        tooth.update();
+        //player.update();
 
     }
 }

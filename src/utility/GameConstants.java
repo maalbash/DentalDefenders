@@ -8,7 +8,7 @@ import processing.core.PVector;
 public class GameConstants
 {
 
-    public static final int SCR_WIDTH = 1000;
+    public static final int SCR_WIDTH = 1300;
     public static final int SCR_HEIGHT = 800;
     public static final float SCR_OFFSET = 20;
 

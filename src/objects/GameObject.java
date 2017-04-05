@@ -15,7 +15,7 @@ public class GameObject extends AbstractObject
     private int life;
     private float size;
 
-    private PApplet app;
+    protected PApplet app;
     private PShape shape;
     private PVector color;
 
@@ -102,9 +102,6 @@ public class GameObject extends AbstractObject
     {
         makeShape();
 
-        //TODO Should life be a default? I don't think so - Kinshuk
-        //CHANGED - Ujan
-
         this.velocity = GameConstants.DEFAULT_VEL;
         this.rotation = GameConstants.DEFAULT_ROT;
         this.linearAcc = GameConstants.DEFAULT_LINEAR_ACC;
@@ -136,23 +133,38 @@ public class GameObject extends AbstractObject
 
         shape = app.createShape(app.GROUP);
         circle = app.createShape(app.ELLIPSE, posX, posY, size, size);
-        triangle = app.createShape(app.TRIANGLE, posX + size/5f, posY - size/2f,
-                posX + size/5f, posY + size/2f, posX + size, posY);
+        triangle = app.createShape(app.TRIANGLE, posX + size/7f, posY - size/2f,
+                posX + size/7f, posY + size/2f, posX + size, posY);
 
         shape.addChild(circle);
         shape.addChild(triangle);
+    }
+
+    public void changeShape(PShape newShape)
+    {
+        shape = newShape;
     }
 
     public void drawShape()
     {
         app.pushMatrix();
         shape.rotate(orientation);
-        PShape[] children = shape.getChildren();
 
-        for (PShape child : children)
+
+        if (shape.getChildCount() > 0)
         {
-            child.setStroke(app.color(color.x, color.y, color.z, 255));
-            child.setFill(app.color(color.x, color.y, color.z, 255));
+            PShape[] children = shape.getChildren();
+
+            for (PShape child : children)
+            {
+                child.setStroke(app.color(color.x, color.y, color.z, 255));
+                child.setFill(app.color(color.x, color.y, color.z, 255));
+            }
+        }
+        else
+        {
+            shape.setStroke(app.color(color.x, color.y, color.z, 255));
+            shape.setFill(app.color(color.x, color.y, color.z, 255));
         }
 
         app.shape(shape, position.x, position.y);
