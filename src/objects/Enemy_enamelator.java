@@ -10,7 +10,13 @@ import processing.core.PVector;
 //TODO discuss details about parameters for each enemy
 public class Enemy_enamelator extends Enemy {
 
+    private static int life = 80;
+    private static PVector color = new PVector(204,0,0);
+    private static int size = 20;
+    private static int PursueRadius  =50;
+
     public Enemy_enamelator(PApplet app, float posX, float posY, float orientation){
+
 
         //The rational here is that each lactus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.

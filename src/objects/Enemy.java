@@ -10,12 +10,12 @@ public abstract class Enemy extends GameObject
 {
     public static final int DEFAULT_ENEMY_LIFE = 100;
 
-    protected int RoPursue;
+    protected int PURSUE_RADIUS;
 
     public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int RoPursue)
     {
         super (app, color, size, posX, posY, orientation, life);
-        this.RoPursue = RoPursue;
+        this.PURSUE_RADIUS = RoPursue;
     }
 
     public enum mode{

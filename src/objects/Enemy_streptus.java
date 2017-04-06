@@ -8,6 +8,10 @@ import processing.core.PVector;
  */
 //TODO discuss details about parameters for each enemy
 public class Enemy_streptus extends Enemy {
+    private static int life = 60;
+    private static PVector color = new PVector(153,0,153);
+    private static int size = 20;
+    private static int PursueRadius  =50;
 
     public Enemy_streptus(PApplet app, float posX, float posY, float orientation){
 
