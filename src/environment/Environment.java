@@ -2,6 +2,7 @@ package environment;
 
 import objects.GameObject;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
 import utility.GameConstants;
 
@@ -19,12 +20,16 @@ public class Environment
 
     private List<Obstacle> obstacles;
     private Set<Integer> invalidNodes;
+    private static PVector tileSize;
+    private static PVector numTiles; 
 
     private Graph gameGraph;
 
     public Environment(PApplet app)
     {
         this.app = app;
+        tileSize = GameConstants.TILE_SIZE;
+        numTiles = GameConstants.NUM_TILES;
 
         invalidNodes = new HashSet<>();
         obstacles = new ArrayList<>();
@@ -39,6 +44,7 @@ public class Environment
     public void update()
     {
         drawObstacles();
+        //drawGraph();
     }
 
 
@@ -60,21 +66,41 @@ public class Environment
 
 
     /* Helper methods */
+    
+    public void drawGraph()
+    {
+        app.rectMode(PConstants.CORNER);
+
+        for (int i = 0; i < numTiles.y; i++)
+        {
+            for (int j = 0; j < numTiles.x; j++)
+            {
+                app.noFill();
+                app.rect(j * tileSize.x, i * tileSize.y, tileSize.x, tileSize.y);
+            }
+        }
+
+        app.rectMode(PConstants.CENTER);
+
+    }
 
     private void createObstacles()
     {
 
-        /* Outer layer */
-        obstacles.add(new Obstacle(this.app, new PVector(0.05f * GameConstants.NUM_TILES.x, 0.35f * GameConstants.NUM_TILES.y), new PVector(4, 20), GameConstants.DEFAULT_OBSTACLE_COLOR));
-        obstacles.add(new Obstacle(this.app, new PVector(0.88f * GameConstants.NUM_TILES.x, 0.35f * GameConstants.NUM_TILES.y), new PVector(4, 20), GameConstants.DEFAULT_OBSTACLE_COLOR));
-        obstacles.add(new Obstacle(this.app, new PVector(0.31f * GameConstants.NUM_TILES.x, 0.05f * GameConstants.NUM_TILES.y), new PVector(20, 4), GameConstants.DEFAULT_OBSTACLE_COLOR));
-        obstacles.add(new Obstacle(this.app, new PVector(0.31f * GameConstants.NUM_TILES.x, 0.88f * GameConstants.NUM_TILES.y), new PVector(20, 4), GameConstants.DEFAULT_OBSTACLE_COLOR));
+        /* Clockwise from left */
 
-        /* Inner layer */
-        obstacles.add(new Obstacle(this.app, new PVector(0.475f * GameConstants.NUM_TILES.x, 0.175f * GameConstants.NUM_TILES.y), new PVector(4, 10), GameConstants.DEFAULT_OBSTACLE_COLOR));
-        obstacles.add(new Obstacle(this.app, new PVector(0.475f * GameConstants.NUM_TILES.x, 0.65f * GameConstants.NUM_TILES.y), new PVector(4, 10), GameConstants.DEFAULT_OBSTACLE_COLOR));
-        obstacles.add(new Obstacle(this.app, new PVector(0.20f * GameConstants.NUM_TILES.x, 0.475f * GameConstants.NUM_TILES.y), new PVector(10, 4), GameConstants.DEFAULT_OBSTACLE_COLOR));
-        obstacles.add(new Obstacle(this.app, new PVector(0.60f * GameConstants.NUM_TILES.x, 0.475f * GameConstants.NUM_TILES.y), new PVector(10, 4), GameConstants.DEFAULT_OBSTACLE_COLOR));
+        /* Outer layer */
+        obstacles.add(new Obstacle(app, new PVector(0.2f * numTiles.x, 0.5f * numTiles.y), new PVector(4, 20)));
+        obstacles.add(new Obstacle(app, new PVector(0.8f * numTiles.x, 0.5f * numTiles.y), new PVector(4, 20)));
+        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.1f * numTiles.y), new PVector(10, 4)));
+        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.9f * numTiles.y), new PVector(10, 4)));
+
+        /* Inner layer *//*
+        obstacles.add(new Obstacle(app, new PVector(0.3f * numTiles.x, 0.5f * numTiles.y), new PVector(10, 4)));
+        obstacles.add(new Obstacle(app, new PVector(0.7f * numTiles.x, 0.5f * numTiles.y), new PVector(10, 4)));
+        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.3f * numTiles.y), new PVector(4, 10)));
+        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.7f * numTiles.y), new PVector(4, 10)));*/
+
 
 
         for (Obstacle obstacle : obstacles)

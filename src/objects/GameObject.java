@@ -1,6 +1,7 @@
 package objects;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
@@ -12,15 +13,18 @@ import utility.GameConstants;
 public class GameObject extends AbstractObject
 {
 
-    private int life;
-    private float size;
+    protected int life;
+    protected float size;
 
     protected PApplet app;
-    private PShape shape;
-    private PVector color;
+    protected PShape shape;
+    protected PVector color;
 
-    private BreadCrumbs crumbs;
-    private boolean crumbTrail;
+    protected BreadCrumbs crumbs;
+    protected boolean crumbTrail;
+
+    protected int scr_width = GameConstants.SCR_WIDTH;
+    protected int scr_height = GameConstants.SCR_HEIGHT;
 
     public GameObject(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life)
     {
@@ -50,10 +54,12 @@ public class GameObject extends AbstractObject
         drawShape();
     }
 
+    /* Initialize breadcrumbs */
+
     public void initCrumbs()
     {
         crumbs = new BreadCrumbs(this.app, this);
-    }       // Initialize breadcrumbs
+    }
 
     public boolean outOfBounds()
     {
@@ -63,7 +69,6 @@ public class GameObject extends AbstractObject
 
 
     /* Getters and Setters */
-
 
     public PVector getGridLocation()
     {
@@ -131,9 +136,9 @@ public class GameObject extends AbstractObject
         PShape circle, triangle;
         float posX = 0, posY = 0;
 
-        shape = app.createShape(app.GROUP);
-        circle = app.createShape(app.ELLIPSE, posX, posY, size, size);
-        triangle = app.createShape(app.TRIANGLE, posX + size/7f, posY - size/2f,
+        shape = app.createShape(PConstants.GROUP);
+        circle = app.createShape(PConstants.ELLIPSE, posX, posY, size, size);
+        triangle = app.createShape(PConstants.TRIANGLE, posX + size/7f, posY - size/2f,
                 posX + size/7f, posY + size/2f, posX + size, posY);
 
         shape.addChild(circle);

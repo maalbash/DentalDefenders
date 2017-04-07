@@ -12,46 +12,45 @@ import java.util.Set;
  */
 public class Obstacle
 {
-    private static int cornerRadius = 20;
+    protected static int cornerRadius = 20;
     private PVector centerPosition;
     private Set<PVector> tileLocations;
     private Set<Integer> tileIndices;
+    private static PVector tileSize = GameConstants.TILE_SIZE;
 
     public PVector color;
-    public PVector corner;
+    public PVector center;
     public PVector size;
 
     private PApplet app;
 
-    public Obstacle(PApplet theApplet, PVector upperLeft, PVector size, PVector color)
+    public Obstacle(PApplet theApplet, PVector center, PVector size)
     {
         this.app = theApplet;
-        this.color = color;
-        this.corner = upperLeft;
+        this.color = GameConstants.DEFAULT_OBSTACLE_COLOR;
+        this.center = center;
         this.size = size;
+
 
         tileLocations = new HashSet<>();                                                  // The set containing tile locations as PVectors
         tileIndices = new HashSet<>();                                                    // The set containing tile locations as integer indices
 
-        for (int i = (int)corner.y; i < (int)corner.y + size.y; i++)
+        for (int i = (int) this.center.y; i < (int) this.center.y + size.y; i++)
         {
-            for (int j = (int)corner.x; j < (int)corner.x + size.x; j++)
+            for (int j = (int) this.center.x; j < (int) this.center.x + size.x; j++)
             {
                 tileLocations.add(new PVector(j,i));
                 tileIndices.add(i * (int) GameConstants.NUM_TILES.y + j);
             }
         }
 
-        centerPosition = new PVector(corner.x + size.x/2, corner.y + size.y/2);
+        centerPosition = new PVector(this.center.x + size.x/2, this.center.y + size.y/2);
     }
 
     public void draw()
     {
-        app.fill(color.x, color.y, color.z, 100);
-        app.rect((int) corner.x * GameConstants.TILE_SIZE.x, (int) corner.y * GameConstants.TILE_SIZE.y, size.x * GameConstants.TILE_SIZE.x, size.y * GameConstants.TILE_SIZE.y, cornerRadius);
-
         app.fill(color.x, color.y, color.z);
-        app.rect(((int)corner.x + 1) * GameConstants.TILE_SIZE.x, ((int)corner.y + 1) * GameConstants.TILE_SIZE.y, (size.x - 2) * GameConstants.TILE_SIZE.x, (size.y - 2) * GameConstants.TILE_SIZE.y, cornerRadius);
+        app.rect((int) center.x * tileSize.x, (int) center.y * tileSize.y, size.x * tileSize.x, size.y * tileSize.y, cornerRadius);
         app.noFill();
     }
 

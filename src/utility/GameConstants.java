@@ -14,6 +14,7 @@ public class GameConstants
 
     public static final PVector NUM_TILES = new PVector(50, 50);
     public static final PVector TILE_SIZE = new PVector(SCR_WIDTH/NUM_TILES.x, SCR_HEIGHT/NUM_TILES.y);
+    public static final PVector GRAPH_CENTER = new PVector(0.5f * NUM_TILES.x, 0.5f * NUM_TILES.y);
 
     public static final PVector DEFAULT_OBSTACLE_COLOR = new PVector(123, 116, 214);
 

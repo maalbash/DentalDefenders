@@ -1,8 +1,7 @@
 package objects;
 
+import environment.Obstacle;
 import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
 
@@ -10,26 +9,26 @@ import utility.GameConstants;
  * Created by ujansengupta on 4/5/17.
  */
 
-public class Tooth extends GameObject
+public class Tooth extends Obstacle
 {
-    private static int life = 200;
-    private static PVector color = new PVector(227, 220, 175);
-    private static float size = 30;
-    private static float posX = GameConstants.SCR_WIDTH/2;
-    private static float posY = GameConstants.SCR_HEIGHT/2;
+    private static PApplet app;
+    public static int life = 200;
+    public static PVector size = new PVector(50, 50);
+    public static PVector center = GameConstants.GRAPH_CENTER;
     private static float orientation = 0;
 
     public Tooth(PApplet app)
     {
-        super(app, color, size, posX, posY, orientation, life);
-        this.makeTooth();
+        super(app, center, size);
+        Tooth.app = app;
+        color = new PVector(227, 182, 48);
     }
 
-    public void makeTooth()
+    public void draw()
     {
-        app.rectMode(PConstants.CENTER);
-        PShape square = app.createShape(app.RECT, posX, posY, size, size);
-        changeShape(square);
-        app.rectMode(PConstants.CORNER);
+        app.fill(color.x, color.y, color.z);
+        app.rect((int) center.x * GameConstants.TILE_SIZE.x, (int) center.y * GameConstants.TILE_SIZE.y,
+                2 * GameConstants.TILE_SIZE.x, 2 * GameConstants.TILE_SIZE.y, cornerRadius);
+        app.noFill();
     }
 }
