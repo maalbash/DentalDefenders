@@ -23,7 +23,7 @@ public class GameConstants
     public static final float DEFAULT_ANGULAR_ACC = 0;
     public static final float DEFAULT_ROT = 0;
 
-    public static final float DEFAULT_MAX_VEL = 3;
+    public static final float DEFAULT_MAX_VEL = 7;
     public static final float DEFAULT_MAX_linearACC = 1;
 
     public static final float DEFAULT_MAX_ROTATION = 2 * (float)Math.PI;
@@ -32,11 +32,11 @@ public class GameConstants
     public static final float DEFAULT_linearROS = 3;
     public static final float DEFAULT_linearROD = 15;
 
-    public static final float DEFAULT_angularROS = 1.5f;
-    public static final float DEFAULT_angularROD = 2.5f;
+    public static final float DEFAULT_angularROS = 0.15f;
+    public static final float DEFAULT_angularROD = 2f;
 
     public static final float DEFAULT_TTTVEL = 10f;
-    public static final float DEFAULT_TTTROT = 0.1f;
+    public static final float DEFAULT_TTTROT = 10f;
 
 
 

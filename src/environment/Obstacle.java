@@ -49,8 +49,11 @@ public class Obstacle
 
     public void draw()
     {
+        /*app.fill(color.x, color.y, color.z, 100);
+        app.rect((int) center.x * tileSize.x, (int) center.y * tileSize.y, size.x * tileSize.x, size.y * tileSize.y, cornerRadius);*/
+
         app.fill(color.x, color.y, color.z);
-        app.rect((int) center.x * tileSize.x, (int) center.y * tileSize.y, size.x * tileSize.x, size.y * tileSize.y, cornerRadius);
+        app.rect((int) center.x * tileSize.x, (int) center.y * tileSize.y, (size.x - 1) * tileSize.x, (size.y - 1) * tileSize.y, cornerRadius);
         app.noFill();
     }
 

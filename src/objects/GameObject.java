@@ -1,16 +1,20 @@
 package objects;
 
+import movement.Align;
+import movement.Arrive;
+import movement.Seek;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
+import utility.Movable;
 
 /**
  * Created by KinshukBasu on 29-Mar-17.
  */
 
-public class GameObject extends AbstractObject
+public class GameObject extends AbstractObject implements Movable
 {
 
     protected int life;
@@ -25,6 +29,14 @@ public class GameObject extends AbstractObject
 
     protected int scr_width = GameConstants.SCR_WIDTH;
     protected int scr_height = GameConstants.SCR_HEIGHT;
+
+    protected static PVector tileSize = GameConstants.TILE_SIZE;
+
+    protected int wanderRadius = 20;
+
+    //protected PVector targetPosition;
+
+
 
     public GameObject(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life)
     {
@@ -103,6 +115,26 @@ public class GameObject extends AbstractObject
     public PVector getColor() { return color;}
 
 
+    public int getWanderRadius() {
+        return wanderRadius;
+    }
+
+    public void setWanderRadius(int wanderRadius) {
+        this.wanderRadius = wanderRadius;
+    }
+
+
+    /*public PVector getTargetPosition()
+    {
+        return targetPosition;
+    }
+
+    public void setTargetPosition(PVector targetPosition)
+    {
+        this.targetPosition = targetPosition;
+    }*/
+
+
     public void setDefaults()
     {
         makeShape();
@@ -120,6 +152,8 @@ public class GameObject extends AbstractObject
         this.angularROS = GameConstants.DEFAULT_angularROS;
         this.linearROD = GameConstants.DEFAULT_linearROD;
         this.angularROD = GameConstants.DEFAULT_angularROD;
+        this.timeToTargetRot = GameConstants.DEFAULT_TTTROT;
+        this.timeToTargetVel = GameConstants.DEFAULT_TTTVEL;
     }
 
 
@@ -138,8 +172,8 @@ public class GameObject extends AbstractObject
 
         shape = app.createShape(PConstants.GROUP);
         circle = app.createShape(PConstants.ELLIPSE, posX, posY, size, size);
-        triangle = app.createShape(PConstants.TRIANGLE, posX + size/7f, posY - size/2f,
-                posX + size/7f, posY + size/2f, posX + size, posY);
+        triangle = app.createShape(PConstants.TRIANGLE, posX + size/7f, posY - size/3f,
+                posX + size/7f, posY + size/3f, posX + size, posY);
 
         shape.addChild(circle);
         shape.addChild(triangle);
@@ -156,24 +190,62 @@ public class GameObject extends AbstractObject
         shape.rotate(orientation);
 
 
-        if (shape.getChildCount() > 0)
-        {
-            PShape[] children = shape.getChildren();
+        PShape[] children = shape.getChildren();
 
-            for (PShape child : children)
-            {
-                child.setStroke(app.color(color.x, color.y, color.z, 255));
-                child.setFill(app.color(color.x, color.y, color.z, 255));
-            }
-        }
-        else
+        for (PShape child : children)
         {
-            shape.setStroke(app.color(color.x, color.y, color.z, 255));
-            shape.setFill(app.color(color.x, color.y, color.z, 255));
+            child.setStroke(app.color(color.x, color.y, color.z, 255));
+            child.setFill(app.color(color.x, color.y, color.z, 255));
         }
 
         app.shape(shape, position.x, position.y);
         shape.resetMatrix();
         app.popMatrix();
     }
+
+
+    /* Movement methods */
+
+    @Override
+    public void Seek(PVector target)
+    {
+        this.setVelocity(Seek.getKinematic(this, target).velocity);
+    }
+
+    @Override
+    public void Arrive(PVector target)
+    {
+        this.setLinearAcc(Arrive.getSteering(this, target).linear);
+    }
+
+    @Override
+    public void Align(PVector target)
+    {
+        this.setAngularAcc(Align.getSteering(this, target).angular);
+        if (angularAcc == 0)
+            rotation = 0;
+    }
+
+    @Override
+    public void Wander() {
+
+    }
+
+    @Override
+    public void stopMoving()
+    {
+        this.velocity.setMag(0);
+        this.linearAcc.setMag(0);
+        this.angularAcc = 0;
+        this.rotation = 0;
+
+    }
+
+    @Override
+    public void checkBounds()
+    {
+
+    }
+
+
 }
