@@ -20,6 +20,8 @@ public class Engine extends PApplet
     Player player;
     Tooth tooth;
     Environment environment;
+    Enemy_lactus lactus;
+
 
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
@@ -38,6 +40,9 @@ public class Engine extends PApplet
         player = new Player(this);
         tooth = new Tooth(this);
         environment = new Environment(this);
+
+        lactus = new Enemy_lactus(this, width/4,height/4,0);
+
     }
 
 
@@ -48,6 +53,8 @@ public class Engine extends PApplet
         environment.update();
         tooth.draw();
         player.update();
+
+        lactus.update();
 
     }
 }
