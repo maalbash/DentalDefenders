@@ -17,6 +17,6 @@ public interface Movable
 
     void stopMoving();
 
-    void checkBounds();
+    boolean outOfBounds();
 
 }

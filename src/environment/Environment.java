@@ -102,7 +102,6 @@ public class Environment
         obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.7f * numTiles.y), new PVector(4, 10)));*/
 
 
-
         for (Obstacle obstacle : obstacles)
             invalidNodes.addAll(obstacle.getTileIndices());
     }

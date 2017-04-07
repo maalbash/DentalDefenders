@@ -1,5 +1,7 @@
 package objects;
 
+import engine.Engine;
+import environment.Obstacle;
 import movement.Align;
 import movement.Arrive;
 import movement.Seek;
@@ -73,11 +75,6 @@ public class GameObject extends AbstractObject implements Movable
         crumbs = new BreadCrumbs(this.app, this);
     }
 
-    public boolean outOfBounds()
-    {
-        return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
-                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
-    }
 
 
     /* Getters and Setters */
@@ -242,9 +239,10 @@ public class GameObject extends AbstractObject implements Movable
     }
 
     @Override
-    public void checkBounds()
+    public boolean outOfBounds()
     {
-
+        return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
+                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
     }
 
 

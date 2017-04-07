@@ -26,7 +26,7 @@ public class Engine extends PApplet
     Environment environment;
     Enemy_lactus lactus;
 
-    public List<Obstacle> staticObjects;
+    public static List<Obstacle> staticObjects;
 
 
     public static void main(String[] args){
@@ -68,9 +68,11 @@ public class Engine extends PApplet
         environment.update();
         tooth.draw();
         player.update();
+
+        /*
         System.out.println("Rotation : " + player.getRotation());
         System.out.println("Orientation : " + player.getOrientation());
-        System.out.println("Angular Acc : " + player.getAngularAcc());
+        System.out.println("Angular Acc : " + player.getAngularAcc());*/
 
 
         lactus.update();
