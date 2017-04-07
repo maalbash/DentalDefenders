@@ -22,4 +22,6 @@ public abstract class Enemy extends GameObject
         ATTACK, FINDTOOTH, WANDER
     }
 
+    public abstract void defaultBehaviour();
+
 }

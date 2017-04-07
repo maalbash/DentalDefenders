@@ -24,4 +24,6 @@ public class Enemy_fructus extends Enemy{
         //float size = 20
         super (app, new PVector(0,0), 20, posX, posY, orientation, 100,50);
     }
+
+    public void defaultBehaviour(){}
 }

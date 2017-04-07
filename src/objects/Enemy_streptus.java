@@ -23,4 +23,6 @@ public class Enemy_streptus extends Enemy {
         //float size = 20
         super (app, new PVector(0,0), 20, posX, posY, orientation, 100,50);
     }
+
+    public void defaultBehaviour(){}
 }

@@ -1,7 +1,10 @@
 package objects;
 
+import movement.KinematicOutput;
+import movement.Seek;
 import processing.core.PApplet;
 import processing.core.PVector;
+import utility.GameConstants;
 
 /**
  * Created by ujansengupta on 3/31/17.
@@ -23,5 +26,14 @@ public class Enemy_lactus extends Enemy {
         //PVector color = new PVector(0,0);
         //float size = 20
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+    }
+
+    public void defaultBehaviour(){
+        //for now, default behaviour is "SEEK TOOTH"
+
+        PVector target = new PVector(GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2);
+        KinematicOutput k = Seek.getKinematic(this,target);
+        this.setVelocity(k.velocity);
+        this.setRotation(k.rotation);
     }
 }

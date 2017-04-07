@@ -26,7 +26,8 @@ public class Engine extends PApplet
     Environment environment;
     Enemy_lactus lactus;
 
-    public static List<Obstacle> staticObjects;
+    public List<Obstacle> staticObjects;
+    public static List<Enemy>  Enemies;
 
 
     public static void main(String[] args){
@@ -46,6 +47,7 @@ public class Engine extends PApplet
         player = new Player(this);
         tooth = new Tooth(this);
         environment = new Environment(this);
+        Enemies = new ArrayList<Enemy>();
 
         staticObjects = new ArrayList<>();
 
@@ -60,6 +62,19 @@ public class Engine extends PApplet
 
     }
 
+    public void drawEnemies(){
+        for (Enemy e : Engine.Enemies){
+            e.update();
+        }
+    }
+
+    public void enemyBehaviour(){
+        for(Enemy e : Engine.Enemies){
+            e.defaultBehaviour();
+            e.update();
+        }
+    }
+
 
 
     public void draw()
@@ -68,11 +83,16 @@ public class Engine extends PApplet
         environment.update();
         tooth.draw();
         player.update();
+        SpawnEnemies.update(this);
+        enemyBehaviour();
+        drawEnemies();
 
         /*
         System.out.println("Rotation : " + player.getRotation());
         System.out.println("Orientation : " + player.getOrientation());
-        System.out.println("Angular Acc : " + player.getAngularAcc());*/
+        System.out.println("Angular Acc : " + player.getAngularAcc());
+        */
+
 
 
         lactus.update();
