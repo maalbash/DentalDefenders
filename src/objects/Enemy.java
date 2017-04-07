@@ -1,12 +1,15 @@
 package objects;
 
+import movement.KinematicOutput;
+import movement.Seek;
 import processing.core.PApplet;
 import processing.core.PVector;
+import utility.Movable;
 
 /**
  * Created by ujansengupta on 3/31/17.
  */
-public abstract class Enemy extends GameObject
+public abstract class Enemy extends GameObject implements Movable
 {
     public static final int DEFAULT_ENEMY_LIFE = 100;
 
@@ -23,5 +26,6 @@ public abstract class Enemy extends GameObject
     }
 
     public abstract void defaultBehaviour();
+
 
 }
