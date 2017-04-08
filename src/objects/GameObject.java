@@ -255,5 +255,20 @@ public class GameObject extends AbstractObject implements Movable
                 this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
     }
 
+    public boolean isTouching(GameObject other)      //Checks to see if two game objects are touching each other
+    {
+        if(PVector.sub(this.position, other.position).mag() < (this.size + other.size))     //All objects considered symmetrical here
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isTouching(PVector pos, int size){
+        if(PVector.sub(this.position, pos).mag() < (this.size + size))     //All objects considered symmetrical here
+            return true;
+        else
+            return false;
+    }
+
 
 }

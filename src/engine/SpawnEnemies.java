@@ -1,5 +1,6 @@
 package engine;
 
+import objects.Enemy_fructus;
 import objects.Enemy_lactus;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -13,10 +14,12 @@ import static java.lang.Math.random;
 public class SpawnEnemies {
 
     private static long lastLactusSpawn=0;
+    private static long lastFructusSpawn=0;
     private static long now;
 
     public static void update(PApplet app){
         addLactus(app);
+        addFructus(app);
     }
 
     public static void addLactus(PApplet app){
@@ -32,6 +35,20 @@ public class SpawnEnemies {
             lastLactusSpawn = now;
         }
     }
+
+    public static void addFructus(PApplet app){
+        now = System.currentTimeMillis();
+        if((now-lastFructusSpawn)>5000) {
+            Enemy_fructus newFructus = new Enemy_fructus(app, 0, 0, 0);
+
+            PVector temp = SpawnEnemies.randomEdgeLocation();
+            newFructus.setPosition(temp);
+
+            Engine.Enemies.add(newFructus);
+            lastFructusSpawn = now;
+        }
+    }
+
 
     private static PVector randomEdgeLocation(){
 
