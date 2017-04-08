@@ -1,5 +1,6 @@
 package utility;
 
+import objects.GameObject;
 import objects.Player;
 import processing.core.PConstants;
 import processing.core.PVector;
@@ -21,7 +22,7 @@ public class Utility
         }
     }
 
-    public static boolean checkTargetReached(Player player, PVector target) {
-        return((Math.abs(target.x - player.getPosition().x) <= 1.f) && (Math.abs(target.y - player.getPosition().y) <= 1.f));
+    public static boolean checkTargetReached(GameObject obj, PVector target) {
+        return((Math.abs(target.x - obj.getPosition().x) <= 1.f) && (Math.abs(target.y - obj.getPosition().y) <= 1.f));
     }
 }

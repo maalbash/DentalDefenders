@@ -5,23 +5,28 @@ package engine;
 
 import environment.Environment;
 import environment.Obstacle;
-import objects.*;
+import objects.Enemy;
+import objects.Enemy_lactus;
+import objects.Player;
+import objects.Tooth;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
+import utility.Utility;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Engine extends PApplet
 {
 
-    Player player;
-    Tooth tooth;
+    public static Player player;        //Changed these 2 to static, since only one instance of each, and to provide ease of access
+    public static Tooth tooth;
     Environment environment;
-    Enemy_lactus lactus;
 
     public static List<Obstacle> staticObjects;
     public static List<Enemy>  Enemies;
@@ -44,7 +49,7 @@ public class Engine extends PApplet
         player = new Player(this);
         tooth = new Tooth(this);
         environment = new Environment(this);
-        Enemies = new ArrayList<>();
+        Enemies = new LinkedList<Enemy>();
 
         staticObjects = new ArrayList<>();
 
@@ -53,23 +58,38 @@ public class Engine extends PApplet
         for (Obstacle o : environment.getObstacles())
             staticObjects.add(o);
 
-        lactus = new Enemy_lactus(this, width/4,height/4,0);
-
         frameRate(60);
 
     }
 
-    public void drawEnemies()
-    {
-        Enemies.forEach(GameObject::update);
+    public void drawEnemies(){
+        for (Enemy e : Engine.Enemies){
+            e.update();
+        }
     }
 
-    public void enemyBehaviour()
-    {
-        for(Enemy e : Engine.Enemies)
-        {
+    public void enemyBehaviour(){
+
+        LinkedList<Enemy> EnemiesToRemove = new LinkedList<Enemy>();
+        /*
+        Iterator<Enemy> tracker = Enemies.listIterator();
+        Enemy e;
+        while(tracker.hasNext()){
+            e = tracker.next();
             e.defaultBehaviour();
             e.update();
+        }
+        */
+
+        for(Enemy e : Engine.Enemies){
+            e.defaultBehaviour();
+            e.update();
+            if(Utility.checkTargetReached(e,e.getFinalTarget())){
+                EnemiesToRemove.add(e);
+            }
+        }
+        for(Enemy e : EnemiesToRemove){
+            Engine.Enemies.remove(e);
         }
     }
 
@@ -91,10 +111,6 @@ public class Engine extends PApplet
         System.out.println("Orientation : " + player.getOrientation());
         System.out.println("Angular Acc : " + player.getAngularAcc());
         */
-
-
-
-        lactus.update();
 
     }
 
