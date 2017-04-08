@@ -13,9 +13,9 @@ import utility.GameConstants;
 
 public class Tooth extends Obstacle
 {
-    private PApplet app;
+    public PApplet app;
     public static int life = 200;
-    public static PVector size = new PVector(50, 50);
+    public static PVector size = new PVector(3, 3);
     public static PVector center = GameConstants.GRAPH_CENTER;
 
 
@@ -25,8 +25,8 @@ public class Tooth extends Obstacle
         this.app = app;
         color = new PVector(227, 182, 48);
 
-        this.shape = app.createShape(PConstants.RECT, (int) center.x * GameConstants.TILE_SIZE.x, (int) center.y * GameConstants.TILE_SIZE.y,
-                2 * GameConstants.TILE_SIZE.x, 2 * GameConstants.TILE_SIZE.y, cornerRadius);
+        /*this.shape = app.createShape(PConstants.RECT, (int) center.x * GameConstants.TILE_SIZE.x, (int) center.y * GameConstants.TILE_SIZE.y,
+                2 * GameConstants.TILE_SIZE.x, 2 * GameConstants.TILE_SIZE.y, cornerRadius);*/
 
         shape.setFill(app.color(color.x, color.y, color.z));
 

@@ -17,8 +17,8 @@ public class Player extends GameObject
 
     private static PVector color = new PVector(109, 69, 1);
     private static float size = 20;
-    private static float DEFAULT_X = GameConstants.SCR_WIDTH/2 + 40;
-    private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 40;
+    private static float DEFAULT_X = GameConstants.SCR_WIDTH/2 + 90;
+    private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
 

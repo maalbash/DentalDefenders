@@ -15,7 +15,6 @@ import java.util.Set;
 public class Obstacle
 {
     protected static int cornerRadius = 20;
-    private PVector centerPosition;
     private Set<PVector> tileLocations;
     private Set<Integer> tileIndices;
     private static PVector tileSize = GameConstants.TILE_SIZE;
@@ -36,6 +35,7 @@ public class Obstacle
 
         this.shape = app.createShape(PConstants.RECT, (int) center.x * tileSize.x, (int) center.y * tileSize.y,
                 (size.x - 1) * tileSize.x, (size.y - 1) * tileSize.y, cornerRadius);
+
         shape.setFill(app.color(color.x, color.y, color.z));
 
         tileLocations = new HashSet<>();                                                  // The set containing tile locations as PVectors
@@ -49,14 +49,20 @@ public class Obstacle
                 tileIndices.add(i * (int) GameConstants.NUM_TILES.y + j);
             }
         }
-
-        centerPosition = new PVector(this.center.x + size.x/2, this.center.y + size.y/2);
     }
 
     public void draw()
     {
         app.shape(shape);
     }
+
+    public boolean contains(PVector point)
+    {
+        return ((point.x > (center.x - Math.ceil(size.x/2 + 1)) && point.x < (center.x + Math.floor(size.x/2)))
+                && (point.y > (center.y - Math.ceil(size.y/2 + 1)) && point.y < (center.y + Math.floor(size.y/2))));
+
+    }
+
 
 
     Set<PVector> getTileLocations()
@@ -71,7 +77,7 @@ public class Obstacle
 
     PVector getCenter()
     {
-        return centerPosition;
+        return center;
     }
 
     PVector getColor()

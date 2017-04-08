@@ -62,6 +62,12 @@ public class GameObject extends AbstractObject implements Movable
         position.y += velocity.y;
         orientation += rotation;
 
+        if (outOfBounds())
+        {
+            position.x -= velocity.x;
+            position.y -= velocity.y;
+        }
+
         if (crumbs != null)
             crumbs.drawCrumbs(crumbTrail);
 
@@ -241,6 +247,10 @@ public class GameObject extends AbstractObject implements Movable
     @Override
     public boolean outOfBounds()
     {
+        for (Obstacle o : Engine.staticObjects)
+            if (o.contains(getGridLocation()))
+                return true;
+
         return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
                 this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
     }

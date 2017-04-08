@@ -26,7 +26,7 @@ public class Engine extends PApplet
     Environment environment;
     Enemy_lactus lactus;
 
-    public List<Obstacle> staticObjects;
+    public static List<Obstacle> staticObjects;
     public static List<Enemy>  Enemies;
 
 
