@@ -61,5 +61,6 @@ public class Enemy_fructus extends Enemy{
                 Seek(this.finalTarget);
                 break;
         }
+
     }
 }

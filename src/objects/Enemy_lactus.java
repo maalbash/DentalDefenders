@@ -31,6 +31,7 @@ public class Enemy_lactus extends Enemy {
         //Since they are default values, they need not be constructor parameters.
 
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        finalTarget = Engine.tooth.tooth;
         mode = SEEKTOOTH;
     }
 

@@ -84,7 +84,7 @@ public class Engine extends PApplet
         for(Enemy e : Engine.Enemies){
             e.defaultBehaviour();
             e.update();
-            if(Utility.checkTargetReached(e,e.getFinalTarget())){
+            if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition())){
                 EnemiesToRemove.add(e);
             }
         }
