@@ -90,10 +90,12 @@ public class Environment
         /* Clockwise from left */
 
         /* Outer layer */
-        obstacles.add(new Obstacle(app, new PVector(0.2f * numTiles.x, 0.5f * numTiles.y), new PVector(4, 20)));
-        obstacles.add(new Obstacle(app, new PVector(0.8f * numTiles.x, 0.5f * numTiles.y), new PVector(4, 20)));
-        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.1f * numTiles.y), new PVector(10, 4)));
-        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.9f * numTiles.y), new PVector(10, 4)));
+        obstacles.add(new Obstacle(app, new PVector(0.2f * numTiles.x, 0.2f * numTiles.y), new PVector(4, 15))); //top left
+        obstacles.add(new Obstacle(app, new PVector(0.8f * numTiles.x, 0.2f * numTiles.y), new PVector(4, 15))); //top right
+        obstacles.add(new Obstacle(app, new PVector(0.2f * numTiles.x, 0.8f * numTiles.y), new PVector(4, 15))); //bot left
+        obstacles.add(new Obstacle(app, new PVector(0.8f * numTiles.x, 0.8f * numTiles.y), new PVector(4, 15))); //bot right
+        //obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.1f * numTiles.y), new PVector(10, 4)));
+        //obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.9f * numTiles.y), new PVector(10, 4)));
 
         /* Inner layer *//*
         obstacles.add(new Obstacle(app, new PVector(0.3f * numTiles.x, 0.5f * numTiles.y), new PVector(10, 4)));
