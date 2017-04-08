@@ -17,14 +17,16 @@ public class Tooth extends Obstacle
     public static int life = 200;
     public static PVector size = new PVector(3, 3);
     public static PVector center = GameConstants.GRAPH_CENTER;
-    public PVector position;
+
+    public GameObject tooth;
 
 
     public Tooth(PApplet app)
     {
         super(app, center, size);
         this.app = app;
-        this.position = center;
+        tooth = new GameObject(app,color,size.x,GameConstants.SCR_WIDTH/2,GameConstants.SCR_HEIGHT/2,0,life);
+
         color = new PVector(227, 182, 48);
 
         /*this.shape = app.createShape(PConstants.RECT, (int) center.x * GameConstants.TILE_SIZE.x, (int) center.y * GameConstants.TILE_SIZE.y,

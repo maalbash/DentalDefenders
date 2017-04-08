@@ -30,6 +30,7 @@ public class Enemy_lactus extends Enemy {
         //Since they are default values, they need not be constructor parameters.
 
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        finalTarget = Engine.tooth.tooth;
         mode = SEEKTOOTH;
     }
 
@@ -38,12 +39,12 @@ public class Enemy_lactus extends Enemy {
         //for now, default behaviour is "SEEK TOOTH"
 
         if(mode==SEEKTOOTH) {
-            PVector target = new PVector(GameConstants.SCR_WIDTH / 2, GameConstants.SCR_HEIGHT / 2);
-            Seek(target);
+            this.finalTarget = Engine.tooth.tooth;
+            Seek(finalTarget.position);
         }
         else if(mode==ATTACKPLAYER){
-            PVector target = Engine.player.getPosition();
-            Seek(target);
+            this.finalTarget = Engine.player;
+            Seek(finalTarget.position);
         }
 
     }

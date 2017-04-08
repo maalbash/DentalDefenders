@@ -15,17 +15,17 @@ public abstract class Enemy extends GameObject
 
     protected int PURSUE_RADIUS;
 
-    public PVector getFinalTarget() {
+    public GameObject getFinalTarget() {
         return finalTarget;
     }
 
-    protected PVector finalTarget;
+    protected GameObject finalTarget;
 
     public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int RoPursue)
     {
         super (app, color, size, posX, posY, orientation, life);
         this.PURSUE_RADIUS = RoPursue;
-        this.finalTarget = Engine.tooth.position;
+        this.finalTarget = Engine.tooth.tooth;
     }
 
     public enum modeList{
