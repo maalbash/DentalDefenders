@@ -33,5 +33,5 @@ public abstract class Enemy extends GameObject implements Movable
     }
 
     public abstract void defaultBehaviour();
-    
+
 }
