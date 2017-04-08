@@ -38,6 +38,10 @@ public class GameConstants
     public static final float DEFAULT_TTTVEL = 10f;
     public static final float DEFAULT_TTTROT = 10f;
 
+    public static final float DEFAULT_BULLET_SPEED = 4;
+    public static final PVector DEFAULT_BULLET_SIZE = new PVector(4, 4);
+
+
 
 
     public static final heuristic DEFAULT_HEURISTIC = heuristic.EUCLIDEAN;
