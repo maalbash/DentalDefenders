@@ -21,10 +21,10 @@ public abstract class Enemy extends GameObject
 
     protected GameObject finalTarget;
 
-    public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int RoPursue)
+    public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int PursueRadius)
     {
         super (app, color, size, posX, posY, orientation, life);
-        this.PURSUE_RADIUS = RoPursue;
+        this.PURSUE_RADIUS = PursueRadius;
         this.finalTarget = Engine.tooth.tooth;
     }
 
