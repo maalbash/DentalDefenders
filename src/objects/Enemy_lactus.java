@@ -1,15 +1,20 @@
 package objects;
 
+import engine.Engine;
 import movement.KinematicOutput;
 import movement.Seek;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
 
+import static objects.Enemy.modeList.ATTACKPLAYER;
+import static objects.Enemy.modeList.SEEKTOOTH;
+
+
 /**
  * Created by ujansengupta on 3/31/17.
  */
-//TODO discuss details about parameters for each enemy
+
 public class Enemy_lactus extends Enemy {
 
     private static int life = 20;
@@ -17,23 +22,40 @@ public class Enemy_lactus extends Enemy {
     private static int size = 20;
     private static int PursueRadius  =50;
 
-    public Enemy_lactus(PApplet app, float posX, float posY, float orientation){
+    private modeList mode;
+
+    public Enemy_lactus(PApplet app, float posX, float posY, float orientation)
+    {
 
         //The rational here is that each lactus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
 
-        //int life = 100;
-        //PVector color = new PVector(0,0);
-        //float size = 20
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        mode = SEEKTOOTH;
     }
 
-    public void defaultBehaviour(){
+
+    public void defaultBehaviour()
+    {
         //for now, default behaviour is "SEEK TOOTH"
 
+<<<<<<< HEAD
         PVector target = new PVector(GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2);
         //Seek(target);
         Wander();
+=======
+        if(mode==SEEKTOOTH)
+        {
+            PVector target = new PVector(GameConstants.SCR_WIDTH / 2, GameConstants.SCR_HEIGHT / 2);
+            Seek(target);
+        }
+        else if(mode==ATTACKPLAYER)
+        {
+            PVector target = Engine.player.getPosition();
+            Seek(target);
+        }
+
+>>>>>>> b8e10d81ee902a57e00d35a519746e9ebb1ec862
     }
 
 
