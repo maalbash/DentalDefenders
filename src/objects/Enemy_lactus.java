@@ -24,7 +24,8 @@ public class Enemy_lactus extends Enemy {
 
     private modeList mode;
 
-    public Enemy_lactus(PApplet app, float posX, float posY, float orientation){
+    public Enemy_lactus(PApplet app, float posX, float posY, float orientation)
+    {
 
         //The rational here is that each lactus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
@@ -34,14 +35,17 @@ public class Enemy_lactus extends Enemy {
     }
 
 
-    public void defaultBehaviour(){
+    public void defaultBehaviour()
+    {
         //for now, default behaviour is "SEEK TOOTH"
 
-        if(mode==SEEKTOOTH) {
+        if(mode==SEEKTOOTH)
+        {
             PVector target = new PVector(GameConstants.SCR_WIDTH / 2, GameConstants.SCR_HEIGHT / 2);
             Seek(target);
         }
-        else if(mode==ATTACKPLAYER){
+        else if(mode==ATTACKPLAYER)
+        {
             PVector target = Engine.player.getPosition();
             Seek(target);
         }

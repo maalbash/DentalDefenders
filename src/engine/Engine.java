@@ -26,7 +26,7 @@ public class Engine extends PApplet
 
     public static Player player;        //Changed these 2 to static, since only one instance of each, and to provide ease of access
     public static Tooth tooth;
-    Environment environment;
+    public static Environment environment;
 
     public static List<Obstacle> staticObjects;
     public static List<Enemy>  Enemies;
@@ -49,7 +49,7 @@ public class Engine extends PApplet
         player = new Player(this);
         tooth = new Tooth(this);
         environment = new Environment(this);
-        Enemies = new LinkedList<Enemy>();
+        Enemies = new ArrayList<>();
 
         staticObjects = new ArrayList<>();
 
