@@ -83,6 +83,7 @@ public class Engine extends PApplet
         environment.update();
         tooth.draw();
         player.update();
+
         SpawnEnemies.update(this);
         enemyBehaviour();
         drawEnemies();
@@ -140,5 +141,10 @@ public class Engine extends PApplet
                 player.Seek(PVector.add(player.getPosition(), new PVector(0, player.getWanderRadius())));
                 break;
         }
+    }
+
+    public void mousePressed()
+    {
+        player.shoot();
     }
 }
