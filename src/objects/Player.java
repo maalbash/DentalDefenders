@@ -5,10 +5,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by ujansengupta on 3/31/17.
@@ -53,7 +50,18 @@ public class Player extends GameObject
     public void update()
     {
         super.update();
-        bullets.forEach(Bullet::update);
+
+        for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
+        {
+            Bullet b = i.next();
+            if (b.outOfBounds())
+                i.remove();
+            else
+                b.update();
+        }
+
+
+
     }
 
 

@@ -1,11 +1,12 @@
 package objects;
 
+import engine.Engine;
+import environment.Obstacle;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
-import utility.Movable;
 
 /**
  * Created by ujansengupta on 4/8/17.
@@ -38,6 +39,21 @@ public class Bullet
     {
         app.shape(shape, position.x, position.y);
         position.add(velocity);
+    }
+
+    public boolean outOfBounds()
+    {
+        for (Obstacle o : Engine.staticObjects)
+            if (o.contains(getGridLocation()))
+                return true;
+
+        return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
+                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
+    }
+
+    public PVector getGridLocation()
+    {
+        return new PVector((int) (position.x/GameConstants.TILE_SIZE.x), (int)(position.y/GameConstants.TILE_SIZE.y));
     }
 
 }

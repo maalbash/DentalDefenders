@@ -15,7 +15,7 @@ public class Enemy_lactus extends Enemy {
     private static int life = 20;
     private static PVector color = new PVector(0,179,0);
     private static int size = 20;
-    private static int PursueRadius  =50;
+    private static int PursueRadius = 50;
 
     public Enemy_lactus(PApplet app, float posX, float posY, float orientation){
 
@@ -26,6 +26,7 @@ public class Enemy_lactus extends Enemy {
         //PVector color = new PVector(0,0);
         //float size = 20
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        this.setMaxVel(2);
     }
 
     public void defaultBehaviour(){

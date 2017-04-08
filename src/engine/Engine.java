@@ -5,10 +5,7 @@ package engine;
 
 import environment.Environment;
 import environment.Obstacle;
-import objects.Enemy;
-import objects.Enemy_lactus;
-import objects.Player;
-import objects.Tooth;
+import objects.*;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PShape;
@@ -47,7 +44,7 @@ public class Engine extends PApplet
         player = new Player(this);
         tooth = new Tooth(this);
         environment = new Environment(this);
-        Enemies = new ArrayList<Enemy>();
+        Enemies = new ArrayList<>();
 
         staticObjects = new ArrayList<>();
 
@@ -62,14 +59,15 @@ public class Engine extends PApplet
 
     }
 
-    public void drawEnemies(){
-        for (Enemy e : Engine.Enemies){
-            e.update();
-        }
+    public void drawEnemies()
+    {
+        Enemies.forEach(GameObject::update);
     }
 
-    public void enemyBehaviour(){
-        for(Enemy e : Engine.Enemies){
+    public void enemyBehaviour()
+    {
+        for(Enemy e : Engine.Enemies)
+        {
             e.defaultBehaviour();
             e.update();
         }

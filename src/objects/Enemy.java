@@ -9,7 +9,7 @@ import utility.Movable;
 /**
  * Created by ujansengupta on 3/31/17.
  */
-public abstract class Enemy extends GameObject implements Movable
+public abstract class Enemy extends GameObject
 {
     public static final int DEFAULT_ENEMY_LIFE = 100;
 
@@ -21,7 +21,8 @@ public abstract class Enemy extends GameObject implements Movable
         this.PURSUE_RADIUS = RoPursue;
     }
 
-    public enum mode{
+    public enum mode
+    {
         ATTACK, FINDTOOTH, WANDER
     }
 
