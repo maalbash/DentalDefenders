@@ -32,8 +32,8 @@ public class Enemy_lactus extends Enemy {
         //for now, default behaviour is "SEEK TOOTH"
 
         PVector target = new PVector(GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2);
-        Seek(target);
-
+        //Seek(target);
+        Wander();
     }
 
 

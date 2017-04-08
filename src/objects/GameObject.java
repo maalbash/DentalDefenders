@@ -5,6 +5,8 @@ import environment.Obstacle;
 import movement.Align;
 import movement.Arrive;
 import movement.Seek;
+import movement.SteeringOutput;
+import movement.Wander;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PShape;
@@ -206,6 +208,7 @@ public class GameObject extends AbstractObject implements Movable
         app.popMatrix();
     }
 
+    float targetRotWander = 0;
 
     /* Movement methods */
 
@@ -231,7 +234,12 @@ public class GameObject extends AbstractObject implements Movable
 
     @Override
     public void Wander() {
+        SteeringOutput steering = Wander.getSteeringAlign(this,targetRotWander, maxRot, maxAngularAcc, 1.5f,2.5f);
+        this.setVelocity(PVector.fromAngle(this.getOrientation()).mult(maxVel));
+        this.setRotation(this.getRotation()+steering.angular);
 
+        if(steering.angular == 0)
+            targetRotWander = Wander.randomBinomial() * maxRot;
     }
 
     @Override
