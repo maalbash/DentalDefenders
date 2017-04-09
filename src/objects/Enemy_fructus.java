@@ -21,8 +21,7 @@ public class Enemy_fructus extends Enemy{
     private static int PursueRadius  =200;
     private modeList mode;
 
-    public Enemy_fructus(PApplet app, float posX, float posY, float orientation)
-    {
+    public Enemy_fructus(PApplet app, float posX, float posY, float orientation){
 
         //The rational here is that each fructus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
@@ -33,12 +32,10 @@ public class Enemy_fructus extends Enemy{
 
     private void setCurrentMode()
     {
-        if(PVector.sub(this.position, Engine.player.position).mag()<this.PURSUE_RADIUS)
-        {
+        if(PVector.sub(this.position, Engine.player.position).mag()<this.PURSUE_RADIUS){
             this.mode = ATTACKPLAYER;
         }
-        else
-        {
+        else{
             this.mode = SEEKTOOTH;
         }
 
@@ -50,15 +47,13 @@ public class Enemy_fructus extends Enemy{
 
         setCurrentMode();
 
-        switch (mode)
-        {
-            case SEEKTOOTH:
-                this.finalTarget = new PVector(GameConstants.SCR_WIDTH / 2, GameConstants.SCR_HEIGHT / 2);
-                Seek(this.finalTarget);
+        switch(mode){
+            case SEEKTOOTH: this.finalTarget = Engine.tooth.tooth;
+                Seek(this.finalTarget.position);
                 break;
-            case ATTACKPLAYER:
-                this.finalTarget = Engine.player.getPosition();
-                Seek(this.finalTarget);
+
+            case ATTACKPLAYER: this.finalTarget = Engine.player;
+                Seek(this.finalTarget.position);
                 break;
         }
 

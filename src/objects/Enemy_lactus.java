@@ -9,6 +9,7 @@ import utility.GameConstants;
 
 import static objects.Enemy.modeList.ATTACKPLAYER;
 import static objects.Enemy.modeList.SEEKTOOTH;
+import static objects.Enemy.modeList.WANDER;
 
 
 /**
@@ -24,8 +25,7 @@ public class Enemy_lactus extends Enemy {
 
     private modeList mode;
 
-    public Enemy_lactus(PApplet app, float posX, float posY, float orientation)
-    {
+    public Enemy_lactus(PApplet app, float posX, float posY, float orientation){
 
         //The rational here is that each lactus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
@@ -35,28 +35,40 @@ public class Enemy_lactus extends Enemy {
         mode = SEEKTOOTH;
     }
 
+    private void setCurrentMode()
+    {
+
+        if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS){
+            mode=SEEKTOOTH;
+        }
+        else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS){
+            mode=ATTACKPLAYER;
+        }
+        else{
+            mode=WANDER;
+        }
+    }
 
     public void defaultBehaviour()
     {
         //for now, default behaviour is "SEEK TOOTH"
 
-<<<<<<< HEAD
-        PVector target = new PVector(GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2);
-        //Seek(target);
-        Wander();
-=======
-        if(mode==SEEKTOOTH)
-        {
-            PVector target = new PVector(GameConstants.SCR_WIDTH / 2, GameConstants.SCR_HEIGHT / 2);
-            Seek(target);
-        }
-        else if(mode==ATTACKPLAYER)
-        {
-            PVector target = Engine.player.getPosition();
-            Seek(target);
+        setCurrentMode();
+
+        switch(mode){
+            case SEEKTOOTH: this.finalTarget = Engine.tooth.tooth;
+                            Seek(this.finalTarget.position);
+                            break;
+
+            case ATTACKPLAYER: this.finalTarget = Engine.player;
+                               Seek(this.finalTarget.position);
+                               break;
+
+            case WANDER: this.finalTarget = Engine.tooth.tooth;
+                         Seek(this.finalTarget.position);
+                         break;
         }
 
->>>>>>> b8e10d81ee902a57e00d35a519746e9ebb1ec862
     }
 
 
