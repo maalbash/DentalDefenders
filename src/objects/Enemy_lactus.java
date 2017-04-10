@@ -1,16 +1,12 @@
 package objects;
 
 import engine.Engine;
-import movement.KinematicOutput;
-import movement.Seek;
-import movement.Wander;
 import processing.core.PApplet;
 import processing.core.PVector;
-import utility.GameConstants;
 
-import static objects.Enemy.modeList.ATTACKPLAYER;
-import static objects.Enemy.modeList.SEEKTOOTH;
-import static objects.Enemy.modeList.WANDER;
+import static objects.Enemy.stateList.ATTACKPLAYER;
+import static objects.Enemy.stateList.SEEKTOOTH;
+import static objects.Enemy.stateList.WANDER;
 
 
 /**
@@ -24,7 +20,7 @@ public class Enemy_lactus extends Enemy {
     private static int size = 20;
     private static int PursueRadius  =50;
 
-    private modeList mode;
+    private stateList state;
 
     public Enemy_lactus(PApplet app, float posX, float posY, float orientation){
 
@@ -33,7 +29,7 @@ public class Enemy_lactus extends Enemy {
 
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
         finalTarget = Engine.tooth.tooth;
-        mode = SEEKTOOTH;
+        state = SEEKTOOTH;
     }
 
     private void setCurrentMode()
@@ -41,15 +37,15 @@ public class Enemy_lactus extends Enemy {
 
         if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS)
         {
-            mode = SEEKTOOTH;
+            state = SEEKTOOTH;
         }
         else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS)
         {
-            mode = ATTACKPLAYER;
+            state = ATTACKPLAYER;
         }
         else
         {
-            mode = WANDER;
+            state = WANDER;
         }
     }
 
@@ -59,7 +55,7 @@ public class Enemy_lactus extends Enemy {
 
         setCurrentMode();
 
-        switch(mode)
+        switch(state)
         {
             case SEEKTOOTH:
                 this.finalTarget = Engine.tooth.tooth;

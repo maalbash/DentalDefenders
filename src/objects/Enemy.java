@@ -28,7 +28,7 @@ public abstract class Enemy extends GameObject
         this.finalTarget = Engine.tooth.tooth;
     }
 
-    public enum modeList
+    public enum stateList
     {
         ATTACKPLAYER, SEEKTOOTH, WANDER
     }
