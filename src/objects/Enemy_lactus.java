@@ -3,6 +3,7 @@ package objects;
 import engine.Engine;
 import movement.KinematicOutput;
 import movement.Seek;
+import movement.Wander;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
@@ -40,15 +41,15 @@ public class Enemy_lactus extends Enemy {
 
         if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS)
         {
-            mode=SEEKTOOTH;
+            mode = SEEKTOOTH;
         }
         else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS)
         {
-            mode=ATTACKPLAYER;
+            mode = ATTACKPLAYER;
         }
         else
         {
-            mode=WANDER;
+            mode = WANDER;
         }
     }
 
@@ -71,8 +72,7 @@ public class Enemy_lactus extends Enemy {
                 break;
 
             case WANDER:
-                this.finalTarget = Engine.tooth.tooth;
-                Seek(this.finalTarget.position);
+                Wander();
                 break;
         }
 
