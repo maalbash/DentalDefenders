@@ -234,9 +234,10 @@ public class GameObject extends AbstractObject implements Movable
 
     @Override
     public void Wander() {
-        SteeringOutput steering = Wander.getSteeringAlign(this,targetRotWander, maxRot, maxAngularAcc, 1.5f,2.5f);
+        SteeringOutput steering = Wander.getSteeringAlign(this,targetRotWander, maxRot, maxAngularAcc, angularROS,angularROD);
+
         this.setVelocity(PVector.fromAngle(this.getOrientation()).mult(maxVel));
-        this.setRotation(this.getRotation()+steering.angular);
+        this.setRotation(this.getRotation() + steering.angular);
 
         if(steering.angular == 0)
             targetRotWander = Wander.randomBinomial() * maxRot;

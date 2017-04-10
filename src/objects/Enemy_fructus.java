@@ -53,12 +53,12 @@ public class Enemy_fructus extends Enemy{
         switch (mode)
         {
             case SEEKTOOTH:
-                this.finalTarget = new PVector(GameConstants.SCR_WIDTH / 2, GameConstants.SCR_HEIGHT / 2);
-                Seek(this.finalTarget);
+                this.finalTarget = Engine.tooth.tooth;
+                Seek(this.finalTarget.getPosition());
                 break;
             case ATTACKPLAYER:
-                this.finalTarget = Engine.player.getPosition();
-                Seek(this.finalTarget);
+                this.finalTarget = Engine.player;
+                Seek(this.finalTarget.getPosition());
                 break;
         }
 

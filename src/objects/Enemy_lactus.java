@@ -20,7 +20,7 @@ public class Enemy_lactus extends Enemy {
     private static int life = 20;
     private static PVector color = new PVector(0,179,0);
     private static int size = 20;
-    private static int PursueRadius  =50;
+    private static int PursueRadius = 50;
 
     private modeList mode;
 
@@ -30,9 +30,11 @@ public class Enemy_lactus extends Enemy {
         //The rational here is that each lactus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
 
-        super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        super (app, color, size, posX, posY, orientation, life, PursueRadius);
         finalTarget = Engine.tooth.tooth;
         mode = SEEKTOOTH;
+        this.setMaxAngularAcc(0.0005f);
+        this.setMaxVel(1f);
     }
 
 
@@ -40,12 +42,10 @@ public class Enemy_lactus extends Enemy {
     {
         //for now, default behaviour is "SEEK TOOTH"
 
-<<<<<<< HEAD
-        PVector target = new PVector(GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2);
+        //PVector target = new PVector(GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2);
         //Seek(target);
         Wander();
-=======
-        if(mode==SEEKTOOTH)
+        /*if(mode==SEEKTOOTH)
         {
             PVector target = new PVector(GameConstants.SCR_WIDTH / 2, GameConstants.SCR_HEIGHT / 2);
             Seek(target);
@@ -54,9 +54,8 @@ public class Enemy_lactus extends Enemy {
         {
             PVector target = Engine.player.getPosition();
             Seek(target);
-        }
+        }*/
 
->>>>>>> b8e10d81ee902a57e00d35a519746e9ebb1ec862
     }
 
 

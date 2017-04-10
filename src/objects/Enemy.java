@@ -11,11 +11,11 @@ import utility.Utility;
  */
 public abstract class Enemy extends GameObject
 {
-    public static final int DEFAULT_ENEMY_LIFE = 100;
 
     protected int PURSUE_RADIUS;
 
-    public GameObject getFinalTarget() {
+    public GameObject getFinalTarget()
+    {
         return finalTarget;
     }
 
@@ -28,7 +28,8 @@ public abstract class Enemy extends GameObject
         this.finalTarget = Engine.tooth.tooth;
     }
 
-    public enum modeList{
+    public enum modeList
+    {
         ATTACKPLAYER, SEEKTOOTH, WANDER
     }
 
