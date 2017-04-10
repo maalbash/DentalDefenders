@@ -38,13 +38,16 @@ public class Enemy_lactus extends Enemy {
     private void setCurrentMode()
     {
 
-        if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS){
+        if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS)
+        {
             mode=SEEKTOOTH;
         }
-        else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS){
+        else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS)
+        {
             mode=ATTACKPLAYER;
         }
-        else{
+        else
+        {
             mode=WANDER;
         }
     }
@@ -55,18 +58,22 @@ public class Enemy_lactus extends Enemy {
 
         setCurrentMode();
 
-        switch(mode){
-            case SEEKTOOTH: this.finalTarget = Engine.tooth.tooth;
-                            Seek(this.finalTarget.position);
-                            break;
+        switch(mode)
+        {
+            case SEEKTOOTH:
+                this.finalTarget = Engine.tooth.tooth;
+                Seek(this.finalTarget.position);
+                break;
 
-            case ATTACKPLAYER: this.finalTarget = Engine.player;
-                               Seek(this.finalTarget.position);
-                               break;
+            case ATTACKPLAYER:
+                this.finalTarget = Engine.player;
+                Seek(this.finalTarget.position);
+                break;
 
-            case WANDER: this.finalTarget = Engine.tooth.tooth;
-                         Seek(this.finalTarget.position);
-                         break;
+            case WANDER:
+                this.finalTarget = Engine.tooth.tooth;
+                Seek(this.finalTarget.position);
+                break;
         }
 
     }

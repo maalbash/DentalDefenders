@@ -47,12 +47,15 @@ public class Enemy_fructus extends Enemy{
 
         setCurrentMode();
 
-        switch(mode){
-            case SEEKTOOTH: this.finalTarget = Engine.tooth.tooth;
+        switch(mode)
+        {
+            case SEEKTOOTH:
+                this.finalTarget = Engine.tooth.tooth;
                 Seek(this.finalTarget.position);
                 break;
 
-            case ATTACKPLAYER: this.finalTarget = Engine.player;
+            case ATTACKPLAYER:
+                this.finalTarget = Engine.player;
                 Seek(this.finalTarget.position);
                 break;
         }
