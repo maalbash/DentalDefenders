@@ -18,7 +18,7 @@ public class Enemy_lactus extends Enemy {
     private static int life = 20;
     private static PVector color = new PVector(0,179,0);
     private static int size = 20;
-    private static int PursueRadius  =50;
+    private static int PursueRadius = 100;
     private static float DEFAULT_LACTUS_SPEED = 0.5f;
 
     private stateList state;

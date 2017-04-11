@@ -1,5 +1,6 @@
 package objects;
 
+import movement.SteeringOutput;
 import processing.core.PVector;
 
 /**
@@ -80,6 +81,12 @@ public abstract class AbstractObject
         this.angularAcc = angular;
     }
 
+
+    public void setAcc(SteeringOutput steering)
+    {
+        this.linearAcc = steering.linear;
+        this.angularAcc = steering.angular;
+    }
 
 
 

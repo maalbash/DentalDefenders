@@ -2,6 +2,7 @@ package objects;
 
 import engine.Engine;
 import environment.Obstacle;
+import environment.PathFollower;
 import movement.Align;
 import movement.Arrive;
 import movement.Seek;
@@ -56,18 +57,17 @@ public class GameObject extends AbstractObject implements Movable
 
     public void update()
     {
-        velocity.x += linearAcc.x;
-        velocity.y += linearAcc.y;
+        velocity.add(linearAcc);
         rotation += angularAcc;
 
-        position.x += velocity.x;
-        position.y += velocity.y;
+        position.add(velocity);
+
+        orientation = (velocity.mag() > 0) ? velocity.heading() : orientation;
         orientation += rotation;
 
         if (outOfBounds())
         {
-            position.x -= velocity.x;
-            position.y -= velocity.y;
+            linearAcc.rotate((float)Math.PI);
         }
 
         if (crumbs != null)
@@ -159,6 +159,7 @@ public class GameObject extends AbstractObject implements Movable
         this.angularROD = GameConstants.DEFAULT_angularROD;
         this.timeToTargetRot = GameConstants.DEFAULT_TTTROT;
         this.timeToTargetVel = GameConstants.DEFAULT_TTTVEL;
+
     }
 
 
@@ -221,7 +222,7 @@ public class GameObject extends AbstractObject implements Movable
     @Override
     public void Arrive(PVector target)
     {
-        this.setLinearAcc(Arrive.getSteering(this, target).linear);
+        setLinearAcc(Arrive.getSteering(this, target).linear);
     }
 
     @Override
@@ -278,6 +279,7 @@ public class GameObject extends AbstractObject implements Movable
         else
             return false;
     }
+
 
 
 }

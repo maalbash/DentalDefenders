@@ -1,5 +1,7 @@
 package objects;
 
+import com.sun.tools.doclint.Env;
+import environment.Environment;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -13,7 +15,7 @@ public class Enemy_enamelator extends Enemy {
     private static int life = 80;
     private static PVector color = new PVector(204,0,0);
     private static int size = 20;
-    private static int PursueRadius  =50;
+    private static int PursueRadius = 50;
 
     public Enemy_enamelator(PApplet app, float posX, float posY, float orientation){
 

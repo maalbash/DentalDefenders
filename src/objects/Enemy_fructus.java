@@ -1,6 +1,7 @@
 package objects;
 
 import engine.Engine;
+import environment.Environment;
 import processing.core.PApplet;
 import processing.core.PVector;
 

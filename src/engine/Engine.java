@@ -31,6 +31,8 @@ public class Engine extends PApplet
     public static List<Obstacle> staticObjects;
     public static List<Enemy>  Enemies;
 
+    public static PVector playerTarget;
+
 
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
@@ -50,7 +52,7 @@ public class Engine extends PApplet
         tooth = new Tooth(this);
         environment = new Environment(this);
         Enemies = new ArrayList<>();
-
+        playerTarget  = new PVector(0, 0);
         staticObjects = new ArrayList<>();
 
         staticObjects.add(tooth);
@@ -100,6 +102,8 @@ public class Engine extends PApplet
         background(105, 183, 219);
         environment.update();
         tooth.draw();
+
+        player.Arrive(playerTarget);
         player.update();
 
         SpawnEnemies.update(this);
@@ -114,7 +118,7 @@ public class Engine extends PApplet
 
     }
 
-    public void keyPressed()
+    /*public void keyPressed()
     {
         //println(keyCode);
         movePlayer(keyCode);
@@ -131,32 +135,38 @@ public class Engine extends PApplet
     {
         switch (keyCode)
         {
-            /* LEFT*/
+            *//* LEFT*//*
             case 37:
                 player.Align(PVector.sub(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
                 player.Seek(PVector.sub(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
                 break;
 
-            /* UP */
+            *//* UP *//*
             case 38:
                 player.Align(PVector.sub(player.getPosition(), new PVector(0, player.getWanderRadius())));
                 player.Seek(PVector.sub(player.getPosition(), new PVector(0, player.getWanderRadius())));
                 break;
 
-            /* RIGHT */
+            *//* RIGHT *//*
             case 39:
                 player.Align(PVector.add(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
                 player.Seek(PVector.add(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
                 break;
 
-            /* DOWN */
+            *//* DOWN *//*
             case 40:
                 player.Align(PVector.add(player.getPosition(), new PVector(0, player.getWanderRadius())));
                 player.Seek(PVector.add(player.getPosition(), new PVector(0, player.getWanderRadius())));
                 break;
         }
-    }
+    }*/
 
+
+    public void mouseMoved()
+    {
+        playerTarget.set(mouseX, mouseY);
+        //player.Align(playerTarget);
+    }
     public void mousePressed()
     {
         player.shoot();

@@ -18,12 +18,12 @@ public class Environment
 {
     private PApplet app;
 
-    private List<Obstacle> obstacles;
-    private Set<Integer> invalidNodes;
-    private static PVector tileSize;
-    private static PVector numTiles; 
+    public static List<Obstacle> obstacles;
+    public static Set<Integer> invalidNodes;
+    public static PVector tileSize;
+    public static PVector numTiles;
 
-    private Graph gameGraph;
+    public static Graph gameGraph;
 
     public Environment(PApplet app)
     {
@@ -110,8 +110,7 @@ public class Environment
 
     private void drawObstacles()
     {
-        for (Obstacle o : obstacles)
-            o.draw();
+        obstacles.forEach(Obstacle::draw);
     }
 
 

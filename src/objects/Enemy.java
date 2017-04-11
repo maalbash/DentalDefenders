@@ -1,6 +1,8 @@
 package objects;
 
 import engine.Engine;
+import environment.Environment;
+import environment.PathFollower;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.Movable;
@@ -12,27 +14,31 @@ import utility.Utility;
 public abstract class Enemy extends GameObject
 {
 
-    protected int PURSUE_RADIUS;
+    public enum stateList
+    {
+        ATTACKPLAYER, SEEKTOOTH, WANDER
+    }
+
+    public int PURSUE_RADIUS;
+    public GameObject finalTarget;
+
+    public PathFollower pathFollower;
+
+    public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int PursueRadius)
+    {
+        super (app, color, size, posX, posY, orientation, life);
+
+        PURSUE_RADIUS = PursueRadius;
+        finalTarget = Engine.tooth.tooth;
+        pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
+    }
+
+    public abstract void defaultBehaviour();
 
     public GameObject getFinalTarget()
     {
         return finalTarget;
     }
 
-    protected GameObject finalTarget;
-
-    public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int PursueRadius)
-    {
-        super (app, color, size, posX, posY, orientation, life);
-        this.PURSUE_RADIUS = PursueRadius;
-        this.finalTarget = Engine.tooth.tooth;
-    }
-
-    public enum stateList
-    {
-        ATTACKPLAYER, SEEKTOOTH, WANDER
-    }
-
-    public abstract void defaultBehaviour();
 
 }
