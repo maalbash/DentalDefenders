@@ -17,7 +17,8 @@ public class Enemy_fructus extends Enemy{
     private static int life = 40;
     private static PVector color = new PVector(0,0,204);
     private static int size = 20;
-    private static int PursueRadius  =200;
+    private static int PursueRadius  =100;
+    private static float DEFAULT_FRUCTUS_SPEED = 1;
     private stateList state;
 
     public Enemy_fructus(PApplet app, float posX, float posY, float orientation){
@@ -25,13 +26,17 @@ public class Enemy_fructus extends Enemy{
         //The rational here is that each fructus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        this.setMaxVel(DEFAULT_FRUCTUS_SPEED);
         state = SEEKTOOTH;
     }
 
 
     private void setCurrentMode()
     {
-        if(PVector.sub(this.position, Engine.player.position).mag()<this.PURSUE_RADIUS){
+        float playerdist, toothdist;
+        playerdist = PVector.sub(this.position, Engine.player.position).mag();
+        toothdist = PVector.sub(this.position, Engine.tooth.tooth.position).mag();
+        if(playerdist<this.PURSUE_RADIUS && playerdist<toothdist){
             this.state = ATTACKPLAYER;
         }
         else{

@@ -19,6 +19,7 @@ public class Enemy_lactus extends Enemy {
     private static PVector color = new PVector(0,179,0);
     private static int size = 20;
     private static int PursueRadius  =50;
+    private static float DEFAULT_LACTUS_SPEED = 0.5f;
 
     private stateList state;
 
@@ -28,6 +29,7 @@ public class Enemy_lactus extends Enemy {
         //Since they are default values, they need not be constructor parameters.
 
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        this.setMaxVel(DEFAULT_LACTUS_SPEED);
         finalTarget = Engine.tooth.tooth;
         state = SEEKTOOTH;
     }
