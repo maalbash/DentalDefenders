@@ -6,17 +6,14 @@ import processing.core.PConstants;
 import processing.core.PVector;
 import utility.GameConstants;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by ujansengupta on 3/31/17.
  */
 public class Environment
 {
-    private PApplet app;
+    private static PApplet app;
 
     public static List<Obstacle> obstacles;
     public static Set<Integer> invalidNodes;
@@ -43,8 +40,10 @@ public class Environment
 
     public void update()
     {
-        drawObstacles();
         //drawGraph();
+        //drawInvalidNodes();
+
+        drawObstacles();
     }
 
 
@@ -90,19 +89,12 @@ public class Environment
         /* Clockwise from left */
 
         /* Outer layer */
-        obstacles.add(new Obstacle(app, new PVector(0.2f * numTiles.x, 0.2f * numTiles.y), new PVector(4, 15))); //top left
-        obstacles.add(new Obstacle(app, new PVector(0.8f * numTiles.x, 0.2f * numTiles.y), new PVector(4, 15))); //top right
-        obstacles.add(new Obstacle(app, new PVector(0.2f * numTiles.x, 0.8f * numTiles.y), new PVector(4, 15))); //bot left
-        obstacles.add(new Obstacle(app, new PVector(0.8f * numTiles.x, 0.8f * numTiles.y), new PVector(4, 15))); //bot right
-        //obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.1f * numTiles.y), new PVector(10, 4)));
-        //obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.9f * numTiles.y), new PVector(10, 4)));
+        obstacles.add(new Obstacle(app, new PVector(0.25f * numTiles.x, 0.25f * numTiles.y), new PVector(4, 15))); //top left
+        obstacles.add(new Obstacle(app, new PVector(0.75f * numTiles.x, 0.25f * numTiles.y), new PVector(4, 15))); //top right
+        obstacles.add(new Obstacle(app, new PVector(0.25f * numTiles.x, 0.75f * numTiles.y), new PVector(4, 15))); //bot left
+        obstacles.add(new Obstacle(app, new PVector(0.75f * numTiles.x, 0.75f * numTiles.y), new PVector(4, 15))); //bot right
 
-        /* Inner layer *//*
-        obstacles.add(new Obstacle(app, new PVector(0.3f * numTiles.x, 0.5f * numTiles.y), new PVector(10, 4)));
-        obstacles.add(new Obstacle(app, new PVector(0.7f * numTiles.x, 0.5f * numTiles.y), new PVector(10, 4)));
-        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.3f * numTiles.y), new PVector(4, 10)));
-        obstacles.add(new Obstacle(app, new PVector(0.5f * numTiles.x, 0.7f * numTiles.y), new PVector(4, 10)));*/
-
+        /* Tooth nodes are not considered invalid */
 
         for (Obstacle obstacle : obstacles)
             invalidNodes.addAll(obstacle.getTileIndices());
@@ -113,6 +105,17 @@ public class Environment
         obstacles.forEach(Obstacle::draw);
     }
 
+    private void drawInvalidNodes()
+    {
+        for (int i : invalidNodes)
+            colorNode(i, new PVector(255, 0, 0), 255);
+    }
 
+    public static void colorNode(int index, PVector color, float alpha)
+    {
+        app.fill(color.x, color.y, color.z, alpha);
+        app.rect((index % numTiles.x) * tileSize.x, (float)Math.floor(index / numTiles.y) * tileSize.y, tileSize.x, tileSize.y);
+        app.noFill();
+    }
 
 }

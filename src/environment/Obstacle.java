@@ -41,9 +41,9 @@ public class Obstacle
         tileLocations = new HashSet<>();                                                  // The set containing tile locations as PVectors
         tileIndices = new HashSet<>();                                                    // The set containing tile locations as integer indices
 
-        for (int i = (int) this.center.y; i < (int) this.center.y + size.y; i++)
+        for (int i = (int) (this.center.y - size.y/2); i < Math.ceil (this.center.y + size.y/2); i++)
         {
-            for (int j = (int) this.center.x; j < (int) this.center.x + size.x; j++)
+            for (int j = (int) (this.center.x - size.x/2); j < Math.ceil(this.center.x + size.x/2); j++)
             {
                 tileLocations.add(new PVector(j,i));
                 tileIndices.add(i * (int) GameConstants.NUM_TILES.y + j);

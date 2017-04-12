@@ -64,7 +64,8 @@ public class Engine extends PApplet
 
     }
 
-    public void drawEnemies(){
+    public void drawEnemies()
+    {
         for (Enemy e : Engine.Enemies){
             e.update();
         }
@@ -73,6 +74,7 @@ public class Engine extends PApplet
     public void enemyBehaviour(){
 
         LinkedList<Enemy> EnemiesToRemove = new LinkedList<Enemy>();
+
         /*
         Iterator<Enemy> tracker = Enemies.listIterator();
         Enemy e;
@@ -83,7 +85,8 @@ public class Engine extends PApplet
         }
         */
 
-        for(Enemy e : Engine.Enemies){
+        for(Enemy e : Engine.Enemies)
+        {
             e.defaultBehaviour();
             e.update();
             if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition())){

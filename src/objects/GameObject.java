@@ -1,6 +1,8 @@
 package objects;
 
+import com.sun.tools.doclint.Env;
 import engine.Engine;
+import environment.Environment;
 import environment.Obstacle;
 import environment.PathFollower;
 import movement.Align;
@@ -14,6 +16,9 @@ import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
 import utility.Movable;
+import utility.Utility;
+
+import java.lang.reflect.GenericArrayType;
 
 /**
  * Created by KinshukBasu on 29-Mar-17.
@@ -28,6 +33,8 @@ public class GameObject extends AbstractObject implements Movable
     protected PApplet app;
     protected PShape shape;
     protected PVector color;
+    protected PVector lookAheadPosition;
+
 
     protected BreadCrumbs crumbs;
     protected boolean crumbTrail;
@@ -37,10 +44,9 @@ public class GameObject extends AbstractObject implements Movable
 
     protected static PVector tileSize = GameConstants.TILE_SIZE;
 
-    protected int wanderRadius = 20;
+    protected int wanderRadius = 5;
 
-    //protected PVector targetPosition;
-
+    protected int lookAheadDistance = GameConstants.DEFAULT_LOOKAHEAD;
 
 
     public GameObject(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life)
@@ -52,23 +58,24 @@ public class GameObject extends AbstractObject implements Movable
         setSize(size);
         setLife(life);
 
+        this.lookAheadPosition = new PVector();
+
         setDefaults();
     }
 
     public void update()
     {
+        if (outOfBounds())
+            Seek(Engine.tooth.tooth.getPosition());
+
         velocity.add(linearAcc);
         rotation += angularAcc;
 
-        position.add(velocity);
+        position.x += velocity.x;
+        position.y += velocity.y;
 
         orientation = (velocity.mag() > 0) ? velocity.heading() : orientation;
         orientation += rotation;
-
-        if (outOfBounds())
-        {
-            linearAcc.rotate((float)Math.PI);
-        }
 
         if (crumbs != null)
             crumbs.drawCrumbs(crumbTrail);
@@ -84,12 +91,139 @@ public class GameObject extends AbstractObject implements Movable
     }
 
 
+    /* Shape Methods */
+
+
+    public void makeShape()
+    {
+        PShape circle, triangle;
+        float posX = 0, posY = 0;
+
+        shape = app.createShape(PConstants.GROUP);
+        circle = app.createShape(PConstants.ELLIPSE, posX, posY, size, size);
+        triangle = app.createShape(PConstants.TRIANGLE, posX + size/7f, posY - size/3f,
+                posX + size/7f, posY + size/3f, posX + size, posY);
+
+        shape.addChild(circle);
+        shape.addChild(triangle);
+    }
+
+    public void changeShape(PShape newShape)
+    {
+        shape = newShape;
+    }
+
+    public void drawShape()
+    {
+        app.pushMatrix();
+        shape.rotate(orientation);
+
+
+        PShape[] children = shape.getChildren();
+
+        for (PShape child : children)
+        {
+            child.setStroke(app.color(color.x, color.y, color.z, 255));
+            child.setFill(app.color(color.x, color.y, color.z, 255));
+        }
+
+        app.shape(shape, position.x, position.y);
+        shape.resetMatrix();
+        app.popMatrix();
+    }
+
+    float targetRotWander = 0;
+
+    /* Movement methods */
+
+    @Override
+    public void Seek(PVector target)
+    {
+        this.setVelocity(Seek.getKinematic(this, target).velocity);
+    }
+
+    @Override
+    public void Arrive(PVector target)
+    {
+        setLinearAcc(Arrive.getSteering(this, target).linear);
+    }
+
+    @Override
+    public void Align(PVector target)
+    {
+        this.setAngularAcc(Align.getSteering(this, target).angular);
+        if (angularAcc == 0)
+            rotation = 0;
+    }
+
+    @Override
+    public void Wander() {
+        SteeringOutput steering = Wander.getSteeringAlign(this, targetRotWander, maxRot, maxAngularAcc, angularROS,angularROD);
+
+        this.setVelocity(PVector.fromAngle(this.getOrientation()).mult(maxVel));
+        this.setAngularAcc(steering.angular);
+
+        if(steering.angular == 0)
+            targetRotWander = Wander.randomBinomial() * maxRot/2;
+    }
+
+    @Override
+    public void stopMoving()
+    {
+        this.velocity.setMag(0);
+        this.linearAcc.setMag(0);
+        this.angularAcc = 0;
+        this.rotation = 0;
+
+    }
+
+    @Override
+    public boolean outOfBounds()
+    {
+        return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
+                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
+    }
+
+    public boolean obstacleCollisionDetected()
+    {
+        lookAheadPosition = PVector.fromAngle(velocity.heading()).mult(lookAheadDistance);
+
+        lookAheadPosition.x += position.x;
+        lookAheadPosition.y += position.y;
+
+        for (Obstacle o : Engine.staticObjects)
+            if (o.contains(Utility.getGridLocation(lookAheadPosition)) && o != Engine.tooth)
+                return true;
+
+        return false;
+    }
+
+    public boolean isTouching(GameObject other)      //Checks to see if two game objects are touching each other
+    {
+        if(PVector.sub(this.position, other.position).mag() < (this.size + other.size))     //All objects considered symmetrical here
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isTouching(PVector pos, int size){
+        if(PVector.sub(this.position, pos).mag() < (this.size + size))     //All objects considered symmetrical here
+            return true;
+        else
+            return false;
+    }
+
 
     /* Getters and Setters */
 
     public PVector getGridLocation()
     {
         return new PVector((int) (position.x/GameConstants.TILE_SIZE.x), (int)(position.y/GameConstants.TILE_SIZE.y));
+    }
+
+    public Integer getGridIndex()
+    {
+        return (int)(position.y/GameConstants.TILE_SIZE.y) * (int) GameConstants.NUM_TILES.x + (int) (position.x/GameConstants.TILE_SIZE.x);
     }
 
 
@@ -167,119 +301,6 @@ public class GameObject extends AbstractObject implements Movable
     {
         this.crumbTrail = crumbTrail;
     }
-
-
-    /* Helper methods */
-
-    public void makeShape()
-    {
-        PShape circle, triangle;
-        float posX = 0, posY = 0;
-
-        shape = app.createShape(PConstants.GROUP);
-        circle = app.createShape(PConstants.ELLIPSE, posX, posY, size, size);
-        triangle = app.createShape(PConstants.TRIANGLE, posX + size/7f, posY - size/3f,
-                posX + size/7f, posY + size/3f, posX + size, posY);
-
-        shape.addChild(circle);
-        shape.addChild(triangle);
-    }
-
-    public void changeShape(PShape newShape)
-    {
-        shape = newShape;
-    }
-
-    public void drawShape()
-    {
-        app.pushMatrix();
-        shape.rotate(orientation);
-
-
-        PShape[] children = shape.getChildren();
-
-        for (PShape child : children)
-        {
-            child.setStroke(app.color(color.x, color.y, color.z, 255));
-            child.setFill(app.color(color.x, color.y, color.z, 255));
-        }
-
-        app.shape(shape, position.x, position.y);
-        shape.resetMatrix();
-        app.popMatrix();
-    }
-
-    float targetRotWander = 0;
-
-    /* Movement methods */
-
-    @Override
-    public void Seek(PVector target)
-    {
-        this.setVelocity(Seek.getKinematic(this, target).velocity);
-    }
-
-    @Override
-    public void Arrive(PVector target)
-    {
-        setLinearAcc(Arrive.getSteering(this, target).linear);
-    }
-
-    @Override
-    public void Align(PVector target)
-    {
-        this.setAngularAcc(Align.getSteering(this, target).angular);
-        if (angularAcc == 0)
-            rotation = 0;
-    }
-
-    @Override
-    public void Wander() {
-        SteeringOutput steering = Wander.getSteeringAlign(this,targetRotWander, maxRot, maxAngularAcc, angularROS,angularROD);
-
-        this.setVelocity(PVector.fromAngle(this.getOrientation()).mult(maxVel));
-        this.setRotation(this.getRotation() + steering.angular);
-
-        if(steering.angular == 0)
-            targetRotWander = Wander.randomBinomial() * maxRot;
-    }
-
-    @Override
-    public void stopMoving()
-    {
-        this.velocity.setMag(0);
-        this.linearAcc.setMag(0);
-        this.angularAcc = 0;
-        this.rotation = 0;
-
-    }
-
-    @Override
-    public boolean outOfBounds()
-    {
-        for (Obstacle o : Engine.staticObjects)
-            if (o.contains(getGridLocation()))
-                return true;
-
-        return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
-                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
-    }
-
-    public boolean isTouching(GameObject other)      //Checks to see if two game objects are touching each other
-    {
-        if(PVector.sub(this.position, other.position).mag() < (this.size + other.size))     //All objects considered symmetrical here
-            return true;
-        else
-            return false;
-    }
-
-    public boolean isTouching(PVector pos, int size){
-        if(PVector.sub(this.position, pos).mag() < (this.size + size))     //All objects considered symmetrical here
-            return true;
-        else
-            return false;
-    }
-
 
 
 }

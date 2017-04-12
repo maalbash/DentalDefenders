@@ -122,7 +122,7 @@ public class GraphSearch
             fill = closedList.size();
         }
 
-        System.out.println("Total space consumed : " + (gMap.size() + fMap.size() + prevNode.size() + openList.size() + closedList.size()) + " new elements");
+        //System.out.println("Total space consumed : " + (gMap.size() + fMap.size() + prevNode.size() + openList.size() + closedList.size()) + " new elements");
 
 
         return getPath(startNode, endNode);

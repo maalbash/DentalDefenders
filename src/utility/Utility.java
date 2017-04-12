@@ -1,5 +1,6 @@
 package utility;
 
+import environment.Environment;
 import objects.GameObject;
 import objects.Player;
 import processing.core.PConstants;
@@ -22,7 +23,18 @@ public class Utility
         }
     }
 
-    public static boolean checkTargetReached(GameObject obj, PVector target) {
-        return((Math.abs(target.x - obj.getPosition().x) <= 1.f) && (Math.abs(target.y - obj.getPosition().y) <= 1.f));
+    public static boolean checkTargetReached(GameObject obj, PVector target)
+    {
+        return((Math.abs(target.x - obj.getPosition().x) <= 20f) && (Math.abs(target.y - obj.getPosition().y) <= 20f));
+    }
+
+    public static Integer getGridIndex(PVector position)
+    {
+        return (int)(position.y/GameConstants.TILE_SIZE.y) * (int) GameConstants.NUM_TILES.x + (int) (position.x/GameConstants.TILE_SIZE.x);
+    }
+
+    public static PVector getGridLocation(PVector position)
+    {
+        return new PVector((int)(position.x/GameConstants.TILE_SIZE.x), (int) (position.y/GameConstants.TILE_SIZE.y));
     }
 }

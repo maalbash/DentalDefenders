@@ -11,13 +11,19 @@ import static java.lang.Math.random;
 /**
  * Created by KinshukBasu on 07-Apr-17.
  */
-public class SpawnEnemies {
+public class SpawnEnemies
+{
 
-    private static long lastLactusSpawn=0;
-    private static long lastFructusSpawn=0;
+    private static int lactusSpawnInterval = 2000;
+    private static int frucusSpawnInterval = 5000;
+
+
+    private static long lastLactusSpawn = 0;
+    private static long lastFructusSpawn = 0;
     private static long now;
 
-    public static void update(PApplet app){
+    public static void update(PApplet app)
+    {
         addLactus(app);
         addFructus(app);
     }
@@ -25,7 +31,7 @@ public class SpawnEnemies {
     public static void addLactus(PApplet app){
 
         now = System.currentTimeMillis();
-        if((now-lastLactusSpawn)>2000) {
+        if((now-lastLactusSpawn) > lactusSpawnInterval) {
             Enemy_lactus newLactus = new Enemy_lactus(app, 0, 0, 0);
 
             PVector temp = SpawnEnemies.randomEdgeLocation();
@@ -38,7 +44,7 @@ public class SpawnEnemies {
 
     public static void addFructus(PApplet app){
         now = System.currentTimeMillis();
-        if((now-lastFructusSpawn)>5000) {
+        if((now-lastFructusSpawn) > frucusSpawnInterval) {
             Enemy_fructus newFructus = new Enemy_fructus(app, 0, 0, 0);
 
             PVector temp = SpawnEnemies.randomEdgeLocation();

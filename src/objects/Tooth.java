@@ -20,7 +20,6 @@ public class Tooth extends Obstacle
 
     public GameObject tooth;
 
-
     public Tooth(PApplet app)
     {
         super(app, center, size);

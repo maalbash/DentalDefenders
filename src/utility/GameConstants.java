@@ -11,6 +11,8 @@ public class GameConstants
     public static final int SCR_WIDTH = 1300;
     public static final int SCR_HEIGHT = 800;
     public static final float SCR_OFFSET = 20;
+    public static final PVector SCR_CENTER = new PVector(SCR_WIDTH/2, SCR_HEIGHT/2);
+
 
     public static final PVector NUM_TILES = new PVector(50, 50);
     public static final PVector TILE_SIZE = new PVector(SCR_WIDTH/NUM_TILES.x, SCR_HEIGHT/NUM_TILES.y);
@@ -38,21 +40,9 @@ public class GameConstants
     public static final float DEFAULT_TTTVEL = 10f;
     public static final float DEFAULT_TTTROT = 100f;
 
-    public static final float DEFAULT_BULLET_SPEED = 4;
+    public static final float DEFAULT_BULLET_SPEED = 7;
     public static final PVector DEFAULT_BULLET_SIZE = new PVector(5, 5);
 
-
-
-
-    public static final heuristic DEFAULT_HEURISTIC = heuristic.EUCLIDEAN;
-
-    public enum searchType
-    {
-        ASTAR, DIJKSTRA
-    }
-
-    public enum heuristic {
-        MANHATTAN, EUCLIDEAN
-    }
+    public static final int DEFAULT_LOOKAHEAD = 40;
 
 }

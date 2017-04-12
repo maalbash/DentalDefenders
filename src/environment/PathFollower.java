@@ -25,7 +25,7 @@ public class PathFollower
     private GraphSearch search;
 
 
-    private float targetSwitchDistance = 2f;
+    private float targetSwitchDistance = 1f;
 
     private int pathOffset = 4;         //Actually 4. The +1 is to account for the 0 based indexing of the path.
 
@@ -60,13 +60,15 @@ public class PathFollower
 
         pathIndices = search.aStarSearch(startIndex, endIndex, Environment.gameGraph);
 
-        Collections.reverse(path);                                   // Since the path is returned in the reverse order
+        Collections.reverse(pathIndices);                                   // Since the path is returned in the reverse order
 
         for (int index : pathIndices) {
             this.path.add(new PVector((index % numTiles.x) * tileSize.x + tileSize.x / 2, (index / numTiles.x) * tileSize.y + tileSize.y / 8));
         }
 
         this.currentTarget = this.path.get(targetIndex);
+
+        //renderSearch();
     }
 
     public void update()
@@ -84,6 +86,26 @@ public class PathFollower
 
                 currentTarget = path.get(targetIndex);
             }
+        }
+    }
+
+    public void renderSearch()
+    {
+        if (pathIndices != null)
+        {
+            float alpha = 200;
+            for (int node : search.getClosedList())
+            {
+                Environment.colorNode(node, new PVector(71, 153 , 131), alpha);
+            }
+
+            for (int node : pathIndices)
+            {
+                Environment.colorNode(node, new PVector(153, 71 , 97), alpha + 25);
+            }
+
+            Environment.colorNode(pathIndices.get(0), new PVector(255, 0, 0), alpha);
+            Environment.colorNode(pathIndices.get(pathIndices.size() - 1), new PVector(0, 255, 0), alpha);
         }
     }
 }

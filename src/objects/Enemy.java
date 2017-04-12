@@ -20,20 +20,32 @@ public abstract class Enemy extends GameObject
     }
 
     public int PURSUE_RADIUS;
-    public GameObject finalTarget;
 
+    public GameObject finalTarget;
     public PathFollower pathFollower;
+
+    public boolean isFollowingPath;
 
     public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int PursueRadius)
     {
         super (app, color, size, posX, posY, orientation, life);
 
+        isFollowingPath = false;
         PURSUE_RADIUS = PursueRadius;
         finalTarget = Engine.tooth.tooth;
         pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
     }
 
     public abstract void defaultBehaviour();
+
+    public void update()
+    {
+        if (isFollowingPath)
+            pathFollower.update();
+
+        super.update();
+    }
+
 
     public GameObject getFinalTarget()
     {
