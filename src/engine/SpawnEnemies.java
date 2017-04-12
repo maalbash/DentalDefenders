@@ -65,19 +65,19 @@ public class SpawnEnemies
 
         switch(choice){
 
-            case(1): pos.x = GameConstants.SCR_OFFSET;
+            case(0): pos.x = GameConstants.SCR_OFFSET;
                      pos.y = (float)(random()*GameConstants.SCR_HEIGHT);
                      break;
 
-            case(2): pos.x = (float)(random()*GameConstants.SCR_WIDTH);
+            case(1): pos.x = (float)(random()*GameConstants.SCR_WIDTH);
                      pos.y = GameConstants.SCR_OFFSET;
                      break;
 
-            case(3): pos.x = GameConstants.SCR_WIDTH-GameConstants.SCR_OFFSET;
+            case(2): pos.x = GameConstants.SCR_WIDTH-GameConstants.SCR_OFFSET;
                      pos.y = (float)(random()*GameConstants.SCR_HEIGHT);
                      break;
 
-            case(4): pos.x = (float)(random()*GameConstants.SCR_WIDTH);
+            case(3): pos.x = (float)(random()*GameConstants.SCR_WIDTH);
                      pos.y = GameConstants.SCR_HEIGHT-GameConstants.SCR_OFFSET;
                      break;
 
