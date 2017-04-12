@@ -35,4 +35,9 @@ public class Tooth extends Obstacle
 
     }
 
+    public void update()
+    {
+        super.draw();
+    }
+
 }

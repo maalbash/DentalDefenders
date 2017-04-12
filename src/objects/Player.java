@@ -27,19 +27,16 @@ public class Player extends GameObject
     public Set<Bullet> bullets;
     public int bulletCount = 0;
 
+    public PVector playerTarget;
+
 
     public Player(PApplet app)
     {
         super (app, color, size, DEFAULT_X, DEFAULT_Y, DEFAULT_ORIENTATION, DEFAULT_PLAYER_LIFE);
-        bullets = new HashSet<>();
-        this.app = app;
-    }
 
-    public Player(PApplet app, float posX, float posY, float orientation)
-    {
-        super (app, color, size, posX, posY, orientation, DEFAULT_PLAYER_LIFE);
         bullets = new HashSet<>();
         this.app = app;
+        playerTarget = new PVector(app.mouseX, app.mouseY);
     }
 
     public void shoot()
@@ -49,6 +46,8 @@ public class Player extends GameObject
     
     public void update()
     {
+        Arrive(playerTarget);
+        Align(playerTarget);
         super.update();
 
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
@@ -59,11 +58,12 @@ public class Player extends GameObject
             else
                 b.update();
         }
-
-
-
     }
 
+    public void updateTarget()
+    {
+        playerTarget.set(app.mouseX, app.mouseY);
+    }
 
 }
 

@@ -6,18 +6,15 @@ package engine;
 import environment.Environment;
 import environment.Obstacle;
 import objects.Enemy;
-import objects.Enemy_lactus;
 import objects.Player;
 import objects.Tooth;
 import processing.core.PApplet;
 import processing.core.PConstants;
-import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
 import utility.Utility;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,9 +27,6 @@ public class Engine extends PApplet
 
     public static List<Obstacle> staticObjects;
     public static List<Enemy>  Enemies;
-
-    public static PVector playerTarget;
-
 
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
@@ -52,7 +46,6 @@ public class Engine extends PApplet
         tooth = new Tooth(this);
         environment = new Environment(this);
         Enemies = new ArrayList<>();
-        playerTarget  = new PVector(0, 0);
         staticObjects = new ArrayList<>();
 
         staticObjects.add(tooth);
@@ -64,7 +57,7 @@ public class Engine extends PApplet
 
     }
 
-    public void drawEnemies()
+    public void updateEnemies()
     {
         for (Enemy e : Engine.Enemies){
             e.update();
@@ -104,14 +97,12 @@ public class Engine extends PApplet
     {
         background(105, 183, 219);
         environment.update();
-        tooth.draw();
-
-        player.Arrive(playerTarget);
+        tooth.update();
         player.update();
 
         SpawnEnemies.update(this);
         enemyBehaviour();
-        drawEnemies();
+        updateEnemies();
 
         /*
         System.out.println("Rotation : " + player.getRotation());
@@ -167,8 +158,7 @@ public class Engine extends PApplet
 
     public void mouseMoved()
     {
-        playerTarget.set(mouseX, mouseY);
-        //player.Align(playerTarget);
+        player.updateTarget();
     }
     public void mousePressed()
     {

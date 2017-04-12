@@ -9,6 +9,7 @@ import utility.Utility;
  */
 public class Align
 {
+    public static float maxAngularAcc = 0.1f;
 
     public static SteeringOutput getSteering(GameObject character, PVector target)
     {
@@ -40,10 +41,10 @@ public class Align
 
         float angularAcc = Math.abs(output.angular);
 
-        if (angularAcc > character.getMaxAngularAcc())
+        if (angularAcc > maxAngularAcc)
         {
             output.angular /= angularAcc;
-            output.angular *= character.getMaxAngularAcc();
+            output.angular *= maxAngularAcc;
         }
 
         return output;

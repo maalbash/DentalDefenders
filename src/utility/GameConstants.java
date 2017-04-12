@@ -43,6 +43,6 @@ public class GameConstants
     public static final float DEFAULT_BULLET_SPEED = 7;
     public static final PVector DEFAULT_BULLET_SIZE = new PVector(5, 5);
 
-    public static final int DEFAULT_LOOKAHEAD = 40;
+    public static final int DEFAULT_LOOKAHEAD = 50;
 
 }

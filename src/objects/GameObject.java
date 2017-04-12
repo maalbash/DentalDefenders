@@ -66,7 +66,10 @@ public class GameObject extends AbstractObject implements Movable
     public void update()
     {
         if (outOfBounds())
+        {
+            Align(Engine.tooth.tooth.getPosition());
             Seek(Engine.tooth.tooth.getPosition());
+        }
 
         velocity.add(linearAcc);
         rotation += angularAcc;
@@ -139,7 +142,7 @@ public class GameObject extends AbstractObject implements Movable
     @Override
     public void Seek(PVector target)
     {
-        this.setVelocity(Seek.getKinematic(this, target).velocity);
+        setVelocity(Seek.getKinematic(this, target).velocity);
     }
 
     @Override
@@ -151,20 +154,21 @@ public class GameObject extends AbstractObject implements Movable
     @Override
     public void Align(PVector target)
     {
-        this.setAngularAcc(Align.getSteering(this, target).angular);
+        setAngularAcc(Align.getSteering(this, target).angular);
         if (angularAcc == 0)
             rotation = 0;
     }
 
     @Override
-    public void Wander() {
+    public void Wander()
+    {
         SteeringOutput steering = Wander.getSteeringAlign(this, targetRotWander, maxRot, maxAngularAcc, angularROS,angularROD);
 
-        this.setVelocity(PVector.fromAngle(this.getOrientation()).mult(maxVel));
-        this.setAngularAcc(steering.angular);
+        setVelocity(PVector.fromAngle(this.getOrientation()).mult(maxVel));
+        setAngularAcc(steering.angular);
 
         if(steering.angular == 0)
-            targetRotWander = Wander.randomBinomial() * maxRot/2;
+            targetRotWander = Wander.randomBinomial() * maxRot;
     }
 
     @Override

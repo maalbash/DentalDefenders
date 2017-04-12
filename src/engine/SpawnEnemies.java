@@ -14,8 +14,8 @@ import static java.lang.Math.random;
 public class SpawnEnemies
 {
 
-    private static int lactusSpawnInterval = 2000;
-    private static int frucusSpawnInterval = 5000;
+    private static int lactusSpawnInterval = 5000;
+    private static int frucusSpawnInterval = 10000;
 
 
     private static long lastLactusSpawn = 0;
@@ -25,7 +25,7 @@ public class SpawnEnemies
     public static void update(PApplet app)
     {
         addLactus(app);
-        addFructus(app);
+        //addFructus(app);
     }
 
     public static void addLactus(PApplet app){

@@ -1,13 +1,12 @@
 package objects;
 
 import engine.Engine;
+import movement.Wander;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.Utility;
 
-import static objects.Enemy.stateList.ATTACKPLAYER;
-import static objects.Enemy.stateList.SEEKTOOTH;
-import static objects.Enemy.stateList.WANDER;
+import static objects.Enemy.stateList.*;
 
 
 /**
@@ -21,8 +20,8 @@ public class Enemy_lactus extends Enemy {
     private static int size = 20;
     private static int PursueRadius = 100;
 
-    private static float DEFAULT_LACTUS_SPEED = 1f;
-    private static float LACTUS_ANGULAR_ACC = 0.0005f;
+    private static float DEFAULT_LACTUS_SPEED = 0.5f;
+    private static float LACTUS_ANGULAR_ACC = 0.001f;
     private static float LACTUS_ANGULAR_ROS = 1.5f;
     private static float LACTUS_ANGULAR_ROD = 2.5f;
 
@@ -43,7 +42,7 @@ public class Enemy_lactus extends Enemy {
         state = SEEKTOOTH;
     }
 
-    private void setCurrentMode()
+    private void setCurrentState()
     {
 
         if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS)
@@ -54,44 +53,43 @@ public class Enemy_lactus extends Enemy {
         {
             state = ATTACKPLAYER;
         }
-        else
+        else if (obstacleCollisionDetected())
         {
-            state = WANDER;
+            state = AVOIDOBSTACLE;
         }
+        else
+            state = WANDER;
+
     }
 
     public void defaultBehaviour()
     {
         //for now, default behaviour is "SEEK TOOTH"
 
-        setCurrentMode();
+        setCurrentState();
 
-        if (obstacleCollisionDetected() && !isFollowingPath)
+        switch (state)
         {
-            pathFollower.followPath(getGridLocation(), Utility.getGridLocation(this.finalTarget.position));
-            isFollowingPath = true;
+            case SEEKTOOTH:
+                this.finalTarget = Engine.tooth.tooth;
+                Seek(this.finalTarget.position);
+                break;
+
+            case ATTACKPLAYER:
+                this.finalTarget = Engine.player;
+                Seek(this.finalTarget.position);
+                break;
+
+            case AVOIDOBSTACLE:
+                targetRotWander = velocity.heading() + (float) Math.PI;
+                Wander();
+                break;
+
+            case WANDER:
+                Wander();
+                break;
         }
-        else
-        {
-            isFollowingPath = false;
 
-            switch (state)
-            {
-                case SEEKTOOTH:
-                    this.finalTarget = Engine.tooth.tooth;
-                    Seek(this.finalTarget.position);
-                    break;
-
-                case ATTACKPLAYER:
-                    this.finalTarget = Engine.player;
-                    Seek(this.finalTarget.position);
-                    break;
-
-                case WANDER:
-                    Wander();
-                    break;
-            }
-        }
 
     }
 
