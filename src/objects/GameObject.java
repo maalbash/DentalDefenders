@@ -202,6 +202,9 @@ public class GameObject extends AbstractObject implements Movable
         return false;
     }
 
+    public void takeDamage(float damage){
+        this.life -= damage;
+    }
     public boolean isTouching(GameObject other)      //Checks to see if two game objects are touching each other
     {
         if(PVector.sub(this.position, other.position).mag() < (this.size + other.size))     //All objects considered symmetrical here

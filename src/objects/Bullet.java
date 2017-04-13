@@ -56,4 +56,12 @@ public class Bullet
         return new PVector((int) (position.x/GameConstants.TILE_SIZE.x), (int)(position.y/GameConstants.TILE_SIZE.y));
     }
 
+    public boolean hasHit(GameObject obj){
+
+        if(PVector.sub(this.position,obj.position).mag() <= (this.size.x+obj.size)){
+            return true;
+        }
+        return false;
+    }
+
 }
