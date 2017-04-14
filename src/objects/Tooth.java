@@ -14,7 +14,7 @@ import utility.GameConstants;
 public class Tooth extends Obstacle
 {
     public PApplet app;
-    public static int life = 200;
+    public static final int life = 200;   //Don't use this variable to update, use (GameObject)tooth.life
     public static PVector size = new PVector(3, 3);
     public static PVector center = GameConstants.GRAPH_CENTER;
 

@@ -21,6 +21,7 @@ public class Enemy_fructus extends Enemy{
     private static int PursueRadius  =100;
     private static float DEFAULT_FRUCTUS_SPEED = 1;
     private stateList state;
+    private static float FructusContactDamage = 15;
 
     public Enemy_fructus(PApplet app, float posX, float posY, float orientation){
 
@@ -29,6 +30,7 @@ public class Enemy_fructus extends Enemy{
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
         this.setMaxVel(DEFAULT_FRUCTUS_SPEED);
         state = SEEKTOOTH;
+        contactDamage = FructusContactDamage;
     }
 
 

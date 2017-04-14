@@ -5,6 +5,7 @@ import environment.Environment;
 import environment.PathFollower;
 import processing.core.PApplet;
 import processing.core.PVector;
+import utility.GameConstants;
 import utility.Movable;
 import utility.Utility;
 
@@ -26,6 +27,8 @@ public abstract class Enemy extends GameObject
 
     public boolean isFollowingPath;
 
+    public float contactDamage;
+
     public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int PursueRadius)
     {
         super (app, color, size, posX, posY, orientation, life);
@@ -34,6 +37,7 @@ public abstract class Enemy extends GameObject
         PURSUE_RADIUS = PursueRadius;
         finalTarget = Engine.tooth.tooth;
         pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
+        contactDamage = GameConstants.DEFAULT_CONTACT_DAMAGE;
     }
 
     public abstract void defaultBehaviour();
