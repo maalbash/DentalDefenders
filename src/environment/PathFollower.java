@@ -79,8 +79,8 @@ public class PathFollower
     {
         if (path != null && path.size() > 0)
         {
-            character.Seek(currentTarget);
             character.Align(currentTarget);
+            character.Seek(currentTarget);
 
             characterGridIndex = character.getGridIndex();
             targetGridIndex = Utility.getGridIndex(currentTarget);

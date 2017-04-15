@@ -46,7 +46,7 @@ public class Enemy_fructus extends Enemy{
     {
         if (followingPath && !pathFollower.reachedTarget)
         {
-            pathFollower.renderSearch();
+            //pathFollower.renderSearch();
             pathFollower.followPath();
         }
 
@@ -71,11 +71,13 @@ public class Enemy_fructus extends Enemy{
         {
             case SEEKTOOTH:
                 this.finalTarget = Engine.tooth.tooth;
+                Align(this.finalTarget.position);
                 Seek(this.finalTarget.position);
                 break;
 
             case ATTACKPLAYER:
                 this.finalTarget = Engine.player;
+                Align(this.finalTarget.position);
                 Seek(this.finalTarget.position);
                 break;
         }

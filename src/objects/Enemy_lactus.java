@@ -75,14 +75,14 @@ public class Enemy_lactus extends Enemy {
         {
             case SEEKTOOTH:
                 this.finalTarget = Engine.tooth.tooth;
-                Seek(this.finalTarget.position);
                 Align(this.finalTarget.position);
+                Seek(this.finalTarget.position);
                 break;
 
             case ATTACKPLAYER:
                 this.finalTarget = Engine.player;
-                Seek(this.finalTarget.position);
                 Align(this.finalTarget.position);
+                Seek(this.finalTarget.position);
                 break;
 
             case WANDER:
