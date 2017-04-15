@@ -14,19 +14,24 @@ import static objects.Enemy.stateList.SEEKTOOTH;
  * Created by ujansengupta on 3/31/17.
  */
 
-public class Enemy_fructus extends Enemy{
+public class Enemy_fructus extends Enemy
+{
 
     private static int life = 40;
-    private static PVector color = new PVector(0,0,204);
     private static int size = 20;
-    private static int PursueRadius  =100;
+    private static int PursueRadius = 100;
     private static float DEFAULT_FRUCTUS_SPEED = 1;
+    private static float FructusContactDamage = 15;
+
     private boolean followingPath;
 
     private stateList state;
-    private static float FructusContactDamage = 15;
 
-    public Enemy_fructus(PApplet app, float posX, float posY, float orientation){
+    private static PVector color = new PVector(0,0,204);
+
+
+    public Enemy_fructus(PApplet app, float posX, float posY, float orientation)
+    {
 
         //The rational here is that each fructus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
@@ -41,12 +46,16 @@ public class Enemy_fructus extends Enemy{
     private void setCurrentMode()
     {
         float playerdist, toothdist;
+
         playerdist = PVector.sub(this.position, Engine.player.position).mag();
         toothdist = PVector.sub(this.position, Engine.tooth.tooth.position).mag();
-        if(playerdist<this.PURSUE_RADIUS && playerdist<toothdist){
+
+        if(playerdist < this.PURSUE_RADIUS && playerdist < toothdist)
+        {
             this.state = ATTACKPLAYER;
         }
-        else{
+        else
+        {
             this.state = SEEKTOOTH;
         }
 

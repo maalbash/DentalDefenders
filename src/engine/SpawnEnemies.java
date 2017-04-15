@@ -15,7 +15,7 @@ public class SpawnEnemies
 {
 
     private static int lactusSpawnInterval = 5000;
-    private static int frucusSpawnInterval = 100000;
+    private static int frucusSpawnInterval = 8000;
 
 
     private static long lastLactusSpawn = 0;
@@ -24,7 +24,7 @@ public class SpawnEnemies
 
     public static void update(PApplet app)
     {
-        //addLactus(app);
+        addLactus(app);
         addFructus(app);
     }
 
