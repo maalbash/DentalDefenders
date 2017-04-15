@@ -45,4 +45,6 @@ public class GameConstants
 
     public static final int DEFAULT_LOOKAHEAD = 50;
 
+    public static final float DEFAULT_CONTACT_DAMAGE = 20;
+
 }

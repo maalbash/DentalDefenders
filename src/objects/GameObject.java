@@ -1,7 +1,9 @@
 package objects;
 
 import engine.Engine;
+import environment.Environment;
 import environment.Obstacle;
+import environment.PathFollower;
 import movement.Align;
 import movement.Arrive;
 import movement.Seek;
@@ -14,6 +16,8 @@ import processing.core.PVector;
 import utility.GameConstants;
 import utility.Movable;
 import utility.Utility;
+
+import java.lang.reflect.GenericArrayType;
 
 /**
  * Created by KinshukBasu on 29-Mar-17.
@@ -196,6 +200,10 @@ public class GameObject extends AbstractObject implements Movable
                 return true;
 
         return false;
+    }
+
+    public void takeDamage(float damage){
+        this.life -= damage;
     }
 
     public boolean isTouching(GameObject other)      //Checks to see if two game objects are touching each other

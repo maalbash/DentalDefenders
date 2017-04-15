@@ -24,6 +24,7 @@ public class Enemy_fructus extends Enemy{
     private boolean followingPath;
 
     private stateList state;
+    private static float FructusContactDamage = 15;
 
     public Enemy_fructus(PApplet app, float posX, float posY, float orientation){
 
@@ -32,13 +33,22 @@ public class Enemy_fructus extends Enemy{
 
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
         this.setMaxVel(DEFAULT_FRUCTUS_SPEED);
-        state = ATTACKPLAYER;
+        state = SEEKTOOTH;
+        contactDamage = FructusContactDamage;
     }
 
 
     private void setCurrentMode()
     {
-
+        float playerdist, toothdist;
+        playerdist = PVector.sub(this.position, Engine.player.position).mag();
+        toothdist = PVector.sub(this.position, Engine.tooth.tooth.position).mag();
+        if(playerdist<this.PURSUE_RADIUS && playerdist<toothdist){
+            this.state = ATTACKPLAYER;
+        }
+        else{
+            this.state = SEEKTOOTH;
+        }
 
     }
 

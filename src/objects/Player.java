@@ -2,6 +2,7 @@ package objects;
 
 import com.sun.org.apache.bcel.internal.generic.FLOAD;
 import environment.Environment;
+import engine.Engine;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
@@ -31,6 +32,7 @@ public class Player extends GameObject
     public int bulletCount = 0;
 
     public PVector playerTarget;
+    public static float BulletDamage = 10;     //TODO - Decide how much damage, and in which class to declare this variable
 
 
     public Player(PApplet app)
@@ -58,6 +60,19 @@ public class Player extends GameObject
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
         {
             Bullet b = i.next();
+
+            for(Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); )
+            {
+                Enemy e = j.next();
+                if(b.hasHit(e)){
+                    i.remove();
+                    e.takeDamage(Player.BulletDamage);
+                    if(e.getLife()<=0){
+                        j.remove();
+                    }
+                }
+            }
+
             if (b.outOfBounds())
                 i.remove();
             else

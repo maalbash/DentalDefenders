@@ -68,22 +68,13 @@ public class Engine extends PApplet
 
         LinkedList<Enemy> EnemiesToRemove = new LinkedList<Enemy>();
 
-        /*
-        Iterator<Enemy> tracker = Enemies.listIterator();
-        Enemy e;
-        while(tracker.hasNext()){
-            e = tracker.next();
-            e.defaultBehaviour();
-            e.update();
-        }
-        */
-
         for(Enemy e : Engine.Enemies)
         {
             e.behaviour();
             e.update();
-            if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition())){
+            if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition())){     //Checks if enemy has touched player/tooth
                 EnemiesToRemove.add(e);
+                e.getFinalTarget().takeDamage(e.contactDamage);
             }
         }
         for(Enemy e : EnemiesToRemove){
