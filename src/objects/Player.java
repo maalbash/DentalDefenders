@@ -1,9 +1,11 @@
 package objects;
 
 import com.sun.org.apache.bcel.internal.generic.FLOAD;
+import environment.Environment;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
+import utility.Utility;
 
 import java.util.*;
 
@@ -23,6 +25,7 @@ public class Player extends GameObject
     private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
+    private static float DEFAULT_PLAYER_MAXVEL = 3f;
 
     public Set<Bullet> bullets;
     public int bulletCount = 0;
@@ -33,9 +36,10 @@ public class Player extends GameObject
     public Player(PApplet app)
     {
         super (app, color, size, DEFAULT_X, DEFAULT_Y, DEFAULT_ORIENTATION, DEFAULT_PLAYER_LIFE);
-
-        bullets = new HashSet<>();
         this.app = app;
+
+        setMaxVel(DEFAULT_PLAYER_MAXVEL);
+        bullets = new HashSet<>();
         playerTarget = new PVector(app.mouseX, app.mouseY);
     }
 
@@ -48,6 +52,7 @@ public class Player extends GameObject
     {
         Arrive(playerTarget);
         Align(playerTarget);
+
         super.update();
 
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
@@ -62,8 +67,10 @@ public class Player extends GameObject
 
     public void updateTarget()
     {
-        playerTarget.set(app.mouseX, app.mouseY);
+        if (!Environment.invalidNodes.contains(Utility.getGridIndex(new PVector(app.mouseX, app.mouseY))))
+            playerTarget.set(app.mouseX, app.mouseY);
     }
+
 
 }
 

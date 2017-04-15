@@ -1,10 +1,7 @@
 package objects;
 
-import com.sun.tools.doclint.Env;
 import engine.Engine;
-import environment.Environment;
 import environment.Obstacle;
-import environment.PathFollower;
 import movement.Align;
 import movement.Arrive;
 import movement.Seek;
@@ -17,8 +14,6 @@ import processing.core.PVector;
 import utility.GameConstants;
 import utility.Movable;
 import utility.Utility;
-
-import java.lang.reflect.GenericArrayType;
 
 /**
  * Created by KinshukBasu on 29-Mar-17.
@@ -47,6 +42,9 @@ public class GameObject extends AbstractObject implements Movable
     protected int wanderRadius = 5;
 
     protected int lookAheadDistance = GameConstants.DEFAULT_LOOKAHEAD;
+
+    public float targetRotationWander = 0;
+
 
 
     public GameObject(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life)
@@ -135,8 +133,6 @@ public class GameObject extends AbstractObject implements Movable
         app.popMatrix();
     }
 
-    float targetRotWander = 0;
-
     /* Movement methods */
 
     @Override
@@ -162,13 +158,13 @@ public class GameObject extends AbstractObject implements Movable
     @Override
     public void Wander()
     {
-        SteeringOutput steering = Wander.getSteeringAlign(this, targetRotWander, maxRot, maxAngularAcc, angularROS,angularROD);
+        SteeringOutput steering = Wander.getSteeringAlign(this, targetRotationWander, maxRot, maxAngularAcc, angularROS,angularROD);
 
         setVelocity(PVector.fromAngle(this.getOrientation()).mult(maxVel));
         setAngularAcc(steering.angular);
 
         if(steering.angular == 0)
-            targetRotWander = Wander.randomBinomial() * maxRot;
+            targetRotationWander = Wander.randomBinomial() * maxRot;
     }
 
     @Override

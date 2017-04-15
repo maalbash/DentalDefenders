@@ -16,7 +16,7 @@ public abstract class Enemy extends GameObject
 
     public enum stateList
     {
-        ATTACKPLAYER, SEEKTOOTH, WANDER, PATHFOLLOW, AVOIDOBSTACLE
+        ATTACKPLAYER, SEEKTOOTH, WANDER
     }
 
     public int PURSUE_RADIUS;
@@ -36,7 +36,12 @@ public abstract class Enemy extends GameObject
         pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
     }
 
+    public abstract void behaviour();
+
     public abstract void defaultBehaviour();
+
+    public abstract void avoidObstacle();
+
 
     public GameObject getFinalTarget()
     {

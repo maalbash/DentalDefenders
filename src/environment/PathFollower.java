@@ -4,6 +4,7 @@ import movement.Align;
 import movement.Seek;
 import objects.GameObject;
 import processing.core.PVector;
+import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.Collections;
 /**
  * Created by ujansengupta on 3/25/17.
  */
+
 public class PathFollower
 {
     private PVector numTiles;
@@ -21,13 +23,14 @@ public class PathFollower
     private ArrayList<PVector> path;
     private PVector currentTarget;
     private int targetIndex = 0;
+    private int characterGridIndex;
+    private int targetGridIndex;
 
     private GraphSearch search;
 
+    private int pathOffset = 3;         //Actually 4. The +1 is to account for the 0 based indexing of the path.
 
-    private float targetSwitchDistance = 1f;
-
-    private int pathOffset = 4;         //Actually 4. The +1 is to account for the 0 based indexing of the path.
+    public boolean reachedTarget;
 
     public PathFollower(GameObject character, PVector numTiles, PVector tileSize)
     {
@@ -46,10 +49,11 @@ public class PathFollower
         return targetIndex;
     }
 
-    public void followPath(PVector startNode, PVector endNode)
+    public void findPath(PVector startNode, PVector endNode)
     {
         this.path.clear();
-        targetIndex = 0;
+        targetIndex = 1;
+        reachedTarget = false;
 
         int startIndex = (int) (startNode.y * numTiles.y + startNode.x);
         int endIndex = (int) (endNode.y * numTiles.y + endNode.x);
@@ -71,18 +75,25 @@ public class PathFollower
         //renderSearch();
     }
 
-    public void update()
+    public void followPath()
     {
         if (path != null && path.size() > 0)
         {
             character.Seek(currentTarget);
+            character.Align(currentTarget);
 
-            if (character.getVelocity().mag() < targetSwitchDistance  && targetIndex < path.size() - 1)
+            characterGridIndex = character.getGridIndex();
+            targetGridIndex = Utility.getGridIndex(currentTarget);
+
+            if (characterGridIndex == targetGridIndex && targetIndex < path.size())
             {
                 targetIndex += pathOffset;
 
                 if (targetIndex >= path.size())
+                {
                     targetIndex = (path.size() - 1);
+                    reachedTarget = true;
+                }
 
                 currentTarget = path.get(targetIndex);
             }

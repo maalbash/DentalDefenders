@@ -1,10 +1,8 @@
 package objects;
 
 import engine.Engine;
-import movement.Wander;
 import processing.core.PApplet;
 import processing.core.PVector;
-import utility.Utility;
 
 import static objects.Enemy.stateList.*;
 
@@ -53,12 +51,17 @@ public class Enemy_lactus extends Enemy {
         {
             state = ATTACKPLAYER;
         }
-        else if (obstacleCollisionDetected())
-        {
-            state = AVOIDOBSTACLE;
-        }
         else
             state = WANDER;
+
+    }
+
+    public void behaviour()
+    {
+        if (obstacleCollisionDetected())
+            avoidObstacle();
+        else
+            defaultBehaviour();
 
     }
 
@@ -73,25 +76,25 @@ public class Enemy_lactus extends Enemy {
             case SEEKTOOTH:
                 this.finalTarget = Engine.tooth.tooth;
                 Seek(this.finalTarget.position);
+                Align(this.finalTarget.position);
                 break;
 
             case ATTACKPLAYER:
                 this.finalTarget = Engine.player;
                 Seek(this.finalTarget.position);
-                break;
-
-            case AVOIDOBSTACLE:
-                targetRotWander = velocity.heading() + (float) Math.PI;
-                Wander();
+                Align(this.finalTarget.position);
                 break;
 
             case WANDER:
                 Wander();
                 break;
         }
-
-
     }
 
+    public void avoidObstacle()
+    {
+        targetRotationWander = velocity.heading() + (float) Math.PI;
+        Wander();
+    }
 
 }
