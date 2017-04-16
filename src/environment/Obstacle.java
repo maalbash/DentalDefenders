@@ -58,8 +58,8 @@ public class Obstacle
 
     public boolean contains(PVector point)
     {
-        return ((point.x > (center.x - Math.ceil(size.x/2 + 1)) && point.x < (center.x + Math.floor(size.x/2)))
-                && (point.y > (center.y - Math.ceil(size.y/2 + 1)) && point.y < (center.y + Math.floor(size.y/2))));
+        return ((point.x > (center.x - Math.ceil(size.x/2 + 1)) && point.x < (center.x + Math.floor(size.x/2 - 1)))
+                && (point.y > (center.y - Math.ceil(size.y/2 + 1)) && point.y < (center.y + Math.floor(size.y/2 - 1))));
 
     }
 

@@ -20,7 +20,7 @@ public class Enemy_fructus extends Enemy
     private static int life = 40;
     private static int size = 20;
     private static int PursueRadius = 100;
-    private static float DEFAULT_FRUCTUS_SPEED = 1;
+    private static float DEFAULT_FRUCTUS_SPEED = 0.5f;
     private static float FructusContactDamage = 15;
 
     private boolean followingPath;
@@ -39,6 +39,7 @@ public class Enemy_fructus extends Enemy
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
         this.setMaxVel(DEFAULT_FRUCTUS_SPEED);
         state = SEEKTOOTH;
+
         contactDamage = FructusContactDamage;
     }
 

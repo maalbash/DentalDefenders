@@ -24,7 +24,7 @@ public class Tooth extends Obstacle
     {
         super(app, center, size);
         this.app = app;
-        tooth = new GameObject(app,color,size.x,GameConstants.SCR_WIDTH/2,GameConstants.SCR_HEIGHT/2,0,life);
+        tooth = new GameObject(app, color,size.x, GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2, 0, life);
 
         color = new PVector(227, 182, 48);
 
@@ -38,6 +38,7 @@ public class Tooth extends Obstacle
     public void update()
     {
         super.draw();
+        tooth.drawLifeBar();
     }
 
 }

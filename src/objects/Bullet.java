@@ -7,6 +7,7 @@ import processing.core.PConstants;
 import processing.core.PShape;
 import processing.core.PVector;
 import utility.GameConstants;
+import utility.Utility;
 
 /**
  * Created by ujansengupta on 4/8/17.
@@ -44,16 +45,11 @@ public class Bullet
     public boolean outOfBounds()
     {
         for (Obstacle o : Engine.staticObjects)
-            if (o.contains(getGridLocation()))
+            if (o.contains(Utility.getGridLocation(this.position)))
                 return true;
 
         return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
                 this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
-    }
-
-    public PVector getGridLocation()
-    {
-        return new PVector((int) (position.x/GameConstants.TILE_SIZE.x), (int)(position.y/GameConstants.TILE_SIZE.y));
     }
 
     public boolean hasHit(GameObject obj){

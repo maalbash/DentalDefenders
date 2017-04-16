@@ -26,7 +26,7 @@ public class Player extends GameObject
     private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
-    private static float DEFAULT_PLAYER_MAXVEL = 3f;
+    private static float DEFAULT_PLAYER_MAXVEL = 1f;
 
     public Set<Bullet> bullets;
     public int bulletCount = 0;
@@ -64,12 +64,16 @@ public class Player extends GameObject
             for(Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); )
             {
                 Enemy e = j.next();
-                if(b.hasHit(e)){
+                if(b.hasHit(e))
+                {
                     i.remove();
                     e.takeDamage(Player.BulletDamage);
-                    if(e.getLife()<=0){
+
+                    if(e.getLife()<=0)
+                    {
                         j.remove();
                     }
+                    break;
                 }
             }
 

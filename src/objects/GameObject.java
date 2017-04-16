@@ -27,6 +27,7 @@ public class GameObject extends AbstractObject implements Movable
 {
 
     protected int life;
+    protected float MAX_LIFE;
     protected float size;
 
     protected PApplet app;
@@ -38,16 +39,14 @@ public class GameObject extends AbstractObject implements Movable
     protected BreadCrumbs crumbs;
     protected boolean crumbTrail;
 
-    protected int scr_width = GameConstants.SCR_WIDTH;
-    protected int scr_height = GameConstants.SCR_HEIGHT;
-
-    protected static PVector tileSize = GameConstants.TILE_SIZE;
-
     protected int wanderRadius = 5;
 
     protected int lookAheadDistance = GameConstants.DEFAULT_LOOKAHEAD;
 
     public float targetRotationWander = 0;
+
+    private static final int LIFE_BAR_WIDTH = 20;
+    private static final int LIFE_BAR_HEIGHT = 3;
 
 
 
@@ -86,6 +85,7 @@ public class GameObject extends AbstractObject implements Movable
             crumbs.drawCrumbs(crumbTrail);
 
         drawShape();
+        drawLifeBar();
     }
 
     /* Initialize breadcrumbs */
@@ -134,6 +134,20 @@ public class GameObject extends AbstractObject implements Movable
 
         app.shape(shape, position.x, position.y);
         shape.resetMatrix();
+        app.popMatrix();
+    }
+
+    public void drawLifeBar() {
+        app.pushMatrix();
+        app.rectMode(PConstants.CORNER);
+
+        app.fill(255, 0, 0);
+        app.rect(position.x - 10, position.y - 20, LIFE_BAR_WIDTH, LIFE_BAR_HEIGHT);
+
+        app.fill(0, 255, 0);
+        app.rect(position.x - 10, position.y - 20, (life / MAX_LIFE) * LIFE_BAR_WIDTH, LIFE_BAR_HEIGHT);
+
+        app.rectMode(PConstants.CENTER);
         app.popMatrix();
     }
 
@@ -238,6 +252,7 @@ public class GameObject extends AbstractObject implements Movable
     public void setLife(int life)
     {
         this.life = life;
+        this.MAX_LIFE = life;
     }
 
     public int getLife()
