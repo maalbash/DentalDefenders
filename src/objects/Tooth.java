@@ -25,14 +25,8 @@ public class Tooth extends Obstacle
         super(app, center, size);
         this.app = app;
         tooth = new GameObject(app, color,size.x, GameConstants.SCR_WIDTH/2, GameConstants.SCR_HEIGHT/2, 0, life);
-
         color = new PVector(227, 182, 48);
-
-        /*this.shape = app.createShape(PConstants.RECT, (int) center.x * GameConstants.TILE_SIZE.x, (int) center.y * GameConstants.TILE_SIZE.y,
-                2 * GameConstants.TILE_SIZE.x, 2 * GameConstants.TILE_SIZE.y, cornerRadius);*/
-
         shape.setFill(app.color(color.x, color.y, color.z));
-
     }
 
     public void update()

@@ -17,7 +17,7 @@ public abstract class Enemy extends GameObject
 
     public enum stateList
     {
-        ATTACKPLAYER, SEEKTOOTH, WANDER
+        ATTACKPLAYER, SEEKTOOTH, WANDER, AVOIDING
     }
 
     public int PURSUE_RADIUS;

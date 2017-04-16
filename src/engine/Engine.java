@@ -64,19 +64,22 @@ public class Engine extends PApplet
         }
     }
 
-    public void enemyBehaviour(){
+    public void enemyBehaviour()
+    {
 
-        LinkedList<Enemy> EnemiesToRemove = new LinkedList<Enemy>();
+        LinkedList<Enemy> EnemiesToRemove = new LinkedList<>();
 
         for(Enemy e : Engine.Enemies)
         {
             e.behaviour();
             e.update();
-            if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition())){     //Checks if enemy has touched player/tooth
+            if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition()))  //Checks if enemy has touched player/tooth
+            {
                 EnemiesToRemove.add(e);
                 e.getFinalTarget().takeDamage(e.contactDamage);
             }
         }
+
         for(Enemy e : EnemiesToRemove){
             Engine.Enemies.remove(e);
         }

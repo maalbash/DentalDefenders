@@ -45,11 +45,11 @@ public class Enemy_lactus extends Enemy {
     private void setCurrentState()
     {
 
-        if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS)
+        if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS && state != AVOIDING)
         {
             state = SEEKTOOTH;
         }
-        else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS)
+        else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS && state != AVOIDING)
         {
             state = ATTACKPLAYER;
         }
@@ -95,6 +95,8 @@ public class Enemy_lactus extends Enemy {
 
     public void avoidObstacle()
     {
+        state = AVOIDING;
+
         targetRotationWander = velocity.heading() + (float) Math.PI;
         Wander();
     }
