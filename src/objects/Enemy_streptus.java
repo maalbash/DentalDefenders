@@ -17,8 +17,7 @@ import static objects.Enemy.stateList.*;
  * Created by ujansengupta on 3/31/17.
  */
 
-@SuppressWarnings("FieldCanBeLocal")
-
+@SuppressWarnings("FieldCanBeLocal, Duplicates")
 
 public class Enemy_streptus extends Enemy
 {
@@ -29,7 +28,7 @@ public class Enemy_streptus extends Enemy
 
     private static float DEFAULT_STREPTUS_SPEED = 0.5f;
     private static float StreptusContactDamage = 15;
-    private static float shootingRange = 100;
+    private static float shootingRange = 200;
     public static float BulletDamage = 10;
     private static long bulletInterval = 1000;
 
@@ -68,6 +67,11 @@ public class Enemy_streptus extends Enemy
             {
                 followingPath = false;
                 state = ATTACKPLAYER;
+            }
+            else if(toothdist <= shootingRange)
+            {
+                followingPath = false;
+                state = SHOOTTOOTH;
             }
         }
         else if(playerdist < this.PURSUE_RADIUS && playerdist < toothdist)
@@ -133,19 +137,22 @@ public class Enemy_streptus extends Enemy
     public void shoot()
     {
         long now = System.currentTimeMillis();
-        if(now-lastBulletTime >= bulletInterval) {
+        if(now-lastBulletTime >= bulletInterval)
+        {
             bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
             lastBulletTime = now;
         }
     }
 
-    public void updateBullets(){
+    public void updateBullets()
+    {
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
         {
             Bullet b = i.next();
             boolean bulletRemoved = false;
 
-            if(b.hasHit(Engine.tooth)){
+            if(b.hasHit(Engine.tooth))
+            {
                 Engine.tooth.tooth.takeDamage(BulletDamage);
                 System.out.println(Engine.tooth.tooth.getLife());
                 i.remove();
@@ -158,7 +165,6 @@ public class Enemy_streptus extends Enemy
             }
             else if (b.outOfBounds()) {
                 i.remove();
-                System.out.println("Strep bullet is out of bounds");
                 bulletRemoved = true;
             }
             else

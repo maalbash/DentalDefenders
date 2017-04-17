@@ -18,6 +18,7 @@ public class Environment
 
     public static List<Obstacle> obstacles;
     public static Set<Integer> invalidNodes;
+    public static Set<Integer> toothNodes;
     public static PVector tileSize;
     public static PVector numTiles;
 
@@ -30,9 +31,11 @@ public class Environment
         numTiles = GameConstants.NUM_TILES;
 
         invalidNodes = new HashSet<>();
+        toothNodes = new HashSet<>();
         obstacles = new ArrayList<>();
 
         createObstacles();
+        toothNodes.addAll(Engine.tooth.getTileIndices());
 
         gameGraph = new Graph();
         gameGraph.buildGraph(invalidNodes);
@@ -42,7 +45,7 @@ public class Environment
     public void update()
     {
         //drawGraph();
-        //drawInvalidNodes();
+        drawInvalidNodes();
 
         drawObstacles();
     }
@@ -100,7 +103,6 @@ public class Environment
         for (Obstacle obstacle : obstacles)
             invalidNodes.addAll(obstacle.getTileIndices());
 
-        invalidNodes.addAll(Engine.tooth.getTileIndices());
     }
 
     private void drawObstacles()
@@ -114,6 +116,10 @@ public class Environment
 
         for (int i : invalidNodes)
             colorNode(i, new PVector(255, 0, 0), 255);
+
+        for (int i: toothNodes)
+            colorNode(i, new PVector(255, 0, 0), 255);
+
 
         app.rectMode(PConstants.CENTER);
 

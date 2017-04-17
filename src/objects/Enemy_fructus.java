@@ -13,7 +13,7 @@ import static objects.Enemy.stateList.SEEKTOOTH;
  * Created by ujansengupta on 3/31/17.
  */
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings("FieldCanBeLocal, Duplicates")
 
 
 public class Enemy_fructus extends Enemy
