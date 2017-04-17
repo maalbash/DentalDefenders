@@ -61,6 +61,7 @@ public class Player extends GameObject
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
         {
             Bullet b = i.next();
+            boolean bulletRemoved = false;
 
             for(Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); )
             {
@@ -68,6 +69,7 @@ public class Player extends GameObject
                 if(b.hasHit(e))
                 {
                     i.remove();
+                    bulletRemoved = true;
                     e.takeDamage(Player.BulletDamage);
 
                     if(e.getLife()<=0)
@@ -79,8 +81,14 @@ public class Player extends GameObject
                 }
             }
 
-            if (b.outOfBounds())
+            if(bulletRemoved){
+                break;
+            }
+
+            if (b.outOfBounds()) {
                 i.remove();
+                bulletRemoved = true;
+            }
             else
                 b.update();
         }

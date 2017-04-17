@@ -40,7 +40,7 @@ public class Enemy_lactus extends Enemy {
         this.setAngularROD(LACTUS_ANGULAR_ROD);
 
         finalTarget = Engine.tooth.tooth;
-        state = SEEKTOOTH;
+        state = WANDER;
         contactDamage = LactusContactDamage;
     }
 
@@ -71,7 +71,6 @@ public class Enemy_lactus extends Enemy {
 
     public void defaultBehaviour()
     {
-        //for now, default behaviour is "SEEK TOOTH"
 
         setCurrentState();
 
