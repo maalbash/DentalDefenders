@@ -4,6 +4,7 @@ import engine.Engine;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
+import utility.Utility;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,9 +31,13 @@ public class Enemy_streptus extends Enemy
     private static float StreptusContactDamage = 15;
     private static float shootingRange = 100;
     public static float BulletDamage = 10;
+    private static long bulletInterval = 1000;
+
+
 
     private stateList state;
     private boolean followingPath;
+    private long lastBulletTime;
 
     public Set<Bullet> bullets;
 
@@ -44,6 +49,7 @@ public class Enemy_streptus extends Enemy
         setMaxVel(DEFAULT_STREPTUS_SPEED);
         contactDamage = StreptusContactDamage;
         bullets = new HashSet<>();
+        lastBulletTime = 0;
 
         state = SEEKTOOTH;
     }
@@ -126,7 +132,11 @@ public class Enemy_streptus extends Enemy
 
     public void shoot()
     {
-        bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
+        long now = System.currentTimeMillis();
+        if(now-lastBulletTime >= bulletInterval) {
+            bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
+            lastBulletTime = now;
+        }
     }
 
     public void updateBullets(){
@@ -137,6 +147,7 @@ public class Enemy_streptus extends Enemy
 
             if(b.hasHit(Engine.tooth.tooth)){
                 Engine.tooth.tooth.takeDamage(BulletDamage);
+                System.out.println(Engine.tooth.tooth.getLife());
                 i.remove();
                 bulletRemoved = true;
             }
@@ -147,6 +158,7 @@ public class Enemy_streptus extends Enemy
             }
             else if (b.outOfBounds()) {
                 i.remove();
+                System.out.println("Strep bullet is out of bounds");
                 bulletRemoved = true;
             }
             else
@@ -157,7 +169,8 @@ public class Enemy_streptus extends Enemy
 
     public void avoidObstacle()
     {
-
+        pathFollower.findPath(getGridLocation(), Utility.getGridLocation(finalTarget.position));
+        followingPath = true;
     }
 
 }
