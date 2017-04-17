@@ -58,12 +58,14 @@ public class Bullet
                 this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET));
     }
 
-    public boolean hasHit(GameObject obj){
+    public boolean hasHit(GameObject obj)
+    {
+        return (PVector.sub(this.position,obj.position).mag() <= (this.size.x + obj.size));
+    }
 
-        if(PVector.sub(this.position,obj.position).mag() <= (this.size.x+obj.size)){
-            return true;
-        }
-        return false;
+    public boolean hasHit(Obstacle obj)
+    {
+        return(obj.getTileIndices().contains(Utility.getGridIndex(this.position)));
     }
 
 }

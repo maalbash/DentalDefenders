@@ -48,9 +48,6 @@ public abstract class Enemy extends GameObject
 
     public abstract void setCurrentState();
 
-
-
-
     public GameObject getFinalTarget()
     {
         return finalTarget;

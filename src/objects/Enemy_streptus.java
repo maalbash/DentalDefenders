@@ -135,7 +135,7 @@ public class Enemy_streptus extends Enemy
             Bullet b = i.next();
             boolean bulletRemoved = false;
 
-            if(b.hasHit(Engine.tooth.tooth)){
+            if(b.hasHit(Engine.tooth)){
                 Engine.tooth.tooth.takeDamage(BulletDamage);
                 i.remove();
                 bulletRemoved = true;
