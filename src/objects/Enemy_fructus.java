@@ -1,7 +1,6 @@
 package objects;
 
 import engine.Engine;
-import environment.Environment;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.Utility;
@@ -46,7 +45,7 @@ public class Enemy_fructus extends Enemy
     }
 
 
-    private void setCurrentMode()
+    public void setCurrentState()
     {
         float playerdist, toothdist;
 
@@ -74,7 +73,7 @@ public class Enemy_fructus extends Enemy
 
     public void behaviour()
     {
-        setCurrentMode();
+        setCurrentState();
 
         if (followingPath && !pathFollower.reachedTarget)
         {

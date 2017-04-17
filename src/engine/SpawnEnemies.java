@@ -2,6 +2,7 @@ package engine;
 
 import objects.Enemy_fructus;
 import objects.Enemy_lactus;
+import objects.Enemy_streptus;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
@@ -15,17 +16,20 @@ public class SpawnEnemies
 {
 
     private static int lactusSpawnInterval = 5000;
-    private static int frucusSpawnInterval = 8000;
+    private static int fructusSpawnInterval = 8000;
+    private static int streptusSpawnInterval = 15000;
 
 
     private static long lastLactusSpawn = 0;
     private static long lastFructusSpawn = 0;
+    private static long lastStreptusSpawn = 0;
     private static long now;
 
     public static void update(PApplet app)
     {
         addLactus(app);
         addFructus(app);
+        addStreptus(app);
     }
 
     public static void addLactus(PApplet app){
@@ -44,7 +48,7 @@ public class SpawnEnemies
 
     public static void addFructus(PApplet app){
         now = System.currentTimeMillis();
-        if((now-lastFructusSpawn) > frucusSpawnInterval) {
+        if((now-lastFructusSpawn) > fructusSpawnInterval) {
             Enemy_fructus newFructus = new Enemy_fructus(app, 0, 0, 0);
 
             PVector temp = SpawnEnemies.randomEdgeLocation();
@@ -52,6 +56,19 @@ public class SpawnEnemies
 
             Engine.Enemies.add(newFructus);
             lastFructusSpawn = now;
+        }
+    }
+
+    public static void addStreptus(PApplet app){
+        now = System.currentTimeMillis();
+        if((now-lastStreptusSpawn) > streptusSpawnInterval) {
+            Enemy_streptus newStreptus = new Enemy_streptus(app, 0, 0, 0);
+
+            PVector temp = SpawnEnemies.randomEdgeLocation();
+            newStreptus.setPosition(temp);
+
+            Engine.Enemies.add(newStreptus);
+            lastStreptusSpawn = now;
         }
     }
 

@@ -1,10 +1,12 @@
 package objects;
 
-import environment.Environment;
+import engine.Engine;
 import processing.core.PApplet;
 import processing.core.PVector;
+import utility.GameConstants;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import static objects.Enemy.stateList.*;
@@ -46,26 +48,112 @@ public class Enemy_streptus extends Enemy
         state = SEEKTOOTH;
     }
 
-    public void setCurrentMode()
+    //TODO - Pls review this function
+    public void setCurrentState()
     {
+        float playerdist, toothdist;
 
+        playerdist = PVector.sub(this.position, Engine.player.position).mag();
+        toothdist = PVector.sub(this.position, Engine.tooth.tooth.position).mag();
+
+        if (followingPath)
+        {
+            if (playerdist < this.PURSUE_RADIUS)
+            {
+                followingPath = false;
+                state = ATTACKPLAYER;
+            }
+        }
+        else if(playerdist < this.PURSUE_RADIUS && playerdist < toothdist)
+        {
+            state = ATTACKPLAYER;
+        }
+        else if(toothdist <= shootingRange){
+            state = SHOOTTOOTH;
+        }
+        else
+        {
+            state = SEEKTOOTH;
+        }
     }
 
 
     public void behaviour()
     {
-        if (obstacleCollisionDetected())
+        setCurrentState();
+
+        if (followingPath && !pathFollower.reachedTarget)
+        {
+            //pathFollower.renderSearch();
+            pathFollower.followPath();
+        }
+
+        else if (followingPath)
+            followingPath = false;
+
+        else if (obstacleCollisionDetected())
             avoidObstacle();
 
         else
             defaultBehaviour();
-
     }
 
     public void defaultBehaviour()
     {
+        switch(state)
+        {
+            case SEEKTOOTH:
+                this.finalTarget = Engine.tooth.tooth;
+                Align(this.finalTarget.position);
+                Seek(this.finalTarget.position);
+                break;
 
+            case ATTACKPLAYER:
+                this.finalTarget = Engine.player;
+                Align(this.finalTarget.position);
+                Seek(this.finalTarget.position);
+                break;
+
+            case SHOOTTOOTH:
+                this.finalTarget = Engine.tooth.tooth;
+                Align(this.finalTarget.position);
+                this.stopMoving();
+                this.shoot();
+                this.updateBullets();
+                break;
+        }
     }
+
+    public void shoot()
+    {
+        bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
+    }
+
+    public void updateBullets(){
+        for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
+        {
+            Bullet b = i.next();
+            boolean bulletRemoved = false;
+
+            if(b.hasHit(Engine.tooth.tooth)){
+                Engine.tooth.tooth.takeDamage(BulletDamage);
+                i.remove();
+                bulletRemoved = true;
+            }
+            else if(b.hasHit(Engine.player)){
+                Engine.player.takeDamage(BulletDamage);
+                i.remove();
+                bulletRemoved = true;
+            }
+            else if (b.outOfBounds()) {
+                i.remove();
+                bulletRemoved = true;
+            }
+            else
+                b.update();
+        }
+    }
+
 
     public void avoidObstacle()
     {

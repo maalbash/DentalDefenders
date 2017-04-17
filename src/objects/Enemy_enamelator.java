@@ -29,6 +29,7 @@ public class Enemy_enamelator extends Enemy {
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
     }
 
+    public void setCurrentState(){}
     public void behaviour(){}
 
     public void defaultBehaviour(){}

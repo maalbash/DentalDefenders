@@ -106,50 +106,6 @@ public class Engine extends PApplet
 
     }
 
-    /*public void keyPressed()
-    {
-        //println(keyCode);
-        movePlayer(keyCode);
-    }
-
-    public void keyReleased()
-    {
-        if (!keyPressed)
-            player.stopMoving();
-    }
-
-
-    public void movePlayer(int keyCode)
-    {
-        switch (keyCode)
-        {
-            *//* LEFT*//*
-            case 37:
-                player.Align(PVector.sub(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
-                player.Seek(PVector.sub(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
-                break;
-
-            *//* UP *//*
-            case 38:
-                player.Align(PVector.sub(player.getPosition(), new PVector(0, player.getWanderRadius())));
-                player.Seek(PVector.sub(player.getPosition(), new PVector(0, player.getWanderRadius())));
-                break;
-
-            *//* RIGHT *//*
-            case 39:
-                player.Align(PVector.add(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
-                player.Seek(PVector.add(player.getPosition(), new PVector(player.getWanderRadius(), 0)));
-                break;
-
-            *//* DOWN *//*
-            case 40:
-                player.Align(PVector.add(player.getPosition(), new PVector(0, player.getWanderRadius())));
-                player.Seek(PVector.add(player.getPosition(), new PVector(0, player.getWanderRadius())));
-                break;
-        }
-    }*/
-
-
     public void mouseMoved()
     {
         player.updateTarget();

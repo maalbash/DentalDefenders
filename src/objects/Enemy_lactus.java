@@ -44,7 +44,7 @@ public class Enemy_lactus extends Enemy {
         contactDamage = LactusContactDamage;
     }
 
-    private void setCurrentState()
+    public void setCurrentState()
     {
 
         if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS && state != AVOID)
