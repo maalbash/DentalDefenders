@@ -4,28 +4,72 @@ import environment.Environment;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static objects.Enemy.stateList.*;
+
+
 /**
  * Created by ujansengupta on 3/31/17.
  */
 
-public class Enemy_streptus extends Enemy {
+@SuppressWarnings("FieldCanBeLocal")
+
+
+public class Enemy_streptus extends Enemy
+{
     private static int life = 60;
     private static PVector color = new PVector(153,0,153);
     private static int size = 20;
-    private static int PursueRadius  =50;
+    private static int PursueRadius = 50;
 
-    public Enemy_streptus(PApplet app, float posX, float posY, float orientation){
+    private static float DEFAULT_STREPTUS_SPEED = 0.5f;
+    private static float StreptusContactDamage = 15;
+    private static float shootingRange = 100;
+    public static float BulletDamage = 10;
 
-        //The rational here is that each lactus enemy will have the same colour, size and life.
-        //Since they are default values, they need not be constructor parameters.
+    private stateList state;
+    private boolean followingPath;
 
-        super (app, color, size, posX, posY, orientation, life,PursueRadius);
+    public Set<Bullet> bullets;
+
+
+    public Enemy_streptus(PApplet app, float posX, float posY, float orientation)
+    {
+        super (app, color, size, posX, posY, orientation, life, PursueRadius);
+
+        setMaxVel(DEFAULT_STREPTUS_SPEED);
+        contactDamage = StreptusContactDamage;
+        bullets = new HashSet<>();
+
+        state = SEEKTOOTH;
     }
 
-    public void behaviour(){}
+    public void setCurrentMode()
+    {
 
-    public void defaultBehaviour(){}
+    }
 
-    public void avoidObstacle(){}
+
+    public void behaviour()
+    {
+        if (obstacleCollisionDetected())
+            avoidObstacle();
+
+        else
+            defaultBehaviour();
+
+    }
+
+    public void defaultBehaviour()
+    {
+
+    }
+
+    public void avoidObstacle()
+    {
+
+    }
 
 }

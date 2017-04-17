@@ -67,7 +67,7 @@ public class Engine extends PApplet
     public void enemyBehaviour()
     {
 
-        LinkedList<Enemy> EnemiesToRemove = new LinkedList<>();
+        LinkedList<Enemy> EnemiesToRemove = new LinkedList<Enemy>();
 
         for(Enemy e : Engine.Enemies)
         {

@@ -14,21 +14,23 @@ import static objects.Enemy.stateList.SEEKTOOTH;
  * Created by ujansengupta on 3/31/17.
  */
 
+@SuppressWarnings("FieldCanBeLocal")
+
+
 public class Enemy_fructus extends Enemy
 {
 
     private static int life = 40;
     private static int size = 20;
     private static int PursueRadius = 100;
+    private static PVector color = new PVector(0,0,204);
+
+
     private static float DEFAULT_FRUCTUS_SPEED = 0.5f;
     private static float FructusContactDamage = 15;
 
     private boolean followingPath;
-
     private stateList state;
-
-    private static PVector color = new PVector(0,0,204);
-
 
     public Enemy_fructus(PApplet app, float posX, float posY, float orientation)
     {
@@ -36,7 +38,7 @@ public class Enemy_fructus extends Enemy
         //The rational here is that each fructus enemy will have the same colour, size and life.
         //Since they are default values, they need not be constructor parameters.
 
-        super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        super (app, color, size, posX, posY, orientation, life, PursueRadius);
         this.setMaxVel(DEFAULT_FRUCTUS_SPEED);
         state = SEEKTOOTH;
 
@@ -51,19 +53,29 @@ public class Enemy_fructus extends Enemy
         playerdist = PVector.sub(this.position, Engine.player.position).mag();
         toothdist = PVector.sub(this.position, Engine.tooth.tooth.position).mag();
 
-        if(playerdist < this.PURSUE_RADIUS && playerdist < toothdist)
+        if (followingPath)
         {
-            this.state = ATTACKPLAYER;
+            if (playerdist < this.PURSUE_RADIUS)
+            {
+                followingPath = false;
+                state = ATTACKPLAYER;
+            }
+        }
+        else if(playerdist < this.PURSUE_RADIUS && playerdist < toothdist)
+        {
+            state = ATTACKPLAYER;
         }
         else
         {
-            this.state = SEEKTOOTH;
+            state = SEEKTOOTH;
         }
 
     }
 
     public void behaviour()
     {
+        setCurrentMode();
+
         if (followingPath && !pathFollower.reachedTarget)
         {
             //pathFollower.renderSearch();
@@ -84,8 +96,6 @@ public class Enemy_fructus extends Enemy
     public void defaultBehaviour()
     {
         //for now, default behaviour is "SEEK TOOTH"
-
-        setCurrentMode();
 
         switch(state)
         {

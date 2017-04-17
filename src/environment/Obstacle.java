@@ -65,22 +65,22 @@ public class Obstacle
 
 
 
-    Set<PVector> getTileLocations()
+    public Set<PVector> getTileLocations()
     {
         return tileLocations;
     }
 
-    Set<Integer> getTileIndices()
+    public Set<Integer> getTileIndices()
     {
         return tileIndices;
     }
 
-    PVector getCenter()
+    public PVector getCenter()
     {
         return center;
     }
 
-    PVector getColor()
+    public PVector getColor()
     {
         return color;
     }

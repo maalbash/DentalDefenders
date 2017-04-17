@@ -1,6 +1,7 @@
 package objects;
 
 import engine.Engine;
+import environment.Environment;
 import environment.Obstacle;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -14,19 +15,27 @@ import utility.Utility;
  */
 public class Bullet
 {
+    public enum Origin
+    {
+        PLAYER, ENEMY
+    }
+
     public PShape shape;
     public PVector color;
     public PVector size;
     public PVector position;
     public PVector velocity;
     public PApplet app;
+    public Origin origin;
 
-    public Bullet(PApplet app, PVector position, float orientation, PVector size, PVector color)
+
+    public Bullet(PApplet app, PVector position, float orientation, PVector size, PVector color, Origin origin)
     {
         this.app = app;
         this.color = color;
         this.size = size;
         this.position = new PVector(position.x, position.y);
+        this.origin = origin;
 
         velocity = PVector.fromAngle(orientation);
         velocity.setMag(GameConstants.DEFAULT_BULLET_SPEED);
@@ -44,12 +53,9 @@ public class Bullet
 
     public boolean outOfBounds()
     {
-        for (Obstacle o : Engine.staticObjects)
-            if (o.contains(Utility.getGridLocation(this.position)))
-                return true;
-
-        return (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
-                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET);
+        return ((Environment.invalidNodes.contains(Utility.getGridIndex(this.position))) ||
+                (this.position.x < GameConstants.SCR_OFFSET || this.position.x > GameConstants.SCR_WIDTH - GameConstants.SCR_OFFSET ||
+                this.position.y < GameConstants.SCR_OFFSET || this.position.y > GameConstants.SCR_HEIGHT - GameConstants.SCR_OFFSET));
     }
 
     public boolean hasHit(GameObject obj){

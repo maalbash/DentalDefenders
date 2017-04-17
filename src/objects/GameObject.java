@@ -216,7 +216,8 @@ public class GameObject extends AbstractObject implements Movable
         return false;
     }
 
-    public void takeDamage(float damage){
+    public void takeDamage(float damage)
+    {
         this.life -= damage;
     }
 

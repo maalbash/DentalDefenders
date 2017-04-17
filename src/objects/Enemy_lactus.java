@@ -11,14 +11,16 @@ import static objects.Enemy.stateList.*;
  * Created by ujansengupta on 3/31/17.
  */
 
+@SuppressWarnings("FieldCanBeLocal")
+
 public class Enemy_lactus extends Enemy {
 
     private static int life = 20;
     private static PVector color = new PVector(0,179,0);
     private static int size = 20;
-    private static int PursueRadius = 200;
-    private static float LactusContactDamage = 10;
+    private static int PursueRadius = 100;
 
+    private static float LactusContactDamage = 10;
     private static float DEFAULT_LACTUS_SPEED = 0.5f;
     private static float LACTUS_ANGULAR_ACC = 0.001f;
     private static float LACTUS_ANGULAR_ROS = 1.5f;
@@ -45,11 +47,11 @@ public class Enemy_lactus extends Enemy {
     private void setCurrentState()
     {
 
-        if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS && state != AVOIDING)
+        if(PVector.sub(this.position, Engine.tooth.tooth.position).mag() < PURSUE_RADIUS && state != AVOID)
         {
             state = SEEKTOOTH;
         }
-        else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS && state != AVOIDING)
+        else if(PVector.sub(this.position, Engine.player.position).mag() < PURSUE_RADIUS && state != AVOID)
         {
             state = ATTACKPLAYER;
         }
@@ -95,7 +97,7 @@ public class Enemy_lactus extends Enemy {
 
     public void avoidObstacle()
     {
-        state = AVOIDING;
+        state = AVOID;
 
         targetRotationWander = velocity.heading() + (float) Math.PI;
         Wander();

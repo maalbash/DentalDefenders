@@ -26,10 +26,11 @@ public class Player extends GameObject
     private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
-    private static float DEFAULT_PLAYER_MAXVEL = 1f;
+    private static float DEFAULT_PLAYER_MAXVEL = 2f;
 
     public Set<Bullet> bullets;
     public int bulletCount = 0;
+    public int enemiesKilled = 0;
 
     public PVector playerTarget;
     public static float BulletDamage = 10;     //TODO - Decide how much damage, and in which class to declare this variable
@@ -47,13 +48,13 @@ public class Player extends GameObject
 
     public void shoot()
     {
-        bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color));
+        bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.PLAYER));
     }
     
     public void update()
     {
-        Arrive(playerTarget);
         Align(playerTarget);
+        Arrive(playerTarget);
 
         super.update();
 
@@ -72,6 +73,7 @@ public class Player extends GameObject
                     if(e.getLife()<=0)
                     {
                         j.remove();
+                        System.out.println(enemiesKilled++);
                     }
                     break;
                 }

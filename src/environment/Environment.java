@@ -1,5 +1,6 @@
 package environment;
 
+import engine.Engine;
 import objects.GameObject;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -22,9 +23,9 @@ public class Environment
 
     public static Graph gameGraph;
 
-    public Environment(PApplet app)
+    public Environment(PApplet theApp)
     {
-        this.app = app;
+        app = theApp;
         tileSize = GameConstants.TILE_SIZE;
         numTiles = GameConstants.NUM_TILES;
 
@@ -89,15 +90,17 @@ public class Environment
         /* Clockwise from left */
 
         /* Outer layer */
-        obstacles.add(new Obstacle(app, new PVector(0.25f * numTiles.x, 0.25f * numTiles.y), new PVector(4, 15))); //top left
-        obstacles.add(new Obstacle(app, new PVector(0.75f * numTiles.x, 0.25f * numTiles.y), new PVector(4, 15))); //top right
-        obstacles.add(new Obstacle(app, new PVector(0.25f * numTiles.x, 0.75f * numTiles.y), new PVector(4, 15))); //bot left
-        obstacles.add(new Obstacle(app, new PVector(0.75f * numTiles.x, 0.75f * numTiles.y), new PVector(4, 15))); //bot right
+        obstacles.add(new Obstacle(app, new PVector(0.3f * numTiles.x, 0.3f * numTiles.y), new PVector(4, 15))); //top left
+        obstacles.add(new Obstacle(app, new PVector(0.7f * numTiles.x, 0.3f * numTiles.y), new PVector(4, 15))); //top right
+        obstacles.add(new Obstacle(app, new PVector(0.3f * numTiles.x, 0.7f * numTiles.y), new PVector(4, 15))); //bot left
+        obstacles.add(new Obstacle(app, new PVector(0.7f * numTiles.x, 0.7f * numTiles.y), new PVector(4, 15))); //bot right
 
         /* Tooth nodes are not considered invalid */
 
         for (Obstacle obstacle : obstacles)
             invalidNodes.addAll(obstacle.getTileIndices());
+
+        invalidNodes.addAll(Engine.tooth.getTileIndices());
     }
 
     private void drawObstacles()
@@ -107,8 +110,13 @@ public class Environment
 
     private void drawInvalidNodes()
     {
+        app.rectMode(PConstants.CORNER);
+
         for (int i : invalidNodes)
             colorNode(i, new PVector(255, 0, 0), 255);
+
+        app.rectMode(PConstants.CENTER);
+
     }
 
     public static void colorNode(int index, PVector color, float alpha)

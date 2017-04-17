@@ -9,6 +9,9 @@ import processing.core.PVector;
  * Created by ujansengupta on 3/31/17.
  */
 
+@SuppressWarnings("FieldCanBeLocal")
+
+
 
 public class Enemy_enamelator extends Enemy {
 
