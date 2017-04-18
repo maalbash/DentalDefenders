@@ -17,7 +17,7 @@ public class SpawnEnemies
 
     private static int lactusSpawnInterval = 5000;
     private static int fructusSpawnInterval = 8000;
-    private static int streptusSpawnInterval = 15000;
+    private static int streptusSpawnInterval = 12000;
 
 
     private static long lastLactusSpawn = 0;

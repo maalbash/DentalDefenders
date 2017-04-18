@@ -24,7 +24,7 @@ public class Enemy_streptus extends Enemy
     private static int life = 60;
     private static PVector color = new PVector(153,0,153);
     private static int size = 20;
-    private static int PursueRadius = 50;
+    private static int PursueRadius = 200;
 
     private static float DEFAULT_STREPTUS_SPEED = 0.5f;
     private static float StreptusContactDamage = 15;
@@ -74,12 +74,14 @@ public class Enemy_streptus extends Enemy
                 state = SHOOTTOOTH;
             }
         }
-        else if(playerdist < this.PURSUE_RADIUS && playerdist < toothdist)
+        else if(playerdist < this.PURSUE_RADIUS)
         {
             state = ATTACKPLAYER;
         }
-        else if(toothdist <= shootingRange){
+        else if(toothdist <= shootingRange)
+        {
             state = SHOOTTOOTH;
+            this.stopMoving();
         }
         else
         {
@@ -121,13 +123,13 @@ public class Enemy_streptus extends Enemy
             case ATTACKPLAYER:
                 this.finalTarget = Engine.player;
                 Align(this.finalTarget.position);
-                Seek(this.finalTarget.position);
+                this.shoot();
+                this.updateBullets();
                 break;
 
             case SHOOTTOOTH:
                 this.finalTarget = Engine.tooth.tooth;
                 Align(this.finalTarget.position);
-                this.stopMoving();
                 this.shoot();
                 this.updateBullets();
                 break;

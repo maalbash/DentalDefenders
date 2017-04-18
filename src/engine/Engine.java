@@ -89,6 +89,12 @@ public class Engine extends PApplet
 
     public void draw()
     {
+        /*if (player.getLife() <= 0 || tooth.tooth.getLife() <= 0)
+        {
+            System.out.println(" You killed : " + player.enemiesKilled + " enemies");
+            return;
+        }*/
+
         background(105, 183, 219);
         environment.update();
         tooth.update();
