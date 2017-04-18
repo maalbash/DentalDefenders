@@ -77,6 +77,7 @@ public class Enemy_streptus extends Enemy
         else if(playerdist < this.PURSUE_RADIUS)
         {
             state = ATTACKPLAYER;
+            this.stopMoving();
         }
         else if(toothdist <= shootingRange)
         {

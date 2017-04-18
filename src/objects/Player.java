@@ -85,10 +85,8 @@ public class Player extends GameObject
                 break;
             }
 
-            if (b.outOfBounds()) {
+            if (b.outOfBounds())
                 i.remove();
-                bulletRemoved = true;
-            }
             else
                 b.update();
         }
