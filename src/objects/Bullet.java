@@ -28,6 +28,8 @@ public class Bullet
     public PApplet app;
     public Origin origin;
 
+    public int bodyOffset = 10;
+
 
     public Bullet(PApplet app, PVector position, float orientation, PVector size, PVector color, Origin origin)
     {
@@ -47,8 +49,8 @@ public class Bullet
 
     public void update()
     {
-        app.shape(shape, position.x, position.y);
         position.add(velocity);
+        app.shape(shape, position.x, position.y);
     }
 
     public boolean outOfBounds()

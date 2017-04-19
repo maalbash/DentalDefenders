@@ -216,6 +216,21 @@ public class GameObject extends AbstractObject implements Movable
         return false;
     }
 
+    public boolean hasLOS(PVector target)
+    {
+        PVector lightBeacon = new PVector(position.x, position.y);
+        PVector targetVelocity = PVector.sub(target, lightBeacon).normalize().mult(maxVel);
+
+        while (Utility.getGridIndex(lightBeacon) != Utility.getGridIndex(target))
+        {
+            lightBeacon.add(targetVelocity);
+            if (Environment.invalidNodes.contains(Utility.getGridIndex(lightBeacon)))
+                return false;
+        }
+
+        return true;
+    }
+
     public void takeDamage(float damage)
     {
         this.life -= damage;

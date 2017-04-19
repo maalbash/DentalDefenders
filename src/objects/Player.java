@@ -26,7 +26,7 @@ public class Player extends GameObject
     private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
-    private static float DEFAULT_PLAYER_MAXVEL = 2f;
+    private static float DEFAULT_PLAYER_MAXVEL = 1.5f;
 
     public Set<Bullet> bullets;
     public int bulletCount = 0;
@@ -72,7 +72,7 @@ public class Player extends GameObject
                     bulletRemoved = true;
                     e.takeDamage(Player.BulletDamage);
 
-                    if(e.getLife()<=0)
+                    if(e.getLife()<=0)                                  // TODO: move out of this class and put in Engine
                     {
                         j.remove();
                         System.out.println(enemiesKilled++);

@@ -102,7 +102,7 @@ public class Engine extends PApplet
 
         SpawnEnemies.update(this);
         enemyBehaviour();
-        updateEnemies();
+        //updateEnemies();              //No need for this as enemy behaviour already updates enemies
 
         /*
         System.out.println("Rotation : " + player.getRotation());

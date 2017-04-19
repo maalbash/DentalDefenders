@@ -178,8 +178,11 @@ public class Enemy_streptus extends Enemy
 
     public void avoidObstacle()
     {
-        pathFollower.findPath(getGridLocation(), Utility.getGridLocation(finalTarget.position));
-        followingPath = true;
+        if (state != ATTACKPLAYER)
+        {
+            pathFollower.findPath(getGridLocation(), Utility.getGridLocation(finalTarget.position));
+            followingPath = true;
+        }
     }
 
 }

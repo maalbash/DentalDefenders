@@ -28,7 +28,7 @@ public class PathFollower
 
     private GraphSearch search;
 
-    private int pathOffset = 3;         //Actually 4. The +1 is to account for the 0 based indexing of the path.
+    private int pathOffset = 2;         //Actually 3. The +1 is to account for the 0 based indexing of the path.
 
     public boolean reachedTarget;
 
