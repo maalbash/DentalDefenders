@@ -27,6 +27,7 @@ public class Enemy_enamelator extends Enemy {
         //Since they are default values, they need not be constructor parameters.
 
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
+        this.enemyPriority = 5;
     }
 
     public void setCurrentState(){}

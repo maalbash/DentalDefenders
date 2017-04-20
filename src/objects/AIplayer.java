@@ -122,7 +122,7 @@ public class AIplayer extends GameObject {
 
     public void setStatus(){
         //player should according to different parameters, perform an action. this method sets the state of the player.
-
+        Enemy e = getEnemyWithHighestPriority();
 
 
     }
@@ -176,28 +176,32 @@ public class AIplayer extends GameObject {
 
 
     public void defendTooth(){
-        // if not LOS, then get LOS
+        // if not LOS, then get LOS and shoot at enemy
     }
 
     public void shootingBack(){
-        // probably has LOS, but if not then get LOS
+        // probably has LOS, but if not then get LOS and shoot at enemy
     }
 
     public Enemy getEnemyWithHighestPriority() {
-        int highestPrioritySoFar = 0;
-        int currPriority = 0;
+        float highestPrioritySoFar = 0;
         Enemy enemyWithHighestPriority = null;
         for (Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); ) {
             Enemy e = j.next();
-            if(e.getClass().getSimpleName().toString().compareTo("Enemy_streptus") == 0){
-                currPriority += 3;
-                if(highestPrioritySoFar < currPriority)
-                    highestPrioritySoFar = currPriority;
-                if(e.position.dist(this.getPosition()) <= YELLOW_ZONE){
-                    currPriority += 10;
-                    if(highestPrioritySoFar < currPriority)
-                        highestPrioritySoFar = currPriority;
+            //uncomment next two line if we want to set an enemy with highest priority even when none are in the danger zone
+//            if(e.enemyPriority > highestPrioritySoFar)
+//                enemyWithHighestPriority = e;
+            if(e.position.dist(this.getPosition()) <= YELLOW_ZONE) {
+                if(e.enemyPriority < 10) {
+                    e.enemyPriority += 10;
                 }
+                if (highestPrioritySoFar < e.enemyPriority) {
+                    highestPrioritySoFar = e.enemyPriority;
+                    enemyWithHighestPriority = e;
+                }
+            }else{
+                if(e.enemyPriority > 10)
+                    e.enemyPriority -= 10;
             }
         }
         return enemyWithHighestPriority;

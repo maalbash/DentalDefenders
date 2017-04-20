@@ -29,6 +29,8 @@ public abstract class Enemy extends GameObject
 
     public float contactDamage;
 
+    public float enemyPriority;
+
     public Enemy(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life, int PursueRadius)
     {
         super (app, color, size, posX, posY, orientation, life);

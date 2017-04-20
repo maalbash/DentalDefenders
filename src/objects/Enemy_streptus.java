@@ -45,6 +45,8 @@ public class Enemy_streptus extends Enemy
     {
         super (app, color, size, posX, posY, orientation, life, PursueRadius);
 
+        this.enemyPriority = 3;
+
         setMaxVel(DEFAULT_STREPTUS_SPEED);
         contactDamage = StreptusContactDamage;
         bullets = new HashSet<>();

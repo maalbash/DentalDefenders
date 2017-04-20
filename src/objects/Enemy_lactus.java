@@ -38,6 +38,7 @@ public class Enemy_lactus extends Enemy {
         this.setMaxAngularAcc(LACTUS_ANGULAR_ACC);
         this.setAngularROS(LACTUS_ANGULAR_ROS);
         this.setAngularROD(LACTUS_ANGULAR_ROD);
+        this.enemyPriority = 1;
 
         finalTarget = Engine.tooth.tooth;
         state = WANDER;
