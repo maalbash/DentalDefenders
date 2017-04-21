@@ -5,6 +5,7 @@ package engine;
 
 import environment.Environment;
 import environment.Obstacle;
+import objects.AIplayer;
 import objects.Enemy;
 import objects.Player;
 import objects.Tooth;
@@ -21,7 +22,8 @@ import java.util.List;
 public class Engine extends PApplet
 {
 
-    public static Player player;        //Changed these 2 to static, since only one instance of each, and to provide ease of access
+    //public static Player player;        //Changed these 2 to static, since only one instance of each, and to provide ease of access
+    public static AIplayer player;
     public static Tooth tooth;
     public static Environment environment;
 
@@ -42,7 +44,8 @@ public class Engine extends PApplet
     {
         rectMode(PConstants.CENTER);
 
-        player = new Player(this);
+        //player = new Player(this);
+        player = new AIplayer(this);
         tooth = new Tooth(this);
         environment = new Environment(this);
         Enemies = new ArrayList<>();
@@ -98,20 +101,18 @@ public class Engine extends PApplet
         background(105, 183, 219);
         environment.update();
         tooth.update();
+
+        player.behaviour();
         player.update();
 
         SpawnEnemies.update(this);
         enemyBehaviour();
         //updateEnemies();              //No need for this as enemy behaviour already updates enemies
 
-        /*
-        System.out.println("Rotation : " + player.getRotation());
-        System.out.println("Orientation : " + player.getOrientation());
-        System.out.println("Angular Acc : " + player.getAngularAcc());
-        */
 
     }
 
+    /*
     public void mouseMoved()
     {
         player.updateTarget();
@@ -120,4 +121,5 @@ public class Engine extends PApplet
     {
         player.shoot();
     }
+    */
 }

@@ -98,7 +98,8 @@ public class Player extends GameObject
             playerTarget.set(app.mouseX, app.mouseY);
     }
 
-    
+
+    /*
     public boolean hasLOS(GameObject other){        //TODO- Test once player AI is implemented
         float m,c;
         PVector p1 = this.getGridLocation();
@@ -120,7 +121,14 @@ public class Player extends GameObject
 
         return true;
     }
+    */
 
+    public void takeDamage(float damage){
+        super.takeDamage(damage);
+        if(this.getLife()<=0){
+            app.noLoop();
+        }
+    }
 
 }
 

@@ -30,7 +30,8 @@ public class AIplayer extends GameObject {
         IDLE,
         AVOIDING_OBSTACLE,
         DEFENDING_TOOTH,
-        SHOOTING_BACK
+        SHOOTING_BACK,
+
     }
 
     private enum PRIORITY {
@@ -41,8 +42,14 @@ public class AIplayer extends GameObject {
     public GameObject finalTarget;
     public PathFollower pathFollower;
 
+
+    //TWEAKABLE PARAMETERS
+    public static float GREEN_ZONE,RED_ZONE;
+    public static float YELLOW_ZONE = 500;
+    private static long bulletInterval = 500;
+
+
     /* Player properties */
-    public static float GREEN_ZONE,YELLOW_ZONE,RED_ZONE;
     public static PVector color = new PVector(109, 69, 1);
     public static float size = 20;
     private static float DEFAULT_X = GameConstants.SCR_WIDTH/2 + 90;
@@ -58,7 +65,7 @@ public class AIplayer extends GameObject {
     private static float shootingOffset = 2f;
     private static Enemy enemycurrentlyHighestPriority;
     private long lastBulletTime;
-    private static long bulletInterval = 1000;
+
 
 
     public Set<Bullet> bullets;
@@ -78,6 +85,7 @@ public class AIplayer extends GameObject {
         setMaxVel(DEFAULT_PLAYER_MAXVEL);
         bullets = new HashSet<>();
         playerTarget = new PVector(DEFAULT_X, DEFAULT_Y);
+
     }
 
     public void shoot() {
@@ -97,7 +105,11 @@ public class AIplayer extends GameObject {
         Arrive(playerTarget);
 
         super.update();
+        updateBullets();
 
+    }
+
+    public void updateBullets(){
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); ) {
             Bullet b = i.next();
             boolean bulletRemoved = false;
@@ -140,12 +152,13 @@ public class AIplayer extends GameObject {
             if((float) this.getLife() / (float) DEFAULT_PLAYER_LIFE <= 0.25f)
                 currPriorityAsset = PRIORITY.PLAYER;
         }
-
+        
         enemycurrentlyHighestPriority = getEnemyWithHighestPriority();
         if(checkObstacle()){
             status = STATUS.AVOIDING_OBSTACLE;
         }else {
             if (enemycurrentlyHighestPriority == null) {
+                //System.out.println("No enemy priority :/");
                 status = STATUS.IDLE;
             }else{
                 status = STATUS.SHOOTING_BACK;
@@ -156,6 +169,7 @@ public class AIplayer extends GameObject {
     public void behaviour(){
         //depending on the current status of the player, perform a different action
         setStatus();
+        System.out.println(status);
         switch (status)
         {
             case AVOIDING_OBSTACLE:
@@ -168,7 +182,8 @@ public class AIplayer extends GameObject {
                 shootingBack();
                 break;
             case IDLE:
-                defaultPosition();
+                Wander();
+                //defaultPosition();
                 break;
 
         }
@@ -227,7 +242,8 @@ public class AIplayer extends GameObject {
             //uncomment next two line if we want to set an enemy with highest priority even when none are in the danger zone
 //            if(e.enemyPriority > highestPrioritySoFar)
 //                enemyWithHighestPriority = e;
-            if(e.position.dist(this.getPosition()) <= YELLOW_ZONE) {
+
+            if(e.position.dist(Engine.tooth.tooth.getPosition()) <= YELLOW_ZONE) {
                 if(e.enemyPriority < 10) {
                     e.enemyPriority += 10;
                 }
