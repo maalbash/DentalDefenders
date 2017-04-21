@@ -5,10 +5,7 @@ package engine;
 
 import environment.Environment;
 import environment.Obstacle;
-import objects.AIplayer;
-import objects.Enemy;
-import objects.Player;
-import objects.Tooth;
+import objects.*;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
@@ -19,11 +16,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class Engine extends PApplet
 {
 
-    //public static Player player;        //Changed these 2 to static, since only one instance of each, and to provide ease of access
-    public static AIplayer player;
+    public static AIplayer player;        //Changed these 2 to static, since only one instance of each, and to provide ease of access
+    //public static AIplayer player;
     public static Tooth tooth;
     public static Environment environment;
 
@@ -44,8 +42,8 @@ public class Engine extends PApplet
     {
         rectMode(PConstants.CENTER);
 
-        //player = new Player(this);
         player = new AIplayer(this);
+
         tooth = new Tooth(this);
         environment = new Environment(this);
         Enemies = new ArrayList<>();
@@ -102,6 +100,7 @@ public class Engine extends PApplet
         environment.update();
         tooth.update();
 
+
         player.behaviour();
         player.update();
 
@@ -111,6 +110,7 @@ public class Engine extends PApplet
 
 
     }
+
 
     /*
     public void mouseMoved()
@@ -122,4 +122,6 @@ public class Engine extends PApplet
         player.shoot();
     }
     */
+
+
 }

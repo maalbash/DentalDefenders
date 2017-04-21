@@ -45,7 +45,7 @@ public class AIplayer extends GameObject {
 
     //TWEAKABLE PARAMETERS
     public static float GREEN_ZONE,RED_ZONE;
-    public static float YELLOW_ZONE = 500;
+    public static float YELLOW_ZONE = 400;
     private static long bulletInterval = 500;
 
 
@@ -101,8 +101,8 @@ public class AIplayer extends GameObject {
 
         //updating the position and orientation of the player
 
-        Align(playerTarget);
-        Arrive(playerTarget);
+        //Align(playerTarget);
+        //Arrive(playerTarget);
 
         super.update();
         updateBullets();
@@ -152,7 +152,7 @@ public class AIplayer extends GameObject {
             if((float) this.getLife() / (float) DEFAULT_PLAYER_LIFE <= 0.25f)
                 currPriorityAsset = PRIORITY.PLAYER;
         }
-        
+
         enemycurrentlyHighestPriority = getEnemyWithHighestPriority();
         if(checkObstacle()){
             status = STATUS.AVOIDING_OBSTACLE;
@@ -173,12 +173,18 @@ public class AIplayer extends GameObject {
         switch (status)
         {
             case AVOIDING_OBSTACLE:
+                Align(playerTarget);
+                Arrive(playerTarget);
                 avoidObstacle();
                 break;
             case DEFENDING_TOOTH:
+                Align(playerTarget);
+                Arrive(playerTarget);
                 defendTooth();
                 break;
             case SHOOTING_BACK:
+                Align(playerTarget);
+                Arrive(playerTarget);
                 shootingBack();
                 break;
             case IDLE:
@@ -211,8 +217,18 @@ public class AIplayer extends GameObject {
 
     public void avoidObstacle(){
         //path follow to target
-        pathFollower.findPath(getGridLocation(), Utility.getGridLocation(playerTarget));
-        pathFollowing = true;
+        try {
+            playerTarget = enemycurrentlyHighestPriority.position;
+        }catch(NullPointerException e){
+            playerTarget = DEFAULT_POS;
+        }
+
+        try {
+            pathFollower.findPath(getGridLocation(), Utility.getGridLocation(playerTarget));
+            pathFollowing = true;
+        }catch(NullPointerException e){
+            System.out.println("Null pointer exception bro");
+        }
     }
 
 
@@ -229,7 +245,7 @@ public class AIplayer extends GameObject {
                 this.setOrientation(dir.heading());
                 shoot();
             }else{
-
+                //TODO - Add the get to LOS code here
             }
         }
     }
@@ -237,6 +253,14 @@ public class AIplayer extends GameObject {
     public Enemy getEnemyWithHighestPriority() {
         float highestPrioritySoFar = 0;
         Enemy enemyWithHighestPriority = null;
+
+        //Trying to stick to the last enemy if it's still alive and in the yellow zone
+        if(enemycurrentlyHighestPriority != null && enemycurrentlyHighestPriority.life>0
+                && enemycurrentlyHighestPriority.position.dist(Engine.tooth.tooth.position)<=YELLOW_ZONE)
+        {
+            return enemycurrentlyHighestPriority;
+        }
+
         for (Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); ) {
             Enemy e = j.next();
             //uncomment next two line if we want to set an enemy with highest priority even when none are in the danger zone
