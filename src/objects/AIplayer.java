@@ -4,6 +4,7 @@ import engine.Engine;
 import environment.Environment;
 import environment.PathFollower;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
 import utility.GameConstants;
 import utility.Utility;
@@ -53,7 +54,11 @@ public class AIplayer extends GameObject {
     private static STATUS status;
     private static PRIORITY priority;
     private static boolean pathFollowing;
-
+    private static PRIORITY currPriorityAsset;
+    private static float shootingOffset = 2f;
+    private static Enemy enemycurrentlyHighestPriority;
+    private long lastBulletTime;
+    private static long bulletInterval = 1000;
 
 
     public Set<Bullet> bullets;
@@ -64,9 +69,11 @@ public class AIplayer extends GameObject {
     public static float BulletDamage = 10;
 
 
-    public AIplayer(PApplet app, PVector color, float size, float posX, float posY, float orientation, int life) {
-        super(app, color, size, posX, posY, orientation, life);
+    public AIplayer(PApplet app) {
+        super(app, color, size, DEFAULT_X, DEFAULT_Y, DEFAULT_ORIENTATION, DEFAULT_PLAYER_LIFE);
         this.app = app;
+        status = STATUS.IDLE;
+        currPriorityAsset = PRIORITY.TOOTH;
 
         setMaxVel(DEFAULT_PLAYER_MAXVEL);
         bullets = new HashSet<>();
@@ -74,7 +81,12 @@ public class AIplayer extends GameObject {
     }
 
     public void shoot() {
-        bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.PLAYER));
+        long now = System.currentTimeMillis();
+        if(now-lastBulletTime >= bulletInterval)
+        {
+            bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
+            lastBulletTime = now;
+        }
     }
 
     public void update(){
@@ -120,11 +132,25 @@ public class AIplayer extends GameObject {
     }
 
 
-    public void setStatus(){
+    public void setStatus() {
         //player should according to different parameters, perform an action. this method sets the state of the player.
-        Enemy e = getEnemyWithHighestPriority();
+        if ((float) Engine.tooth.tooth.getLife() / (float) Engine.tooth.life <= 0.25f){
+            currPriorityAsset = PRIORITY.TOOTH;
+        }else{
+            if((float) this.getLife() / (float) DEFAULT_PLAYER_LIFE <= 0.25f)
+                currPriorityAsset = PRIORITY.PLAYER;
+        }
 
-
+        enemycurrentlyHighestPriority = getEnemyWithHighestPriority();
+        if(checkObstacle()){
+            status = STATUS.AVOIDING_OBSTACLE;
+        }else {
+            if (enemycurrentlyHighestPriority == null) {
+                status = STATUS.IDLE;
+            }else{
+                status = STATUS.SHOOTING_BACK;
+            }
+        }
     }
 
     public void behaviour(){
@@ -133,7 +159,7 @@ public class AIplayer extends GameObject {
         switch (status)
         {
             case AVOIDING_OBSTACLE:
-
+                avoidObstacle();
                 break;
             case DEFENDING_TOOTH:
                 defendTooth();
@@ -144,7 +170,6 @@ public class AIplayer extends GameObject {
             case IDLE:
                 defaultPosition();
                 break;
-            default:
 
         }
     }
@@ -156,8 +181,7 @@ public class AIplayer extends GameObject {
         update();
     }
 
-    public void updateTarget(PVector updatedTarget)
-    {
+    public void updateTarget(PVector updatedTarget) {
         // this method is called frequently to update the final target
         if (!Environment.invalidNodes.contains(Utility.getGridIndex(new PVector(updatedTarget.x, updatedTarget.y))))
             playerTarget.set(updatedTarget.x, updatedTarget.y);
@@ -165,6 +189,8 @@ public class AIplayer extends GameObject {
 
     public boolean checkObstacle(){
         // this method checks if an obstacle appears in front of the player, then delegates to avoidObstacle method if one is found.
+        if(this.velocity.mag() != 0 && obstacleCollisionDetected())
+            return true;
         return false;
     }
 
@@ -181,6 +207,16 @@ public class AIplayer extends GameObject {
 
     public void shootingBack(){
         // probably has LOS, but if not then get LOS and shoot at enemy
+        if(enemycurrentlyHighestPriority.getLife() > 0) {
+            if(hasLOS(enemycurrentlyHighestPriority.getPosition())) {
+                PVector shootingPoint = PVector.add(enemycurrentlyHighestPriority.getPosition(), PVector.mult(enemycurrentlyHighestPriority.getVelocity(), shootingOffset));
+                PVector dir = PVector.sub(shootingPoint, this.getPosition());
+                this.setOrientation(dir.heading());
+                shoot();
+            }else{
+
+            }
+        }
     }
 
     public Enemy getEnemyWithHighestPriority() {
