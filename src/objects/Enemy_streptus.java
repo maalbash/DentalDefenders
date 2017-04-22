@@ -53,6 +53,23 @@ public class Enemy_streptus extends Enemy
         state = SEEKTOOTH;
     }
 
+    public void behaviour()
+    {
+        setCurrentState();
+
+        if (followingPath && !pathFollower.reachedTarget)
+            pathFollower.followPath();
+
+        else if (followingPath)
+            followingPath = false;
+
+        else if (obstacleCollisionDetected())
+            avoidObstacle();
+
+        else
+            defaultBehaviour();
+    }
+
     //TODO - Pls review this function
     public void setCurrentState()
     {
@@ -63,7 +80,7 @@ public class Enemy_streptus extends Enemy
 
         if (followingPath)
         {
-            if (playerdist < this.PURSUE_RADIUS)
+            if (playerdist < this.PURSUE_RADIUS && hasLOS(Engine.player.getPosition()))//
             {
                 followingPath = false;
                 state = ATTACKPLAYER;
@@ -74,7 +91,7 @@ public class Enemy_streptus extends Enemy
                 state = SHOOTTOOTH;
             }
         }
-        else if(playerdist < this.PURSUE_RADIUS)
+        else if(playerdist < this.PURSUE_RADIUS && hasLOS(Engine.player.getPosition()))
         {
             state = ATTACKPLAYER;
             this.stopMoving();
@@ -88,27 +105,6 @@ public class Enemy_streptus extends Enemy
         {
             state = SEEKTOOTH;
         }
-    }
-
-
-    public void behaviour()
-    {
-        setCurrentState();
-
-        if (followingPath && !pathFollower.reachedTarget)
-        {
-            //pathFollower.renderSearch();
-            pathFollower.followPath();
-        }
-
-        else if (followingPath)
-            followingPath = false;
-
-        else if (obstacleCollisionDetected())
-            avoidObstacle();
-
-        else
-            defaultBehaviour();
     }
 
     public void defaultBehaviour()
@@ -152,23 +148,19 @@ public class Enemy_streptus extends Enemy
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); )
         {
             Bullet b = i.next();
-            boolean bulletRemoved = false;
 
             if(b.hasHit(Engine.tooth))
             {
                 Engine.tooth.tooth.takeDamage(BulletDamage);
-                System.out.println(Engine.tooth.tooth.getLife());
+                //System.out.println(Engine.tooth.tooth.getLife());
                 i.remove();
-                bulletRemoved = true;
             }
             else if(b.hasHit(Engine.player)){
                 Engine.player.takeDamage(BulletDamage);
                 i.remove();
-                bulletRemoved = true;
             }
             else if (b.outOfBounds()) {
                 i.remove();
-                bulletRemoved = true;
             }
             else
                 b.update();

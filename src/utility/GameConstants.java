@@ -34,7 +34,7 @@ public class GameConstants
     public static final float DEFAULT_linearROS = 3;
     public static final float DEFAULT_linearROD = 15;
 
-    public static final float DEFAULT_angularROS = 0.15f;
+    public static final float DEFAULT_angularROS = 0.05f;
     public static final float DEFAULT_angularROD = 3f;
 
     public static final float DEFAULT_TTTVEL = 10f;
