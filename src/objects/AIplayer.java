@@ -46,7 +46,7 @@ public class AIplayer extends GameObject {
     //TWEAKABLE PARAMETERS
     public static float GREEN_ZONE,RED_ZONE;
     public static float YELLOW_ZONE = 400;
-    private static long bulletInterval = 500;
+    private static long bulletInterval = 1000;
 
 
     /* Player properties */
@@ -286,4 +286,6 @@ public class AIplayer extends GameObject {
         }
         return enemyWithHighestPriority;
     }
+
+
 }
