@@ -39,6 +39,7 @@ public class Enemy_fructus extends Enemy
 
         super (app, color, size, posX, posY, orientation, life, PursueRadius);
         this.setMaxVel(DEFAULT_FRUCTUS_SPEED);
+        this.enemyPriority = 2;
         state = SEEKTOOTH;
 
         contactDamage = FructusContactDamage;
