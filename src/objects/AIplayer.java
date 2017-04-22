@@ -76,7 +76,8 @@ public class AIplayer extends GameObject {
     public static float BulletDamage = 10;
 
 
-    public AIplayer(PApplet app) {
+    public AIplayer(PApplet app)
+    {
         super(app, color, size, DEFAULT_X, DEFAULT_Y, DEFAULT_ORIENTATION, DEFAULT_PLAYER_LIFE);
         this.app = app;
         status = STATUS.IDLE;
@@ -144,7 +145,8 @@ public class AIplayer extends GameObject {
     }
 
 
-    public void setStatus() {
+    public void setStatus()
+    {
         //player should, according to different parameters, perform an action. this method sets the state of the player.
         if ((float) Engine.tooth.tooth.getLife() / (float) Engine.tooth.life <= 0.25f){
             currPriorityAsset = PRIORITY.TOOTH;

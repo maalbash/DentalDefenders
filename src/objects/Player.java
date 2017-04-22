@@ -98,31 +98,6 @@ public class Player extends GameObject
             playerTarget.set(app.mouseX, app.mouseY);
     }
 
-
-    /*
-    public boolean hasLOS(GameObject other){        //TODO- Test once player AI is implemented
-        float m,c;
-        PVector p1 = this.getGridLocation();
-        PVector p2 = other.getGridLocation();
-
-        m = (p2.y-p1.y)/(p2.x-p1.x);
-        c = ( (p2.y - m*p2.x) + (p1.y - m*p1.x) )/2;
-
-        Iterator<Integer> i = Environment.toothNodes.iterator();
-
-        while(i.hasNext()){
-            int nodeid = i.next();
-            PVector gridLoc = new PVector(nodeid%GameConstants.NUM_TILES.x, (int)(nodeid/GameConstants.NUM_TILES.x));
-
-            if(Math.abs((gridLoc.y - m*gridLoc.x -c))<0.5){   // <0.5, or strictly equal to zero?
-                return false;
-            }
-        }
-
-        return true;
-    }
-    */
-
     public void takeDamage(float damage){
         super.takeDamage(damage);
         if(this.getLife()<=0){
