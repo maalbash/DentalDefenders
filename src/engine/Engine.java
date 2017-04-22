@@ -108,7 +108,9 @@ public class Engine extends PApplet
         enemyBehaviour();
         //updateEnemies();              //No need for this as enemy behaviour already updates enemies
 
-
+        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
+            noLoop();
+        }
     }
 
 
