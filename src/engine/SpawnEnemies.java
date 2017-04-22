@@ -1,5 +1,6 @@
 package engine;
 
+import objects.Enemy_enamelator;
 import objects.Enemy_fructus;
 import objects.Enemy_lactus;
 import objects.Enemy_streptus;
@@ -18,11 +19,13 @@ public class SpawnEnemies
     private static int lactusSpawnInterval = 5000;
     private static int fructusSpawnInterval = 8000;
     private static int streptusSpawnInterval = 12000;
+    private static int enamelatorSpawnInterval = 15000;
 
 
     private static long lastLactusSpawn = 0;
     private static long lastFructusSpawn = 0;
     private static long lastStreptusSpawn = 0;
+    private static long lastEnamelatorSpawn = 0;
     private static long now;
 
     public static void update(PApplet app)
@@ -30,6 +33,7 @@ public class SpawnEnemies
         addLactus(app);
         addFructus(app);
         addStreptus(app);
+        addEnamelator(app);
     }
 
     public static void addLactus(PApplet app){
@@ -69,6 +73,21 @@ public class SpawnEnemies
 
             Engine.Enemies.add(newStreptus);
             lastStreptusSpawn = now;
+        }
+    }
+
+    public static void addEnamelator(PApplet app)
+    {
+        now = System.currentTimeMillis();
+        if((now-lastEnamelatorSpawn) > enamelatorSpawnInterval)
+        {
+            Enemy_enamelator newEnamelator = new Enemy_enamelator(app, 0, 0, 0);
+
+            PVector temp = SpawnEnemies.randomEdgeLocation();
+            newEnamelator.setPosition(temp);
+
+            Engine.Enemies.add(newEnamelator);
+            lastEnamelatorSpawn = now;
         }
     }
 

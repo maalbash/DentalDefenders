@@ -238,17 +238,12 @@ public class GameObject extends AbstractObject implements Movable
 
     public boolean isTouching(GameObject other)      //Checks to see if two game objects are touching each other
     {
-        if(PVector.sub(this.position, other.position).mag() < (this.size + other.size))     //All objects considered symmetrical here
-            return true;
-        else
-            return false;
+        return (PVector.sub(this.position, other.position).mag() < (this.size + other.size));     //All objects considered symmetrical here
     }
 
-    public boolean isTouching(PVector pos, int size){
-        if(PVector.sub(this.position, pos).mag() < (this.size + size))     //All objects considered symmetrical here
-            return true;
-        else
-            return false;
+    public boolean isTouching(PVector pos, int size)
+    {
+        return (PVector.sub(this.position, pos).mag() < (this.size + size));     //All objects considered symmetrical here
     }
 
 
@@ -259,7 +254,7 @@ public class GameObject extends AbstractObject implements Movable
         return new PVector((int) (position.x/GameConstants.TILE_SIZE.x), (int)(position.y/GameConstants.TILE_SIZE.y));
     }
 
-    public Integer getGridIndex()
+    public int getGridIndex()
     {
         return (int)(position.y/GameConstants.TILE_SIZE.y) * (int) GameConstants.NUM_TILES.x + (int) (position.x/GameConstants.TILE_SIZE.x);
     }

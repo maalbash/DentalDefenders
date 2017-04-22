@@ -82,7 +82,7 @@ public class Enemy_streptus extends Enemy
 
         if (followingPath)
         {
-            if (playerdist < this.PURSUE_RADIUS && hasLOS(Engine.player.getPosition()))//
+            if (playerdist < this.PURSUE_RADIUS && hasLOS(Engine.player.getPosition()))
             {
                 followingPath = false;
                 state = ATTACKPLAYER;
@@ -138,7 +138,7 @@ public class Enemy_streptus extends Enemy
     public void shoot()
     {
         long now = System.currentTimeMillis();
-        if(now-lastBulletTime >= bulletInterval)
+        if(now - lastBulletTime >= bulletInterval)
         {
             bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
             lastBulletTime = now;

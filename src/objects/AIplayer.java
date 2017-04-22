@@ -57,7 +57,7 @@ public class AIplayer extends GameObject {
     private static PVector DEFAULT_POS = new PVector(DEFAULT_X,DEFAULT_Y);
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
-    private static float DEFAULT_PLAYER_MAXVEL = 2f;
+    private static float DEFAULT_PLAYER_MAXVEL = 1f;
     private static STATUS status;
     private static PRIORITY priority;
     private static boolean pathFollowing;
@@ -172,6 +172,7 @@ public class AIplayer extends GameObject {
         //depending on the current status of the player, perform a different action
         setStatus();
         System.out.println(status);
+
         switch (status)
         {
             case AVOIDING_OBSTACLE:
