@@ -80,8 +80,8 @@ public class AIplayer extends GameObject {
         super(app, color, size, DEFAULT_X, DEFAULT_Y, DEFAULT_ORIENTATION, DEFAULT_PLAYER_LIFE);
         this.app = app;
         status = STATUS.IDLE;
-        currPriorityAsset = PRIORITY.TOOTH;
-
+        currPriorityAsset = PRIORITY.PLAYER;
+        YELLOW_ZONE = 500f;
         setMaxVel(DEFAULT_PLAYER_MAXVEL);
         bullets = new HashSet<>();
         playerTarget = new PVector(DEFAULT_X, DEFAULT_Y);
@@ -145,7 +145,7 @@ public class AIplayer extends GameObject {
 
 
     public void setStatus() {
-        //player should according to different parameters, perform an action. this method sets the state of the player.
+        //player should, according to different parameters, perform an action. this method sets the state of the player.
         if ((float) Engine.tooth.tooth.getLife() / (float) Engine.tooth.life <= 0.25f){
             currPriorityAsset = PRIORITY.TOOTH;
         }else{
@@ -173,8 +173,8 @@ public class AIplayer extends GameObject {
         switch (status)
         {
             case AVOIDING_OBSTACLE:
-                Align(playerTarget);
-                Arrive(playerTarget);
+                //Align(playerTarget);
+                //Arrive(playerTarget);
                 avoidObstacle();
                 break;
             case DEFENDING_TOOTH:
@@ -183,8 +183,8 @@ public class AIplayer extends GameObject {
                 defendTooth();
                 break;
             case SHOOTING_BACK:
-                Align(playerTarget);
-                Arrive(playerTarget);
+                //Align(playerTarget);
+                //Arrive(playerTarget);
                 shootingBack();
                 break;
             case IDLE:
@@ -226,6 +226,7 @@ public class AIplayer extends GameObject {
         try {
             pathFollower.findPath(getGridLocation(), Utility.getGridLocation(playerTarget));
             pathFollowing = true;
+            pathFollower.followPath();
         }catch(NullPointerException e){
             System.out.println("Null pointer exception bro");
         }
@@ -255,11 +256,11 @@ public class AIplayer extends GameObject {
         Enemy enemyWithHighestPriority = null;
 
         //Trying to stick to the last enemy if it's still alive and in the yellow zone
-        if(enemycurrentlyHighestPriority != null && enemycurrentlyHighestPriority.life>0
-                && enemycurrentlyHighestPriority.position.dist(Engine.tooth.tooth.position)<=YELLOW_ZONE)
-        {
-            return enemycurrentlyHighestPriority;
-        }
+//        if(enemycurrentlyHighestPriority != null && enemycurrentlyHighestPriority.life>0
+//                && enemycurrentlyHighestPriority.position.dist(Engine.tooth.tooth.position)<=YELLOW_ZONE)
+//        {
+//            return enemycurrentlyHighestPriority;
+//        }
 
         for (Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); ) {
             Enemy e = j.next();
