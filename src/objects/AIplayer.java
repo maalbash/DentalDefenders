@@ -61,7 +61,7 @@ public class AIplayer extends GameObject {
         return DEFAULT_PLAYER_LIFE;
     }
 
-    private static final int DEFAULT_PLAYER_LIFE = 100;
+    public static final int DEFAULT_PLAYER_LIFE = 100;
     private static float DEFAULT_PLAYER_MAXVEL = 1f;
     private static STATUS status;
     private static PRIORITY priority;

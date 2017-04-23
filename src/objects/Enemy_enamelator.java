@@ -31,6 +31,10 @@ public class Enemy_enamelator extends Enemy {
     private static int size = 30;
     private static int PursueRadius = 50;
 
+    public static int toothDamage = 0;
+    public static int playerDamage = 0;
+
+
     private static float DEFAULT_ENAMELATOR_SPEED = 0.4f;
     private static float EnamelatorContactDamage = 15;
     private static float shootingRange = 100;
@@ -142,11 +146,13 @@ public class Enemy_enamelator extends Enemy {
             if(b.hasHit(Engine.tooth))
             {
                 Engine.tooth.tooth.takeDamage(bulletDamage);
+                toothDamage+= bulletDamage;
                 //System.out.println(Engine.tooth.tooth.getLife());
                 i.remove();
             }
             else if(b.hasHit(Engine.player)){
                 Engine.player.takeDamage(bulletDamage);
+                playerDamage += bulletDamage;
                 i.remove();
             }
             else if (b.outOfBounds()) {
@@ -166,6 +172,8 @@ public class Enemy_enamelator extends Enemy {
             if (rocket.getGridIndex() == Engine.player.getGridIndex())
             {
                 Engine.player.takeDamage(rocketDamage);
+                playerDamage += rocketDamage;
+
                 rocket = null;
             }
             else if (rocket.pathFollower.reachedTarget)

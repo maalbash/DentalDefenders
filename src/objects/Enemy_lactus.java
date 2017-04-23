@@ -26,6 +26,9 @@ public class Enemy_lactus extends Enemy {
     private static float LACTUS_ANGULAR_ROS = 1.5f;
     private static float LACTUS_ANGULAR_ROD = 2.5f;
 
+    public static int toothDamage = 0;
+    public static int playerDamage = 0;
+
     private stateList state;
 
     public Enemy_lactus(PApplet app, float posX, float posY, float orientation){
