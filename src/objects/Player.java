@@ -98,7 +98,8 @@ public class Player extends GameObject
             playerTarget.set(app.mouseX, app.mouseY);
     }
 
-    public void takeDamage(float damage){
+    public void takeDamage(float damage)
+    {
         super.takeDamage(damage);
         if(this.getLife()<=0){
             app.noLoop();

@@ -59,8 +59,6 @@ public class Engine extends PApplet
         environment = new Environment(this);
         player = new AIplayer(this);
 
-
-
         Enemies = new ArrayList<>();
         staticObjects = new ArrayList<>();
 
@@ -76,6 +74,7 @@ public class Engine extends PApplet
         hpLastTime = player.getDefaultPlayerLife();
 
     }
+
 
     public void LogDamageByEnemyType(Enemy e){
 
@@ -106,6 +105,26 @@ public class Engine extends PApplet
             }
             else
                 Enemy_enamelator.toothDamage+= e.contactDamage;
+
+    public void draw()
+    {
+
+        timer++;
+        currentHP = player.getLife();
+        difficultyAdjustment();
+
+        background(105, 183, 219);
+
+        environment.update();
+        tooth.update();
+        player.update();
+
+        SpawnEnemies.update(this);
+        enemyBehaviour();
+
+        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
+            EndGameandLog();
+
         }
     }
 
@@ -132,34 +151,9 @@ public class Engine extends PApplet
         }
     }
 
-
-
-    public void draw()
+    public void difficultyAdjustment()
     {
-
-        timer++;
-        currentHP = player.getLife();
-        difficultyAdjustment();
-
-        background(105, 183, 219);
-        environment.update();
-        tooth.update();
-
-
-        player.behaviour();
-        player.update();
-
-        SpawnEnemies.update(this);
-        enemyBehaviour();
-
-        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
-            EndGameandLog();
-        }
-    }
-
-
-    public void difficultyAdjustment(){
-        if(timer - 0 >= 10){
+        if(timer >= 10){
             timer = 0;
             //TODO - check to see if the default hp loss value is adequate
             if(currentHP - hpLastTime >= GameConstants.DEFAULT_HP_LOSS){
@@ -168,25 +162,30 @@ public class Engine extends PApplet
         }
     }
 
-    public void EndGameandLog(){
+    public void EndGameandLog()
+    {
         long now = System.currentTimeMillis();
         LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
         logData.add(newEntry);
         newEntry.print();
 
-        if(LOGGER_MODE) {
-            if(loopCtr < maxLoop) {
+        if(LOGGER_MODE)
+        {
+            if(loopCtr < maxLoop)
+            {
                 this.settings();
                 this.setup();
                 ++loopCtr;
             }
 
-            if(loopCtr>=maxLoop){
+            if(loopCtr>=maxLoop)
+            {
                 LogRecord.printAvg();
                 noLoop();
             }
         }
-        else{
+        else
+        {
             noLoop();
         }
     }
