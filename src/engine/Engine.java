@@ -59,8 +59,6 @@ public class Engine extends PApplet
         environment = new Environment(this);
         player = new AIplayer(this);
 
-
-
         Enemies = new ArrayList<>();
         staticObjects = new ArrayList<>();
 
@@ -77,10 +75,51 @@ public class Engine extends PApplet
 
     }
 
-    public void updateEnemies()
+    public void draw()
     {
-        for (Enemy e : Engine.Enemies){
-            e.update();
+        /*if (player.getLife() <= 0 || tooth.tooth.getLife() <= 0)
+        {
+            System.out.println(" You killed : " + player.enemiesKilled + " enemies");
+            return;
+        }*/
+
+        timer++;
+        currentHP = player.getLife();
+        difficultyAdjustment();
+
+        background(105, 183, 219);
+
+        environment.update();
+        tooth.update();
+        player.update();
+
+        SpawnEnemies.update(this);
+        enemyBehaviour();
+
+        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
+
+            long now = System.currentTimeMillis();
+            LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
+            logData.add(newEntry);
+            newEntry.print();
+
+            if(LOGGER_MODE)
+            {
+                if(loopCtr < maxLoop) {
+                    this.settings();
+                    this.setup();
+                    ++loopCtr;
+                }
+
+                if(loopCtr>=maxLoop){
+                    LogRecord.printAvg();
+                    noLoop();
+                }
+            }
+            else
+                noLoop();
+
+
         }
     }
 
@@ -102,56 +141,6 @@ public class Engine extends PApplet
 
         for(Enemy e : EnemiesToRemove){
             Engine.Enemies.remove(e);
-        }
-    }
-
-
-
-    public void draw()
-    {
-        /*if (player.getLife() <= 0 || tooth.tooth.getLife() <= 0)
-        {
-            System.out.println(" You killed : " + player.enemiesKilled + " enemies");
-            return;
-        }*/
-
-        timer++;
-        currentHP = player.getLife();
-        difficultyAdjustment();
-
-        background(105, 183, 219);
-        environment.update();
-        tooth.update();
-        player.update();
-
-        SpawnEnemies.update(this);
-        enemyBehaviour();
-
-        //updateEnemies();              //No need for this as enemy behaviour already updates enemies
-
-        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
-
-            long now = System.currentTimeMillis();
-            LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
-            logData.add(newEntry);
-            newEntry.print();
-
-            if(LOGGER_MODE) {
-                if(loopCtr < maxLoop) {
-                    this.settings();
-                    this.setup();
-                    ++loopCtr;
-                }
-
-                if(loopCtr>=maxLoop){
-                    LogRecord.printAvg();
-                    noLoop();
-                }
-            }
-            else{
-                noLoop();
-            }
-
         }
     }
 

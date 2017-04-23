@@ -85,20 +85,22 @@ public class AIplayer extends GameObject {
     {
         super(app, color, size, DEFAULT_X, DEFAULT_Y, DEFAULT_ORIENTATION, DEFAULT_PLAYER_LIFE);
         this.app = app;
-        status = STATUS.IDLE;
-        currPriorityAsset = PRIORITY.PLAYER;
+
         YELLOW_ZONE = 400f;
         RED_ZONE = 200f;
+
+        status = STATUS.IDLE;
+        currPriorityAsset = PRIORITY.PLAYER;
+
         setMaxVel(DEFAULT_PLAYER_MAXVEL);
         bullets = new HashSet<>();
         playerTarget = PatrolTargets[patrolTargetIterator];
-
         pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
-
     }
 
 
-    public void shoot() {
+    public void shoot()
+    {
         long now = System.currentTimeMillis();
         if(now-lastBulletTime >= bulletInterval)
         {
@@ -107,7 +109,9 @@ public class AIplayer extends GameObject {
         }
     }
 
-    public void update(){
+    public void update()
+    {
+        behaviour();
 
         //updating the position and orientation of the player
 
@@ -116,10 +120,10 @@ public class AIplayer extends GameObject {
 
         super.update();
         updateBullets();
-
     }
 
-    public void updateBullets(){
+    public void updateBullets()
+    {
         for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); ) {
             Bullet b = i.next();
             boolean bulletRemoved = false;
@@ -142,18 +146,16 @@ public class AIplayer extends GameObject {
                 }
             }
 
-            if(bulletRemoved){
+            if(bulletRemoved)
                 break;
-            }
 
-            if (b.outOfBounds() || Environment.toothNodes.contains(Utility.getGridIndex(b.position))) {
+
+            if (b.outOfBounds() || Environment.toothNodes.contains(Utility.getGridIndex(b.position)))
                 i.remove();
-                bulletRemoved = true;
-            }
+
             else
                 b.update();
         }
-
 
     }
 
@@ -161,32 +163,43 @@ public class AIplayer extends GameObject {
     public void setStatus()
     {
         //player should, according to different parameters, perform an action. this method sets the state of the player.
-        if ((float) Engine.tooth.tooth.getLife() / (float) Engine.tooth.life <= 0.25f){
+        if ((float) Engine.tooth.tooth.getLife() / (float) Engine.tooth.life <= 0.25f)
+        {
             currPriorityAsset = PRIORITY.TOOTH;
-        }else{
+        }
+        else
+        {
             if((float) this.getLife() / (float) DEFAULT_PLAYER_LIFE <= 0.25f)
                 currPriorityAsset = PRIORITY.PLAYER;
         }
 
         enemycurrentlyHighestPriority = getEnemyWithHighestPriority();
-        if(enemycurrentlyHighestPriority != null) {
+        if(enemycurrentlyHighestPriority != null)
+        {
             app.ellipse(enemycurrentlyHighestPriority.position.x, enemycurrentlyHighestPriority.position.y, 50, 50);
             playerTarget = enemycurrentlyHighestPriority.position;
         }
 
-        if(checkObstacle()){
+        if(obstacleCollisionDetected())
+        {
             status = STATUS.AVOIDING_OBSTACLE;
-        }else {
-            if (enemycurrentlyHighestPriority == null) {
+        }
+        else
+        {
+            if (enemycurrentlyHighestPriority == null)
+            {
                 //System.out.println("No enemy priority :/");
                 status = STATUS.IDLE;
-            }else{
+            }
+            else
+            {
                 status = STATUS.SHOOTING_BACK;
             }
         }
     }
 
-    public void behaviour(){
+    public void behaviour()
+    {
         //depending on the current status of the player, perform a different action
         setStatus();
         //System.out.println(status);
@@ -194,6 +207,7 @@ public class AIplayer extends GameObject {
         if (followingPath && !pathFollower.reachedTarget)
         {
             pathFollower.followPath();
+            return;
         }
 
         else if (followingPath)
@@ -214,7 +228,6 @@ public class AIplayer extends GameObject {
                 break;
             case IDLE:
                 followingPath = false;
-                //TODO the player should patrol the tooth, but for some reason movement is not working.
                 defaultBehavior();
                 break;
 
@@ -222,7 +235,8 @@ public class AIplayer extends GameObject {
     }
 
 
-    public void defaultBehavior(){
+    public void defaultBehavior()
+    {
         //if the status is idle, return to default location.
         //System.out.println("Patrolling..");
         if(this.getPosition().dist(this.playerTarget) <= 10f) {
@@ -232,20 +246,12 @@ public class AIplayer extends GameObject {
 
             updateTarget(PatrolTargets[patrolTargetIterator]);
         }
-        update();
     }
 
     public void updateTarget(PVector updatedTarget) {
         // this method is called frequently to update the final target
         if (!Environment.invalidNodes.contains(Utility.getGridIndex(new PVector(updatedTarget.x, updatedTarget.y))))
             playerTarget.set(updatedTarget.x, updatedTarget.y);
-    }
-
-    public boolean checkObstacle(){
-        // this method checks if an obstacle appears in front of the player, then delegates to avoidObstacle method if one is found.
-        if(this.velocity.mag() != 0 && obstacleCollisionDetected())
-            return true;
-        return false;
     }
 
     public void avoidObstacle(){
@@ -258,7 +264,7 @@ public class AIplayer extends GameObject {
         }
 
         try {
-            pathFollower.findPath(getGridLocation(), Utility.getGridLocation(playerTarget));
+            pathFollower.findPath(this.getGridLocation(), Utility.getGridLocation(playerTarget));
             followingPath = true;
             pathFollower.followPath();
         }catch(NullPointerException e){
@@ -267,21 +273,28 @@ public class AIplayer extends GameObject {
     }
 
 
-    public void defendTooth(){
+    public void defendTooth()
+    {
         // if not LOS, then get LOS and shoot at enemy
     }
+
     //TODO player for some reason moves after attacking enemies.
     public void shootingBack(){
         // probably has LOS, but if not then get LOS and shoot at enemy
         this.stopMoving();
-        if(enemycurrentlyHighestPriority.getLife() > 0) {
-            if(hasLOS(enemycurrentlyHighestPriority.getPosition())) {
+        if(enemycurrentlyHighestPriority.getLife() > 0)
+        {
+            if(hasLOS(enemycurrentlyHighestPriority.getPosition()))
+            {
+
                 followingPath = false;
                 PVector shootingPoint = PVector.add(enemycurrentlyHighestPriority.getPosition(), PVector.mult(enemycurrentlyHighestPriority.getVelocity(), shootingOffset));
                 PVector dir = PVector.sub(shootingPoint, this.getPosition());
                 this.setOrientation(dir.heading());
                 shoot();
-            }else{
+            }
+            else
+            {
                 //TODO - Add the get to LOS code here
 
                 try {
@@ -296,7 +309,8 @@ public class AIplayer extends GameObject {
         }
     }
 
-    public Enemy getEnemyWithHighestPriority() {
+    public Enemy getEnemyWithHighestPriority()
+    {
         float highestPrioritySoFar = 0;
         Enemy enemyWithHighestPriority = null;
 
@@ -309,28 +323,36 @@ public class AIplayer extends GameObject {
         }
         */
 
-        for (Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); ) {
+        for (Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext();)
+        {
             Enemy e = j.next();
             //uncomment next two line if we want to set an enemy with highest priority even when none are in the danger zone
 //            if(e.enemyPriority > highestPrioritySoFar)
 //                enemyWithHighestPriority = e;
-            if(e instanceof Enemy_enamelator){
+            if(e instanceof Enemy_enamelator)
+            {
                 return e;
             }
 
-            if(e.position.dist(Engine.tooth.tooth.getPosition()) <= RED_ZONE){
+            if(e.position.dist(Engine.tooth.tooth.getPosition()) <= RED_ZONE)
+            {
                 return e;
             }
 
-            if(e.position.dist(Engine.tooth.tooth.getPosition()) <= YELLOW_ZONE) {
-                if(e.enemyPriority < 10) {
+            if(e.position.dist(Engine.tooth.tooth.getPosition()) <= YELLOW_ZONE)
+            {
+                if(e.enemyPriority < 10)
+                {
                     e.enemyPriority += 10;
                 }
-                if (highestPrioritySoFar < e.enemyPriority) {
+                if (highestPrioritySoFar < e.enemyPriority)
+                {
                     highestPrioritySoFar = e.enemyPriority;
                     enemyWithHighestPriority = e;
                 }
-            }else{
+            }
+            else
+            {
                 if(e.enemyPriority > 10)
                     e.enemyPriority -= 10;
             }
@@ -339,7 +361,8 @@ public class AIplayer extends GameObject {
     }
 
     //Overrode this method to avoid tooth collisions- may be a temporary fix
-    public boolean obstacleCollisionDetected(){
+    public boolean obstacleCollisionDetected()
+    {
         lookAheadPosition = PVector.fromAngle(velocity.heading()).mult(lookAheadDistance);
 
         lookAheadPosition.x += position.x;
