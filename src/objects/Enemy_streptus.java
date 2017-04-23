@@ -32,7 +32,8 @@ public class Enemy_streptus extends Enemy
     public static float BulletDamage = 10;
     private static long bulletInterval = 1000;
 
-
+    public static int toothDamage = 0;
+    public static int playerDamage = 0;
 
     private stateList state;
     private boolean followingPath;
@@ -153,11 +154,13 @@ public class Enemy_streptus extends Enemy
             if(b.hasHit(Engine.tooth))
             {
                 Engine.tooth.tooth.takeDamage(BulletDamage);
+                toothDamage+=BulletDamage;
                 //System.out.println(Engine.tooth.tooth.getLife());
                 i.remove();
             }
             else if(b.hasHit(Engine.player)){
                 Engine.player.takeDamage(BulletDamage);
+                playerDamage+=BulletDamage;
                 i.remove();
             }
             else if (b.outOfBounds()) {

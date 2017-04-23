@@ -31,6 +31,9 @@ public class Enemy_fructus extends Enemy
     private boolean followingPath;
     private stateList state;
 
+    public static int toothDamage = 0;
+    public static int playerDamage = 0;
+
     public Enemy_fructus(PApplet app, float posX, float posY, float orientation)
     {
 
