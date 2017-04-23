@@ -43,7 +43,6 @@ public class AIplayer extends GameObject {
 
 
     //TWEAKABLE PARAMETERS
-    public static float GREEN_ZONE;
     public static float YELLOW_ZONE,RED_ZONE;
     private static long bulletInterval = 500;
 
@@ -83,7 +82,7 @@ public class AIplayer extends GameObject {
         this.app = app;
         status = STATUS.IDLE;
         currPriorityAsset = PRIORITY.PLAYER;
-        YELLOW_ZONE = 300f;
+        YELLOW_ZONE = 400f;
         RED_ZONE = 200f;
         setMaxVel(DEFAULT_PLAYER_MAXVEL);
         bullets = new HashSet<>();
@@ -140,12 +139,17 @@ public class AIplayer extends GameObject {
                 break;
             }
 
-            if (b.outOfBounds()) {
+            if (b.outOfBounds() || Environment.toothNodes.contains(Utility.getGridIndex(b.position))) {
                 i.remove();
                 bulletRemoved = true;
             }
             else
                 b.update();
+        }
+
+        //TODO - Trial statement
+        if(this.enemycurrentlyHighestPriority == null) {
+            this.playerTarget = PatrolTargets[patrolTargetIterator];
         }
     }
 
@@ -194,25 +198,18 @@ public class AIplayer extends GameObject {
         switch (status)
         {
             case AVOIDING_OBSTACLE:
-                //Align(playerTarget);
-                //Arrive(playerTarget);
                 avoidObstacle();
                 break;
             case DEFENDING_TOOTH:
                 followingPath = false;
-                //Align(playerTarget);
-                //Arrive(playerTarget);
                 defendTooth();
                 break;
             case SHOOTING_BACK:
                 followingPath = false;
-                //Align(playerTarget);
-                //Arrive(playerTarget);
                 shootingBack();
                 break;
             case IDLE:
                 followingPath = false;
-                //Wander();
                 //TODO the player should patrol the tooth, but for some reason movement is not working.
                 defaultBehavior();
                 break;
@@ -256,7 +253,6 @@ public class AIplayer extends GameObject {
             System.out.println("enemy is null");
         }
 
-        //TODO - I have absolutely no idea why this still throws an exception - Kinshuk
         try {
             pathFollower.findPath(getGridLocation(), Utility.getGridLocation(playerTarget));
             followingPath = true;
@@ -270,7 +266,7 @@ public class AIplayer extends GameObject {
     public void defendTooth(){
         // if not LOS, then get LOS and shoot at enemy
     }
-    //TODO player for some reason moves while attacking enemies.
+    //TODO player for some reason moves after attacking enemies.
     public void shootingBack(){
         // probably has LOS, but if not then get LOS and shoot at enemy
         this.stopMoving();
