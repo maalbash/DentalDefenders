@@ -129,7 +129,9 @@ public class AIplayer extends GameObject {
 
                     if(e.getLife()<=0)
                     {
+                        enemiesKilled++;
                         j.remove();
+                        this.playerTarget = PatrolTargets[patrolTargetIterator];
                     }
                     break;
                 }
@@ -147,10 +149,7 @@ public class AIplayer extends GameObject {
                 b.update();
         }
 
-        //TODO - Trial statement
-        if(this.enemycurrentlyHighestPriority == null) {
-            this.playerTarget = PatrolTargets[patrolTargetIterator];
-        }
+
     }
 
 
@@ -185,7 +184,7 @@ public class AIplayer extends GameObject {
     public void behaviour(){
         //depending on the current status of the player, perform a different action
         setStatus();
-        System.out.println(status);
+        //System.out.println(status);
 
         if (followingPath && !pathFollower.reachedTarget)
         {
@@ -220,11 +219,11 @@ public class AIplayer extends GameObject {
 
     public void defaultBehavior(){
         //if the status is idle, return to default location.
-        System.out.println("Patrolling..");
+        //System.out.println("Patrolling..");
         if(this.getPosition().dist(this.playerTarget) <= 10f) {
 
             patrolTargetIterator = (patrolTargetIterator + 1) % 4;
-            System.out.print("Next Target ");
+            //System.out.print("Next Target ");
 
             updateTarget(PatrolTargets[patrolTargetIterator]);
         }
@@ -249,8 +248,8 @@ public class AIplayer extends GameObject {
         try {
             updateTarget(enemycurrentlyHighestPriority.position);
         }catch(NullPointerException e){
-            //updateTarget(DEFAULT_POS);
-            System.out.println("enemy is null");
+            updateTarget(PatrolTargets[patrolTargetIterator]);
+            //System.out.println("enemy is null");
         }
 
         try {
