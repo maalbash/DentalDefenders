@@ -17,6 +17,8 @@ public class Obstacle
     protected static int cornerRadius = 20;
     private Set<PVector> tileLocations;
     private Set<Integer> tileIndices;
+
+    private Set<Integer> tilesWithoutpadding;
     private static PVector tileSize = GameConstants.TILE_SIZE;
 
     public PVector color;
@@ -40,6 +42,7 @@ public class Obstacle
 
         tileLocations = new HashSet<>();                                                  // The set containing tile locations as PVectors
         tileIndices = new HashSet<>();                                                    // The set containing tile locations as integer indices
+        tilesWithoutpadding = new HashSet<>();
 
         for (int i = (int) (this.center.y - size.y/2); i < Math.ceil (this.center.y + size.y/2); i++)
         {
@@ -47,6 +50,12 @@ public class Obstacle
             {
                 tileLocations.add(new PVector(j,i));
                 tileIndices.add(i * (int) GameConstants.NUM_TILES.y + j);
+            }
+        }
+
+        for (int i = (int) (this.center.y - size.y/2)+1; i < Math.ceil (this.center.y + size.y/2)-1; i++) {
+            for (int j = (int) (this.center.x - size.x / 2)+1; j < Math.ceil(this.center.x + size.x / 2)-1; j++) {
+                tilesWithoutpadding.add(i *(int) GameConstants.NUM_TILES.y + j);
             }
         }
     }
@@ -83,5 +92,9 @@ public class Obstacle
     public PVector getColor()
     {
         return color;
+    }
+
+    public Set<Integer> getTilesWithoutpadding() {
+        return tilesWithoutpadding;
     }
 }

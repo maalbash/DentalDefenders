@@ -56,6 +56,11 @@ public class AIplayer extends GameObject {
     private int patrolTargetIterator = 1;
     private static PVector[] PatrolTargets = {new PVector(DEFAULT_X,DEFAULT_Y), new PVector(GameConstants.SCR_WIDTH/2 + 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90, GameConstants.SCR_HEIGHT/2 + 90)};
     private static float DEFAULT_ORIENTATION = 0;
+
+    public static int getDefaultPlayerLife() {
+        return DEFAULT_PLAYER_LIFE;
+    }
+
     private static final int DEFAULT_PLAYER_LIFE = 100;
     private static float DEFAULT_PLAYER_MAXVEL = 1f;
     private static STATUS status;

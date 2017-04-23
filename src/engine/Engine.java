@@ -36,6 +36,9 @@ public class Engine extends PApplet
     public static List<Obstacle> staticObjects;
     public static List<Enemy>  Enemies;
 
+    public static long timer;
+    public static float currentHP, hpLastTime;
+
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
     }
@@ -67,6 +70,10 @@ public class Engine extends PApplet
             staticObjects.add(o);
 
         frameRate(60);
+
+        timer = 0;
+        currentHP = player.getDefaultPlayerLife();
+        hpLastTime = player.getDefaultPlayerLife();
 
     }
 
@@ -108,6 +115,10 @@ public class Engine extends PApplet
             return;
         }*/
 
+        timer++;
+        currentHP = player.getLife();
+        difficultyAdjustment();
+
         background(105, 183, 219);
         environment.update();
         tooth.update();
@@ -146,6 +157,16 @@ public class Engine extends PApplet
         }
     }
 
+
+    public void difficultyAdjustment(){
+        if(timer - 0 >= 10){
+            timer = 0;
+            //TODO - check to see if the default hp loss value is adequate
+            if(currentHP - hpLastTime >= GameConstants.DEFAULT_HP_LOSS){
+                //TODO - give the player more HP, or increase the damage of its bullets
+            }
+        }
+    }
 
     /*
     public void mouseMoved()

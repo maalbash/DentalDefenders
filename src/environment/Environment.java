@@ -18,6 +18,7 @@ public class Environment
 
     public static List<Obstacle> obstacles;
     public static Set<Integer> invalidNodes;
+    public static Set<Integer> bulletInvalidNodes;
     public static Set<Integer> toothNodes;
     public static PVector tileSize;
     public static PVector numTiles;
@@ -33,6 +34,7 @@ public class Environment
         invalidNodes = new HashSet<>();
         toothNodes = new HashSet<>();
         obstacles = new ArrayList<>();
+        bulletInvalidNodes = new HashSet<>();
 
         createObstacles();
         toothNodes.addAll(Engine.tooth.getTileIndices());
@@ -100,9 +102,10 @@ public class Environment
 
         /* Tooth nodes are not considered invalid */
 
-        for (Obstacle obstacle : obstacles)
+        for (Obstacle obstacle : obstacles) {
             invalidNodes.addAll(obstacle.getTileIndices());
-
+            bulletInvalidNodes.addAll(obstacle.getTilesWithoutpadding());
+        }
     }
 
     private void drawObstacles()
