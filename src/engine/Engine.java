@@ -76,35 +76,30 @@ public class Engine extends PApplet
     }
 
 
-    public void LogDamageByEnemyType(Enemy e){
+    public void LogDamageByEnemyType(Enemy e) {
 
-        if(e instanceof Enemy_streptus){
-            if(e.getFinalTarget() instanceof AIplayer){
-                Enemy_streptus.playerDamage+= e.contactDamage;
-            }
-            else
-                Enemy_streptus.toothDamage+= e.contactDamage;
+        if (e instanceof Enemy_streptus) {
+            if (e.getFinalTarget() instanceof AIplayer) {
+                Enemy_streptus.playerDamage += e.contactDamage;
+            } else
+                Enemy_streptus.toothDamage += e.contactDamage;
+        } else if (e instanceof Enemy_lactus) {
+            if (e.getFinalTarget() instanceof AIplayer) {
+                Enemy_lactus.playerDamage += e.contactDamage;
+            } else
+                Enemy_lactus.toothDamage += e.contactDamage;
+        } else if (e instanceof Enemy_fructus) {
+            if (e.getFinalTarget() instanceof AIplayer) {
+                Enemy_fructus.playerDamage += e.contactDamage;
+            } else
+                Enemy_fructus.toothDamage += e.contactDamage;
+        } else if (e instanceof Enemy_enamelator) {
+            if (e.getFinalTarget() instanceof AIplayer) {
+                Enemy_enamelator.playerDamage += e.contactDamage;
+            } else
+                Enemy_enamelator.toothDamage += e.contactDamage;
         }
-        else if(e instanceof Enemy_lactus){
-            if(e.getFinalTarget() instanceof AIplayer){
-                Enemy_lactus.playerDamage+= e.contactDamage;
-            }
-            else
-                Enemy_lactus.toothDamage+= e.contactDamage;
-        }
-        else if(e instanceof Enemy_fructus){
-            if(e.getFinalTarget() instanceof AIplayer){
-                Enemy_fructus.playerDamage+= e.contactDamage;
-            }
-            else
-                Enemy_fructus.toothDamage+= e.contactDamage;
-        }
-        else if(e instanceof Enemy_enamelator){
-            if(e.getFinalTarget() instanceof AIplayer){
-                Enemy_enamelator.playerDamage+= e.contactDamage;
-            }
-            else
-                Enemy_enamelator.toothDamage+= e.contactDamage;
+    }
 
     public void draw()
     {
