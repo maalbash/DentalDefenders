@@ -25,6 +25,7 @@ public class AIplayer extends GameObject {
 
     private PApplet app;
 
+    //TODO remove debugging prints
 
     private enum STATUS {
         IDLE,
@@ -44,7 +45,7 @@ public class AIplayer extends GameObject {
     //TWEAKABLE PARAMETERS
     public static float GREEN_ZONE;
     public static float YELLOW_ZONE,RED_ZONE;
-    private static long bulletInterval = 1000;
+    private static long bulletInterval = 500;
 
 
     /* Player properties */
@@ -53,6 +54,8 @@ public class AIplayer extends GameObject {
     private static float DEFAULT_X = GameConstants.SCR_WIDTH/2 + 90;
     private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
     private static PVector DEFAULT_POS = new PVector(DEFAULT_X,DEFAULT_Y);
+    private int patrolTargetIterator = 3;
+    private static PVector[] PatrolTargets = {new PVector(DEFAULT_X,DEFAULT_Y), new PVector(GameConstants.SCR_WIDTH/2 + 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90, GameConstants.SCR_HEIGHT/2 + 90)};
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
     private static float DEFAULT_PLAYER_MAXVEL = 1f;
@@ -104,8 +107,8 @@ public class AIplayer extends GameObject {
 
         //updating the position and orientation of the player
 
-        //Align(playerTarget);
-        //Arrive(playerTarget);
+        Align(playerTarget);
+        Arrive(playerTarget);
 
         super.update();
         updateBullets();
@@ -162,8 +165,6 @@ public class AIplayer extends GameObject {
             app.ellipse(enemycurrentlyHighestPriority.position.x, enemycurrentlyHighestPriority.position.y, 50, 50);
             playerTarget = enemycurrentlyHighestPriority.position;
         }
-        else
-            playerTarget = DEFAULT_POS;
 
         if(checkObstacle()){
             status = STATUS.AVOIDING_OBSTACLE;
@@ -193,35 +194,42 @@ public class AIplayer extends GameObject {
         switch (status)
         {
             case AVOIDING_OBSTACLE:
-                Align(playerTarget);
+                //Align(playerTarget);
                 //Arrive(playerTarget);
                 avoidObstacle();
                 break;
             case DEFENDING_TOOTH:
                 followingPath = false;
-                Align(playerTarget);
-                Arrive(playerTarget);
+                //Align(playerTarget);
+                //Arrive(playerTarget);
                 defendTooth();
                 break;
             case SHOOTING_BACK:
                 followingPath = false;
-                Align(playerTarget);
+                //Align(playerTarget);
                 //Arrive(playerTarget);
                 shootingBack();
                 break;
             case IDLE:
                 followingPath = false;
-                Wander();
-                //defaultPosition();
+                //Wander();
+                //TODO the player should patrol the tooth, but for some reason movement is not working.
+                defaultBehavior();
                 break;
 
         }
     }
 
 
-    public void defaultPosition(){
+    public void defaultBehavior(){
         //if the status is idle, return to default location.
-        updateTarget(DEFAULT_POS);
+        System.out.println("Patrolling..");
+        if(this.getPosition().dist(PatrolTargets[patrolTargetIterator]) <= 0.1f) {
+            patrolTargetIterator = (patrolTargetIterator + 1) % 4;
+            System.out.print("Next Target ");
+
+            updateTarget(PatrolTargets[patrolTargetIterator]);
+        }
         update();
     }
 
@@ -243,7 +251,8 @@ public class AIplayer extends GameObject {
         try {
             updateTarget(enemycurrentlyHighestPriority.position);
         }catch(NullPointerException e){
-            updateTarget(DEFAULT_POS);
+            //updateTarget(DEFAULT_POS);
+            System.out.println("enemy is null");
         }
 
         //TODO - I have absolutely no idea why this still throws an exception - Kinshuk
@@ -260,7 +269,7 @@ public class AIplayer extends GameObject {
     public void defendTooth(){
         // if not LOS, then get LOS and shoot at enemy
     }
-
+    //TODO player for some reason moves while attacking enemies.
     public void shootingBack(){
         // probably has LOS, but if not then get LOS and shoot at enemy
         this.stopMoving();
@@ -302,7 +311,9 @@ public class AIplayer extends GameObject {
             //uncomment next two line if we want to set an enemy with highest priority even when none are in the danger zone
 //            if(e.enemyPriority > highestPrioritySoFar)
 //                enemyWithHighestPriority = e;
-
+            if(e.getClass().getSimpleName().toString().compareTo("Enemy_enemelator") == 0){
+                return e;
+            }
             if(e.position.dist(Engine.tooth.tooth.getPosition()) <= YELLOW_ZONE) {
                 if(e.enemyPriority < 10) {
                     e.enemyPriority += 10;
@@ -332,6 +343,7 @@ public class AIplayer extends GameObject {
 
         return false;
     }
+
 
 
 }
