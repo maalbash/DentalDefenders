@@ -13,9 +13,9 @@ import static java.lang.Math.random;
 public class SpawnEnemies
 {
 
-    private static int lactusSpawnInterval = 5000;
-    private static int fructusSpawnInterval = 8000;
-    private static int streptusSpawnInterval = 12000;
+    private static int lactusSpawnInterval = 2000;
+    private static int fructusSpawnInterval = 5000;
+    private static int streptusSpawnInterval = 7000;
     private static int enamelatorSpawnInterval = 15000;
 
     private static int MaxLactus = 7;
@@ -59,10 +59,12 @@ public class SpawnEnemies
             addLactus(app);
         if(FructusCount < MaxFructus)
             addFructus(app);
+        /*
         if(StreptusCount < MaxStreptus)
             addStreptus(app);
         if(EnamelatorCount < MaxEnamelator)
             addEnamelator(app);
+            */
     }
 
     public static void addLactus(PApplet app){

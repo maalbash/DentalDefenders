@@ -45,7 +45,7 @@ public class Environment
     public void update()
     {
         //drawGraph();
-        //drawInvalidNodes();
+        drawInvalidNodes();
 
         drawObstacles();
     }
