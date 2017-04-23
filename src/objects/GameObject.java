@@ -226,6 +226,8 @@ public class GameObject extends AbstractObject implements Movable
             lightBeacon.add(targetVelocity);
             if (Environment.invalidNodes.contains(Utility.getGridIndex(lightBeacon)))
                 return false;
+            if (Environment.toothNodes.contains(Utility.getGridIndex(lightBeacon)))
+                return false;
         }
 
         return true;

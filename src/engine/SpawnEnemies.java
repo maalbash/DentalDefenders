@@ -59,12 +59,12 @@ public class SpawnEnemies
             addLactus(app);
         if(FructusCount < MaxFructus)
             addFructus(app);
-        /*
+
         if(StreptusCount < MaxStreptus)
             addStreptus(app);
         if(EnamelatorCount < MaxEnamelator)
             addEnamelator(app);
-            */
+
     }
 
     public static void addLactus(PApplet app){

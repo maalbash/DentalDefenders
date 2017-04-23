@@ -54,7 +54,7 @@ public class AIplayer extends GameObject {
     private static float DEFAULT_X = GameConstants.SCR_WIDTH/2 + 90;
     private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
     private static PVector DEFAULT_POS = new PVector(DEFAULT_X,DEFAULT_Y);
-    private int patrolTargetIterator = 3;
+    private int patrolTargetIterator = 1;
     private static PVector[] PatrolTargets = {new PVector(DEFAULT_X,DEFAULT_Y), new PVector(GameConstants.SCR_WIDTH/2 + 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90, GameConstants.SCR_HEIGHT/2 + 90)};
     private static float DEFAULT_ORIENTATION = 0;
     private static final int DEFAULT_PLAYER_LIFE = 100;
@@ -87,7 +87,7 @@ public class AIplayer extends GameObject {
         RED_ZONE = 200f;
         setMaxVel(DEFAULT_PLAYER_MAXVEL);
         bullets = new HashSet<>();
-        playerTarget = new PVector(DEFAULT_X, DEFAULT_Y);
+        playerTarget = PatrolTargets[patrolTargetIterator];
 
         pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
 
@@ -224,7 +224,8 @@ public class AIplayer extends GameObject {
     public void defaultBehavior(){
         //if the status is idle, return to default location.
         System.out.println("Patrolling..");
-        if(this.getPosition().dist(PatrolTargets[patrolTargetIterator]) <= 0.1f) {
+        if(this.getPosition().dist(this.playerTarget) <= 10f) {
+
             patrolTargetIterator = (patrolTargetIterator + 1) % 4;
             System.out.print("Next Target ");
 
@@ -282,13 +283,15 @@ public class AIplayer extends GameObject {
                 shoot();
             }else{
                 //TODO - Add the get to LOS code here
-                System.out.println(getGridLocation());
-                System.out.println(enemycurrentlyHighestPriority.getGridLocation());
-                /*
-                pathFollower.findPath(getGridLocation(), Utility.getGridLocation(enemycurrentlyHighestPriority.position));
-                followingPath = true;
-                pathFollower.followPath();
-                */
+
+                try {
+                    pathFollower.findPath(getGridLocation(), Utility.getGridLocation(enemycurrentlyHighestPriority.position));
+                    //followingPath = true;
+                    //pathFollower.followPath();
+                }catch(NullPointerException e){
+                    System.out.println("Null in moving to LOS");
+                }
+
             }
         }
     }
@@ -311,9 +314,14 @@ public class AIplayer extends GameObject {
             //uncomment next two line if we want to set an enemy with highest priority even when none are in the danger zone
 //            if(e.enemyPriority > highestPrioritySoFar)
 //                enemyWithHighestPriority = e;
-            if(e.getClass().getSimpleName().toString().compareTo("Enemy_enemelator") == 0){
+            if(e instanceof Enemy_enamelator){
                 return e;
             }
+
+            if(e.position.dist(Engine.tooth.tooth.getPosition()) <= RED_ZONE){
+                return e;
+            }
+
             if(e.position.dist(Engine.tooth.tooth.getPosition()) <= YELLOW_ZONE) {
                 if(e.enemyPriority < 10) {
                     e.enemyPriority += 10;
