@@ -75,30 +75,6 @@ public class Engine extends PApplet
 
     }
 
-
-    public void enemyBehaviour()
-    {
-
-        LinkedList<Enemy> EnemiesToRemove = new LinkedList<>();
-
-        for(Enemy e : Engine.Enemies)
-        {
-            e.behaviour();
-            e.update();
-            if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition()))  //Checks if enemy has touched player/tooth
-            {
-                EnemiesToRemove.add(e);
-                e.getFinalTarget().takeDamage(e.contactDamage);
-            }
-        }
-
-        for(Enemy e : EnemiesToRemove){
-            Engine.Enemies.remove(e);
-        }
-    }
-
-
-
     public void draw()
     {
 
@@ -121,8 +97,30 @@ public class Engine extends PApplet
     }
 
 
-    public void difficultyAdjustment(){
-        if(timer - 0 >= 10){
+    public void enemyBehaviour()
+    {
+
+        LinkedList<Enemy> EnemiesToRemove = new LinkedList<>();
+
+        for(Enemy e : Engine.Enemies)
+        {
+            e.behaviour();
+            e.update();
+            if(Utility.checkTargetReached(e,e.getFinalTarget().getPosition()))  //Checks if enemy has touched player/tooth
+            {
+                EnemiesToRemove.add(e);
+                e.getFinalTarget().takeDamage(e.contactDamage);
+            }
+        }
+
+        for(Enemy e : EnemiesToRemove){
+            Engine.Enemies.remove(e);
+        }
+    }
+
+    public void difficultyAdjustment()
+    {
+        if(timer >= 10){
             timer = 0;
             //TODO - check to see if the default hp loss value is adequate
             if(currentHP - hpLastTime >= GameConstants.DEFAULT_HP_LOSS){
@@ -131,25 +129,30 @@ public class Engine extends PApplet
         }
     }
 
-    public void EndGameandLog(){
+    public void EndGameandLog()
+    {
         long now = System.currentTimeMillis();
         LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
         logData.add(newEntry);
         newEntry.print();
 
-        if(LOGGER_MODE) {
-            if(loopCtr < maxLoop) {
+        if(LOGGER_MODE)
+        {
+            if(loopCtr < maxLoop)
+            {
                 this.settings();
                 this.setup();
                 ++loopCtr;
             }
 
-            if(loopCtr>=maxLoop){
+            if(loopCtr>=maxLoop)
+            {
                 LogRecord.printAvg();
                 noLoop();
             }
         }
-        else{
+        else
+        {
             noLoop();
         }
     }

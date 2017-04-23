@@ -97,17 +97,6 @@ public class AIplayer extends GameObject {
 
     }
 
-
-    public void shoot()
-    {
-        long now = System.currentTimeMillis();
-        if(now-lastBulletTime >= bulletInterval)
-        {
-            bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
-            lastBulletTime = now;
-        }
-    }
-
     public void update()
     {
         behaviour();
@@ -119,46 +108,7 @@ public class AIplayer extends GameObject {
 
         super.update();
         updateBullets();
-
     }
-
-    public void updateBullets()
-    {
-        for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); ) {
-            Bullet b = i.next();
-            boolean bulletRemoved = false;
-
-            for(Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); ){
-                Enemy e = j.next();
-                if(b.hasHit(e))
-                {
-                    i.remove();
-                    bulletRemoved = true;
-                    e.takeDamage(AIplayer.BulletDamage);
-
-                    if(e.getLife()<=0)
-                    {
-                        enemiesKilled++;
-                        j.remove();
-                        this.playerTarget = PatrolTargets[patrolTargetIterator];
-                    }
-                    break;
-                }
-            }
-
-            if(bulletRemoved)
-                break;
-
-
-            if (b.outOfBounds() || Environment.toothNodes.contains(Utility.getGridIndex(b.position)))
-                i.remove();
-
-            else
-                b.update();
-        }
-
-    }
-
 
     public void setStatus()
     {
@@ -207,7 +157,6 @@ public class AIplayer extends GameObject {
         if (followingPath && !pathFollower.reachedTarget)
         {
             pathFollower.followPath();
-            return;
         }
 
         else if (followingPath)
@@ -228,7 +177,6 @@ public class AIplayer extends GameObject {
                 break;
             case IDLE:
                 followingPath = false;
-                //TODO the player should patrol the tooth, but for some reason movement is not working.
                 defaultBehavior();
                 break;
 
@@ -240,8 +188,8 @@ public class AIplayer extends GameObject {
     {
         //if the status is idle, return to default location.
         //System.out.println("Patrolling..");
-        if(this.getPosition().dist(this.playerTarget) <= 10f) {
-
+        if(this.getPosition().dist(this.playerTarget) <= 10f)
+        {
             patrolTargetIterator = (patrolTargetIterator + 1) % 4;
             //System.out.print("Next Target ");
 
@@ -249,7 +197,10 @@ public class AIplayer extends GameObject {
         }
     }
 
-    public void updateTarget(PVector updatedTarget) {
+
+
+    public void updateTarget(PVector updatedTarget)
+    {
         // this method is called frequently to update the final target
         if (!Environment.invalidNodes.contains(Utility.getGridIndex(new PVector(updatedTarget.x, updatedTarget.y))))
             playerTarget.set(updatedTarget.x, updatedTarget.y);
@@ -279,14 +230,14 @@ public class AIplayer extends GameObject {
         // if not LOS, then get LOS and shoot at enemy
     }
 
-    public void shootingBack(){
+    public void shootingBack()
+    {
         // probably has LOS, but if not then get LOS and shoot at enemy
         this.stopMoving();
         if(enemycurrentlyHighestPriority.getLife() > 0)
         {
             if(hasLOS(enemycurrentlyHighestPriority.getPosition()))
             {
-
                 followingPath = false;
                 PVector shootingPoint = PVector.add(enemycurrentlyHighestPriority.getPosition(), PVector.mult(enemycurrentlyHighestPriority.getVelocity(), shootingOffset));
                 PVector dir = PVector.sub(shootingPoint, this.getPosition());
@@ -295,7 +246,6 @@ public class AIplayer extends GameObject {
             }
             else
             {
-
                 try {
                     this.pathFollower.findPath(getGridLocation(), Utility.getGridLocation(enemycurrentlyHighestPriority.position));
                     followingPath = true;
@@ -376,6 +326,55 @@ public class AIplayer extends GameObject {
 
         return false;
     }
+
+    public void shoot()
+    {
+        long now = System.currentTimeMillis();
+        if(now-lastBulletTime >= bulletInterval)
+        {
+            bullets.add(new Bullet(app, getPosition(), getOrientation(), GameConstants.DEFAULT_BULLET_SIZE, color, Bullet.Origin.ENEMY));
+            lastBulletTime = now;
+        }
+    }
+
+
+    public void updateBullets()
+    {
+        for (Iterator<Bullet> i = bullets.iterator(); i.hasNext(); ) {
+            Bullet b = i.next();
+            boolean bulletRemoved = false;
+
+            for(Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext(); ){
+                Enemy e = j.next();
+                if(b.hasHit(e))
+                {
+                    i.remove();
+                    bulletRemoved = true;
+                    e.takeDamage(AIplayer.BulletDamage);
+
+                    if(e.getLife()<=0)
+                    {
+                        enemiesKilled++;
+                        j.remove();
+                        this.playerTarget = PatrolTargets[patrolTargetIterator];
+                    }
+                    break;
+                }
+            }
+
+            if(bulletRemoved)
+                break;
+
+
+            if (b.outOfBounds() || Environment.toothNodes.contains(Utility.getGridIndex(b.position)))
+                i.remove();
+
+            else
+                b.update();
+        }
+
+    }
+
 
 
 
