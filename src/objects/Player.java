@@ -33,7 +33,7 @@ public class Player extends GameObject
     public int enemiesKilled = 0;
 
     public PVector playerTarget;
-    public static float BulletDamage = 10;     //TODO - Decide how much damage, and in which class to declare this variable
+    public static float BulletDamage = 10;
 
 
     public Player(PApplet app)

@@ -94,6 +94,7 @@ public class AIplayer extends GameObject {
         playerTarget = PatrolTargets[patrolTargetIterator];
 
         pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
+        enemycurrentlyHighestPriority = null;
 
     }
 
@@ -270,7 +271,7 @@ public class AIplayer extends GameObject {
     public void defendTooth(){
         // if not LOS, then get LOS and shoot at enemy
     }
-    //TODO player for some reason moves after attacking enemies.
+
     public void shootingBack(){
         // probably has LOS, but if not then get LOS and shoot at enemy
         this.stopMoving();
@@ -282,7 +283,6 @@ public class AIplayer extends GameObject {
                 this.setOrientation(dir.heading());
                 shoot();
             }else{
-                //TODO - Add the get to LOS code here
 
                 try {
                     this.pathFollower.findPath(getGridLocation(), Utility.getGridLocation(enemycurrentlyHighestPriority.position));
@@ -302,6 +302,9 @@ public class AIplayer extends GameObject {
 
         //Trying to stick to the last enemy if it's still alive and in the yellow zone
         /*
+        if(enemyWithHighestPriority instanceof Enemy_enamelator && enemycurrentlyHighestPriority.life >0)
+            return enemycurrentlyHighestPriority;
+
         if(enemycurrentlyHighestPriority != null && enemycurrentlyHighestPriority.life>0
                 && enemycurrentlyHighestPriority.position.dist(Engine.tooth.tooth.position)<=YELLOW_ZONE)
         {

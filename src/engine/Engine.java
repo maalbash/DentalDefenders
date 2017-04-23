@@ -77,12 +77,6 @@ public class Engine extends PApplet
 
     }
 
-    public void updateEnemies()
-    {
-        for (Enemy e : Engine.Enemies){
-            e.update();
-        }
-    }
 
     public void enemyBehaviour()
     {
@@ -109,11 +103,6 @@ public class Engine extends PApplet
 
     public void draw()
     {
-        /*if (player.getLife() <= 0 || tooth.tooth.getLife() <= 0)
-        {
-            System.out.println(" You killed : " + player.enemiesKilled + " enemies");
-            return;
-        }*/
 
         timer++;
         currentHP = player.getLife();
@@ -129,31 +118,9 @@ public class Engine extends PApplet
 
         SpawnEnemies.update(this);
         enemyBehaviour();
-        //updateEnemies();              //No need for this as enemy behaviour already updates enemies
 
         if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
-
-            long now = System.currentTimeMillis();
-            LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
-            logData.add(newEntry);
-            newEntry.print();
-
-            if(LOGGER_MODE) {
-                if(loopCtr < maxLoop) {
-                    this.settings();
-                    this.setup();
-                    ++loopCtr;
-                }
-
-                if(loopCtr>=maxLoop){
-                    LogRecord.printAvg();
-                    noLoop();
-                }
-            }
-            else{
-                noLoop();
-            }
-
+            EndGameandLog();
         }
     }
 
@@ -165,6 +132,29 @@ public class Engine extends PApplet
             if(currentHP - hpLastTime >= GameConstants.DEFAULT_HP_LOSS){
                 //TODO - give the player more HP, or increase the damage of its bullets
             }
+        }
+    }
+
+    public void EndGameandLog(){
+        long now = System.currentTimeMillis();
+        LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
+        logData.add(newEntry);
+        newEntry.print();
+
+        if(LOGGER_MODE) {
+            if(loopCtr < maxLoop) {
+                this.settings();
+                this.setup();
+                ++loopCtr;
+            }
+
+            if(loopCtr>=maxLoop){
+                LogRecord.printAvg();
+                noLoop();
+            }
+        }
+        else{
+            noLoop();
         }
     }
 
