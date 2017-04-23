@@ -33,12 +33,12 @@ public class Enemy_enamelator extends Enemy {
 
     private static float DEFAULT_ENAMELATOR_SPEED = 0.4f;
     private static float EnamelatorContactDamage = 15;
-    private static float shootingRange = 200;
+    private static float shootingRange = 100;
     private static float bulletDamage = 10;
     private static long bulletInterval = 3000;
     private static float rocketDamage = 15;
     private static int rocketInterval = 7000;
-    private static int rocketPathRefreshInterval = 3000;
+    private static int rocketPathRefreshInterval = 1500;
 
     public Set<Bullet> bullets;
     private stateList state;
@@ -53,6 +53,7 @@ public class Enemy_enamelator extends Enemy {
         super (app, color, size, posX, posY, orientation, life,PursueRadius);
 
         this.enemyPriority = 5;
+
         setMaxVel(DEFAULT_ENAMELATOR_SPEED);
         contactDamage = EnamelatorContactDamage;
         bullets = new HashSet<>();

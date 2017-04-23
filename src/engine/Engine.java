@@ -99,13 +99,11 @@ public class Engine extends PApplet
         background(105, 183, 219);
         environment.update();
         tooth.update();
-
-
-        player.behaviour();
         player.update();
 
         SpawnEnemies.update(this);
         enemyBehaviour();
+
         //updateEnemies();              //No need for this as enemy behaviour already updates enemies
 
 
