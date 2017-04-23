@@ -285,9 +285,9 @@ public class AIplayer extends GameObject {
                 //TODO - Add the get to LOS code here
 
                 try {
-                    pathFollower.findPath(getGridLocation(), Utility.getGridLocation(enemycurrentlyHighestPriority.position));
-                    //followingPath = true;
-                    //pathFollower.followPath();
+                    this.pathFollower.findPath(getGridLocation(), Utility.getGridLocation(enemycurrentlyHighestPriority.position));
+                    followingPath = true;
+                    pathFollower.followPath();
                 }catch(NullPointerException e){
                     System.out.println("Null in moving to LOS");
                 }

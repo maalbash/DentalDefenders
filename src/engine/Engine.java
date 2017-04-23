@@ -42,10 +42,12 @@ public class Engine extends PApplet
     {
         rectMode(PConstants.CENTER);
 
-        player = new AIplayer(this);
-
         tooth = new Tooth(this);
         environment = new Environment(this);
+        player = new AIplayer(this);
+
+
+
         Enemies = new ArrayList<>();
         staticObjects = new ArrayList<>();
 
