@@ -25,7 +25,7 @@ public class LogRecord {
 
         Avg_time = ((Avg_time*RecordCount)+this.time)/(RecordCount+1);
         Avg_enemiesKilled = ((Avg_enemiesKilled*RecordCount)+this.enemiesKilled)/(RecordCount+1);
-        Avg_playerHealth = ((Avg_time*RecordCount)+this.playerHealth)/(RecordCount+1);
+        Avg_playerHealth = ((Avg_playerHealth*RecordCount)+this.playerHealth)/(RecordCount+1);
         Avg_toothHealth = ((Avg_toothHealth*RecordCount)+this.toothHealth)/(RecordCount+1);
         ++RecordCount;
     }

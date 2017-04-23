@@ -72,7 +72,6 @@ public class Enemy_streptus extends Enemy
             defaultBehaviour();
     }
 
-    //TODO - Pls review this function
     public void setCurrentState()
     {
         float playerdist, toothdist;

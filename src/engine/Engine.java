@@ -75,53 +75,6 @@ public class Engine extends PApplet
 
     }
 
-    public void draw()
-    {
-        /*if (player.getLife() <= 0 || tooth.tooth.getLife() <= 0)
-        {
-            System.out.println(" You killed : " + player.enemiesKilled + " enemies");
-            return;
-        }*/
-
-        timer++;
-        currentHP = player.getLife();
-        difficultyAdjustment();
-
-        background(105, 183, 219);
-
-        environment.update();
-        tooth.update();
-        player.update();
-
-        SpawnEnemies.update(this);
-        enemyBehaviour();
-
-        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
-
-            long now = System.currentTimeMillis();
-            LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
-            logData.add(newEntry);
-            newEntry.print();
-
-            if(LOGGER_MODE)
-            {
-                if(loopCtr < maxLoop) {
-                    this.settings();
-                    this.setup();
-                    ++loopCtr;
-                }
-
-                if(loopCtr>=maxLoop){
-                    LogRecord.printAvg();
-                    noLoop();
-                }
-            }
-            else
-                noLoop();
-
-
-        }
-    }
 
     public void enemyBehaviour()
     {
@@ -145,6 +98,29 @@ public class Engine extends PApplet
     }
 
 
+
+    public void draw()
+    {
+
+        timer++;
+        currentHP = player.getLife();
+        difficultyAdjustment();
+
+        background(105, 183, 219);
+
+        environment.update();
+        tooth.update();
+        player.update();
+
+        SpawnEnemies.update(this);
+        enemyBehaviour();
+
+        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
+            EndGameandLog();
+        }
+    }
+
+
     public void difficultyAdjustment(){
         if(timer - 0 >= 10){
             timer = 0;
@@ -152,6 +128,29 @@ public class Engine extends PApplet
             if(currentHP - hpLastTime >= GameConstants.DEFAULT_HP_LOSS){
                 //TODO - give the player more HP, or increase the damage of its bullets
             }
+        }
+    }
+
+    public void EndGameandLog(){
+        long now = System.currentTimeMillis();
+        LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
+        logData.add(newEntry);
+        newEntry.print();
+
+        if(LOGGER_MODE) {
+            if(loopCtr < maxLoop) {
+                this.settings();
+                this.setup();
+                ++loopCtr;
+            }
+
+            if(loopCtr>=maxLoop){
+                LogRecord.printAvg();
+                noLoop();
+            }
+        }
+        else{
+            noLoop();
         }
     }
 
