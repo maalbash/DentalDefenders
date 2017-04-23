@@ -1,9 +1,6 @@
 package engine;
 
-import objects.Enemy_enamelator;
-import objects.Enemy_fructus;
-import objects.Enemy_lactus;
-import objects.Enemy_streptus;
+import objects.*;
 import processing.core.PApplet;
 import processing.core.PVector;
 import utility.GameConstants;
@@ -16,24 +13,58 @@ import static java.lang.Math.random;
 public class SpawnEnemies
 {
 
-    private static int lactusSpawnInterval = 5000;
-    private static int fructusSpawnInterval = 8000;
-    private static int streptusSpawnInterval = 12000;
+    private static int lactusSpawnInterval = 2000;
+    private static int fructusSpawnInterval = 5000;
+    private static int streptusSpawnInterval = 7000;
     private static int enamelatorSpawnInterval = 15000;
+
+    private static int MaxLactus = 7;
+    private static int MaxFructus = 5;
+    private static int MaxStreptus = 3;
+    private static int MaxEnamelator = 1;
 
 
     private static long lastLactusSpawn = 0;
     private static long lastFructusSpawn = 0;
     private static long lastStreptusSpawn = 0;
     private static long lastEnamelatorSpawn = 0;
-    private static long now;
+    private static long now = 0;
+
+    private static int LactusCount;
+    private static int FructusCount;
+    private static int StreptusCount;
+    private static int EnamelatorCount;
 
     public static void update(PApplet app)
     {
-        addLactus(app);
-        addFructus(app);
-        addStreptus(app);
-        addEnamelator(app);
+        if(now==0){
+            now = System.currentTimeMillis();
+            lastLactusSpawn = lastFructusSpawn = lastStreptusSpawn = lastEnamelatorSpawn = now;
+        }
+
+        LactusCount = FructusCount = StreptusCount = EnamelatorCount = 0;
+
+        for(Enemy e : Engine.Enemies){
+            if(e instanceof Enemy_lactus)
+                LactusCount++;
+            else if(e instanceof Enemy_fructus)
+                FructusCount++;
+            else if(e instanceof Enemy_streptus)
+                StreptusCount++;
+            else if(e instanceof Enemy_enamelator)
+                EnamelatorCount++;
+        }
+
+        if(LactusCount < MaxLactus)
+            addLactus(app);
+        if(FructusCount < MaxFructus)
+            addFructus(app);
+
+        if(StreptusCount < MaxStreptus)
+            addStreptus(app);
+        if(EnamelatorCount < MaxEnamelator)
+            addEnamelator(app);
+
     }
 
     public static void addLactus(PApplet app){

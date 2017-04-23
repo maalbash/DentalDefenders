@@ -47,4 +47,6 @@ public class GameConstants
 
     public static final float DEFAULT_CONTACT_DAMAGE = 20;
 
+    public static final float DEFAULT_HP_LOSS = 25f;
+
 }

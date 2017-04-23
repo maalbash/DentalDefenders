@@ -62,7 +62,11 @@ public class PathFollower
         for (; Environment.invalidNodes.contains(endIndex); endIndex--);
         for (; Environment.invalidNodes.contains(startIndex); startIndex--);
 
-        pathIndices = search.aStarSearch(startIndex, endIndex, Environment.gameGraph);
+        try {
+            pathIndices = search.aStarSearch(startIndex, endIndex, Environment.gameGraph);
+        }catch(Exception e){
+            System.out.println("Unable to find path");
+        }
 
         Collections.reverse(pathIndices);                                   // Since the path is returned in the reverse order
 
