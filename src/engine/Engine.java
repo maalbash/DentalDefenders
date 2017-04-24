@@ -32,6 +32,7 @@ public class Engine extends PApplet
     public static AIplayer player;        //Changed these 2 to static, since only one instance of each, and to provide ease of access
     public static Tooth tooth;
     public static Environment environment;
+    //public static Player player;
 
     public static List<Obstacle> staticObjects;
     public static List<Enemy>  Enemies;
@@ -59,6 +60,7 @@ public class Engine extends PApplet
         tooth = new Tooth(this);
         environment = new Environment(this);
         player = new AIplayer(this);
+        //player = new Player(this);
 
         Enemies = new ArrayList<>();
         staticObjects = new ArrayList<>();
@@ -115,7 +117,7 @@ public class Engine extends PApplet
         tooth.update();
         player.update();
 
-        //SpawnEnemies.update(this);
+        SpawnEnemies.update(this);
         enemyBehaviour();
 
         if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
@@ -247,16 +249,14 @@ public class Engine extends PApplet
         }
     }
 
-    /*
-    public void mouseMoved()
+    /*public void mouseMoved()
     {
         player.updateTarget();
     }
     public void mousePressed()
     {
         player.shoot();
-    }
-    */
+    }*/
 
 
 }

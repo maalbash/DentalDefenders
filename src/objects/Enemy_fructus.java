@@ -26,9 +26,6 @@ public class Enemy_fructus extends Enemy
 
 
     private static float DEFAULT_FRUCTUS_SPEED = 0.5f;
-
-
-
     private static float FructusContactDamage = 15;
 
     private boolean followingPath;

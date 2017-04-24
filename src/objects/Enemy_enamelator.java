@@ -40,8 +40,6 @@ public class Enemy_enamelator extends Enemy {
     private static float shootingRange = 100;
     private static float bulletDamage = 10;
 
-
-
     private static long bulletInterval = 3000;
     private static float rocketDamage = 15;
     private static int rocketInterval = 7000;
@@ -61,6 +59,7 @@ public class Enemy_enamelator extends Enemy {
 
         this.enemyPriority = 5;
 
+        setMaxAngularAcc(0.005f);
         setMaxVel(DEFAULT_ENAMELATOR_SPEED);
         contactDamage = EnamelatorContactDamage;
         bullets = new HashSet<>();
@@ -101,14 +100,22 @@ public class Enemy_enamelator extends Enemy {
 
     public void setCurrentState()
     {
-        if (hasLOS(Engine.player.getPosition()))
-            state = ATTACKPLAYER;
+        float toothDistance = PVector.sub(this.position, Engine.tooth.tooth.position).mag();
 
-        else if (PVector.sub(this.position, Engine.tooth.tooth.position).mag() < shootingRange)
+        if (followingPath && toothDistance <= shootingRange)
+        {
+            followingPath = false;
+            state = SHOOTTOOTH;
+        }
+
+        else if (toothDistance < shootingRange)
         {
             state = SHOOTTOOTH;
             this.stopMoving();
         }
+
+        else if (hasLOS(Engine.player.getPosition()))
+            state = ATTACKPLAYER;
 
         else
             state = SEEKTOOTH;
@@ -127,6 +134,7 @@ public class Enemy_enamelator extends Enemy {
             case ATTACKPLAYER:
                 this.finalTarget = Engine.player;
                 Align(this.finalTarget.position);
+                Seek(this.finalTarget.position);
                 this.shoot();
                 break;
 

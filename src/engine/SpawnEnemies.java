@@ -16,7 +16,7 @@ public class SpawnEnemies
     private static int lactusSpawnInterval = 2000;
     private static int fructusSpawnInterval = 5000;
     private static int streptusSpawnInterval = 7000;
-    private static int enamelatorSpawnInterval = 15000;
+    private static int enamelatorSpawnInterval = 2000;
 
     private static int MaxLactus = 7;
     private static int MaxFructus = 5;
@@ -57,13 +57,15 @@ public class SpawnEnemies
 
         if(LactusCount < MaxLactus)
             addLactus(app);
-        if(FructusCount < MaxFructus)
+
+        /*if(FructusCount < MaxFructus)
             addFructus(app);
 
         if(StreptusCount < MaxStreptus)
             addStreptus(app);
+
         if(EnamelatorCount < MaxEnamelator)
-            addEnamelator(app);
+            addEnamelator(app);*/
 
     }
 

@@ -96,9 +96,18 @@ public class LogRecord {
         System.out.println("Enemies killed - "+this.enemiesKilled);
         System.out.println("Player health - "+this.playerHealth);
         System.out.println("Tooth health - "+this.toothHealth);
-        System.out.println("Boss Damage to player - "+this.Boss_playerDamagePercentage+"%");
-        System.out.println("Boss Damage to tooth - "+this.Boss_toothDamagePercentage+"%");
         System.out.println("--------------------------------");
+        System.out.println("Lactus Damage to player - "+this.Lactus_playerDamagePercentage+"%");
+        System.out.println("Lactus Damage to tooth - "+this.Lactus_toothDamagePercentage+"%");
+
+        System.out.println("Fructus Damage to player - "+this.Fructus_playerDamagePercentage+"%");
+        System.out.println("Fructus Damage to tooth - "+this.Fructus_toothDamagePercentage+"%");
+
+        System.out.println("Streptus Damage to player - "+this.Streptus_playerDamagePercentage+"%");
+        System.out.println("Streptus Damage to tooth - "+this.Streptus_toothDamagePercentage+"%");
+
+        System.out.println("Enamelator Damage to player - "+this.Boss_playerDamagePercentage+"%");
+        System.out.println("Enamelator Damage to tooth - "+this.Boss_toothDamagePercentage+"%");
     }
 
     public static void printAvg(){
