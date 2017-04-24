@@ -88,7 +88,7 @@ public class Engine extends PApplet
         tooth.update();
         player.update();
 
-        SpawnEnemies.update(this);
+        //SpawnEnemies.update(this);
         enemyBehaviour();
 
         if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){

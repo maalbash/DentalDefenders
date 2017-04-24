@@ -219,6 +219,7 @@ public class AIplayer extends GameObject {
             pathFollower.findPath(this.getGridLocation(), Utility.getGridLocation(playerTarget));
             followingPath = true;
             pathFollower.followPath();
+            pathFollower.renderSearch();
         }catch(NullPointerException e){
             System.out.println("Null pointer exception bro");
         }
