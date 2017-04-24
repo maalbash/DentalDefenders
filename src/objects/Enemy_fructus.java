@@ -26,6 +26,9 @@ public class Enemy_fructus extends Enemy
 
 
     private static float DEFAULT_FRUCTUS_SPEED = 0.5f;
+
+
+
     private static float FructusContactDamage = 15;
 
     private boolean followingPath;
@@ -48,6 +51,15 @@ public class Enemy_fructus extends Enemy
         contactDamage = FructusContactDamage;
     }
 
+    public static float getFructusContactDamage()
+    {
+        return FructusContactDamage;
+    }
+
+    public static void setFructusContactDamage(float fructusContactDamage)
+    {
+        FructusContactDamage = fructusContactDamage;
+    }
 
     public void setCurrentState()
     {

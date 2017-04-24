@@ -38,6 +38,7 @@ public class Engine extends PApplet
 
     public static long timer;
     public static float currentHP, hpLastTime;
+    public static boolean PLAYER_CURRENTLY_POWERED_UP;
 
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
@@ -72,7 +73,7 @@ public class Engine extends PApplet
         timer = 0;
         currentHP = player.getDefaultPlayerLife();
         hpLastTime = player.getDefaultPlayerLife();
-
+        PLAYER_CURRENTLY_POWERED_UP = false;
     }
 
 
@@ -148,13 +149,74 @@ public class Engine extends PApplet
 
     public void difficultyAdjustment()
     {
-        if(timer >= 10){
+        if(timer - 0 >= 100)
+        {
             timer = 0;
-            //TODO - check to see if the default hp loss value is adequate
-            if(currentHP - hpLastTime >= GameConstants.DEFAULT_HP_LOSS){
-                //TODO - give the player more HP, or increase the damage of its bullets
+            //TODO - check to see if the default hp loss value is adequate, maybe increase and decrease enemy spawn time
+            if(HpBelow25percent() && !PLAYER_CURRENTLY_POWERED_UP)
+            {
+                powerup();
+            }
+
+            if(PLAYER_CURRENTLY_POWERED_UP && !HpBelow25percent())
+            {
+                powerdown();
+            }
+
+            if (hpLastTime - currentHP >= GameConstants.MAJOR_HP_LOSS)
+            {
+                hpLastTime = currentHP+10;
+                player.setLife((int) currentHP + 10);
+                player.BulletDamage = 20;
+            }
+            else if (hpLastTime - currentHP >= GameConstants.DEFAULT_HP_LOSS)
+            {
+                hpLastTime = currentHP;
+                player.BulletDamage = 20;
+            }
+            else if(hpLastTime - currentHP < GameConstants.SMALL_HP_LOSS)
+            {
+                hpLastTime = currentHP;
+                player.BulletDamage = 5;
             }
         }
+    }
+
+    public boolean HpBelow25percent(){
+        return ((float)player.getLife() / (float)player.getDefaultPlayerLife()) <= 0.3f ;
+    }
+
+    public void powerup()
+    {
+        PLAYER_CURRENTLY_POWERED_UP = true;
+        player.setColor(0,0,0);
+        for(Enemy e: Enemies){
+            if(e instanceof Enemy_fructus)
+                ((Enemy_fructus) e).setFructusContactDamage(5);
+            if(e instanceof Enemy_lactus)
+                ((Enemy_lactus) e).setLactusContactDamage(5);
+            if(e instanceof Enemy_streptus)
+                ((Enemy_streptus)e).BulletDamage = 5;
+            if(e instanceof Enemy_enamelator)
+                ((Enemy_enamelator)e).setBulletDamage(5);
+        }
+        player.BulletDamage = 20;
+    }
+
+    public void powerdown(){
+        PLAYER_CURRENTLY_POWERED_UP = false;
+        player.setColor(0,0,0);
+        for(Enemy e: Enemies){
+            if(e instanceof Enemy_fructus)
+                ((Enemy_fructus) e).setFructusContactDamage(15);
+            if(e instanceof Enemy_lactus)
+                ((Enemy_lactus) e).setLactusContactDamage(10);
+            if(e instanceof Enemy_streptus)
+                ((Enemy_streptus)e).BulletDamage = 10;
+            if(e instanceof Enemy_enamelator)
+                ((Enemy_enamelator)e).setBulletDamage(10);
+        }
+        player.BulletDamage=10;
     }
 
     public void EndGameandLog()

@@ -39,6 +39,9 @@ public class Enemy_enamelator extends Enemy {
     private static float EnamelatorContactDamage = 15;
     private static float shootingRange = 100;
     private static float bulletDamage = 10;
+
+
+
     private static long bulletInterval = 3000;
     private static float rocketDamage = 15;
     private static int rocketInterval = 7000;
@@ -67,6 +70,14 @@ public class Enemy_enamelator extends Enemy {
 
 
         state = SEEKTOOTH;
+    }
+
+    public static float getBulletDamage() {
+        return bulletDamage;
+    }
+
+    public static void setBulletDamage(float bulletDamage) {
+        Enemy_enamelator.bulletDamage = bulletDamage;
     }
 
     public void behaviour()
