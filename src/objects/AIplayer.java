@@ -9,9 +9,7 @@ import processing.core.PVector;
 import utility.GameConstants;
 import utility.Utility;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by bash on 4/17/2017.
@@ -52,9 +50,10 @@ public class AIplayer extends GameObject {
     public static float size = 20;
     private static float DEFAULT_X = GameConstants.SCR_WIDTH/2 + 90;
     private static float DEFAULT_Y = GameConstants.SCR_HEIGHT/2 + 90;
-    private static PVector DEFAULT_POS = new PVector(DEFAULT_X,DEFAULT_Y);
-    private int patrolTargetIterator = 1;
+    private static int  patrolTargetIterator = 1;
     private static PVector[] PatrolTargets = {new PVector(DEFAULT_X,DEFAULT_Y), new PVector(GameConstants.SCR_WIDTH/2 + 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90,GameConstants.SCR_HEIGHT/2 - 90), new PVector(GameConstants.SCR_WIDTH/2 - 90, GameConstants.SCR_HEIGHT/2 + 90)};
+
+
     private static float DEFAULT_ORIENTATION = 0;
 
     public static int getDefaultPlayerLife() {
@@ -74,7 +73,6 @@ public class AIplayer extends GameObject {
 
 
     public Set<Bullet> bullets;
-    public int bulletCount = 0;
     public int enemiesKilled = 0;
 
     public PVector playerTarget;
@@ -91,10 +89,12 @@ public class AIplayer extends GameObject {
         RED_ZONE = 200f;
         setMaxVel(DEFAULT_PLAYER_MAXVEL);
         bullets = new HashSet<>();
-        playerTarget = PatrolTargets[patrolTargetIterator];
+
         pathFollower = new PathFollower(this, Environment.numTiles, Environment.tileSize);
         enemycurrentlyHighestPriority = null;
 
+
+        playerTarget = new PVector(PatrolTargets[patrolTargetIterator].x,PatrolTargets[patrolTargetIterator].y);
     }
 
     public void update()
@@ -152,7 +152,6 @@ public class AIplayer extends GameObject {
     {
         //depending on the current status of the player, perform a different action
         setStatus();
-        //System.out.println(status);
 
         if (followingPath && !pathFollower.reachedTarget)
         {
@@ -186,13 +185,9 @@ public class AIplayer extends GameObject {
 
     public void defaultBehavior()
     {
-        //if the status is idle, return to default location.
-        //System.out.println("Patrolling..");
-        if(this.getPosition().dist(this.playerTarget) <= 10f)
+        if(this.getPosition().dist(this.playerTarget) <= 5f)
         {
             patrolTargetIterator = (patrolTargetIterator + 1) % 4;
-            //System.out.print("Next Target ");
-
             updateTarget(PatrolTargets[patrolTargetIterator]);
         }
     }
@@ -263,24 +258,11 @@ public class AIplayer extends GameObject {
         float highestPrioritySoFar = 0;
         Enemy enemyWithHighestPriority = null;
 
-        //Trying to stick to the last enemy if it's still alive and in the yellow zone
-        /*
-        if(enemyWithHighestPriority instanceof Enemy_enamelator && enemycurrentlyHighestPriority.life >0)
-            return enemycurrentlyHighestPriority;
-
-        if(enemycurrentlyHighestPriority != null && enemycurrentlyHighestPriority.life>0
-                && enemycurrentlyHighestPriority.position.dist(Engine.tooth.tooth.position)<=YELLOW_ZONE)
-        {
-            return enemycurrentlyHighestPriority;
-        }
-        */
 
         for (Iterator<Enemy> j = Engine.Enemies.iterator(); j.hasNext();)
         {
             Enemy e = j.next();
-            //uncomment next two line if we want to set an enemy with highest priority even when none are in the danger zone
-//            if(e.enemyPriority > highestPrioritySoFar)
-//                enemyWithHighestPriority = e;
+
             if(e instanceof Enemy_enamelator)
             {
                 return e;
@@ -374,8 +356,4 @@ public class AIplayer extends GameObject {
         }
 
     }
-
-
-
-
 }
