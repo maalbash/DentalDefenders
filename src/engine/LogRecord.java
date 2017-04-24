@@ -48,17 +48,17 @@ public class LogRecord {
         this.playerHealth = playerHealth;
         this.toothHealth = toothHealth;
 
-        this.Boss_playerDamagePercentage = (Enemy_enamelator.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth));
-        this.Boss_toothDamagePercentage = (Enemy_enamelator.toothDamage*100/(Tooth.life - toothHealth));
+        this.Boss_playerDamagePercentage = (Enemy_enamelator.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth+1));
+        this.Boss_toothDamagePercentage = (Enemy_enamelator.toothDamage*100/(Tooth.life - toothHealth+1));
 
-        this.Lactus_playerDamagePercentage = (Enemy_lactus.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth));
-        this.Lactus_toothDamagePercentage = (Enemy_lactus.toothDamage*100/(Tooth.life - toothHealth));
+        this.Lactus_playerDamagePercentage = (Enemy_lactus.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth+1));
+        this.Lactus_toothDamagePercentage = (Enemy_lactus.toothDamage*100/(Tooth.life - toothHealth+1));
 
-        this.Fructus_playerDamagePercentage = (Enemy_fructus.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth));
-        this.Fructus_toothDamagePercentage = (Enemy_fructus.toothDamage*100/(Tooth.life - toothHealth));
+        this.Fructus_playerDamagePercentage = (Enemy_fructus.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth+1));
+        this.Fructus_toothDamagePercentage = (Enemy_fructus.toothDamage*100/(Tooth.life - toothHealth+1));
 
-        this.Streptus_playerDamagePercentage = (Enemy_streptus.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth));
-        this.Streptus_toothDamagePercentage = (Enemy_streptus.toothDamage*100/(Tooth.life - toothHealth));
+        this.Streptus_playerDamagePercentage = (Enemy_streptus.playerDamage*100/(AIplayer.DEFAULT_PLAYER_LIFE - playerHealth+1));
+        this.Streptus_toothDamagePercentage = (Enemy_streptus.toothDamage*100/(Tooth.life - toothHealth+1));
 
         Enemy_enamelator.playerDamage = 0;
         Enemy_enamelator.toothDamage = 0;
