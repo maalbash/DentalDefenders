@@ -26,10 +26,16 @@ public class Enemy_fructus extends Enemy
 
 
     private static float DEFAULT_FRUCTUS_SPEED = 0.5f;
+
+
+
     private static float FructusContactDamage = 15;
 
     private boolean followingPath;
     private stateList state;
+
+    public static int toothDamage = 0;
+    public static int playerDamage = 0;
 
     public Enemy_fructus(PApplet app, float posX, float posY, float orientation)
     {
@@ -45,6 +51,15 @@ public class Enemy_fructus extends Enemy
         contactDamage = FructusContactDamage;
     }
 
+    public static float getFructusContactDamage()
+    {
+        return FructusContactDamage;
+    }
+
+    public static void setFructusContactDamage(float fructusContactDamage)
+    {
+        FructusContactDamage = fructusContactDamage;
+    }
 
     public void setCurrentState()
     {

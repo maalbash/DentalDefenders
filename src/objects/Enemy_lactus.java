@@ -20,11 +20,15 @@ public class Enemy_lactus extends Enemy {
     private static int size = 20;
     private static int PursueRadius = 100;
 
+
     private static float LactusContactDamage = 10;
     private static float DEFAULT_LACTUS_SPEED = 0.5f;
     private static float LACTUS_ANGULAR_ACC = 0.001f;
     private static float LACTUS_ANGULAR_ROS = 1.5f;
     private static float LACTUS_ANGULAR_ROD = 2.5f;
+
+    public static int toothDamage = 0;
+    public static int playerDamage = 0;
 
     private stateList state;
 
@@ -44,6 +48,15 @@ public class Enemy_lactus extends Enemy {
         state = WANDER;
         contactDamage = LactusContactDamage;
     }
+
+    public static float getLactusContactDamage() {
+        return LactusContactDamage;
+    }
+
+    public static void setLactusContactDamage(float lactusContactDamage) {
+        LactusContactDamage = lactusContactDamage;
+    }
+
 
     public void setCurrentState()
     {
