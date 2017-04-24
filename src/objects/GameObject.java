@@ -58,6 +58,7 @@ public class GameObject extends AbstractObject implements Movable
         setColor(color.x, color.y, color.z);
         setSize(size);
         setLife(life);
+        MAX_LIFE = life;
 
         this.lookAheadPosition = new PVector();
 
@@ -224,9 +225,7 @@ public class GameObject extends AbstractObject implements Movable
         while (Utility.getGridIndex(lightBeacon) != Utility.getGridIndex(target))
         {
             lightBeacon.add(targetVelocity);
-            if (Environment.invalidNodes.contains(Utility.getGridIndex(lightBeacon)))
-                return false;
-            if (Environment.toothNodes.contains(Utility.getGridIndex(lightBeacon)))
+            if (Environment.invalidNodes.contains(Utility.getGridIndex(lightBeacon)) || Environment.toothNodes.contains(Utility.getGridIndex(lightBeacon)))
                 return false;
         }
 
@@ -265,12 +264,11 @@ public class GameObject extends AbstractObject implements Movable
     public void setLife(int life)
     {
         this.life = life;
-        this.MAX_LIFE = life;
     }
 
     public int getLife()
     {
-        return life;
+        return this.life;
     }
 
 

@@ -16,7 +16,7 @@ public class SpawnEnemies
     private static int lactusSpawnInterval = 2000;
     private static int fructusSpawnInterval = 5000;
     private static int streptusSpawnInterval = 7000;
-    private static int enamelatorSpawnInterval = 2000;
+    private static int enamelatorSpawnInterval = 13000;
 
     private static int MaxLactus = 7;
     private static int MaxFructus = 5;
@@ -44,7 +44,8 @@ public class SpawnEnemies
 
         LactusCount = FructusCount = StreptusCount = EnamelatorCount = 0;
 
-        for(Enemy e : Engine.Enemies){
+        for(Enemy e : Engine.Enemies)
+        {
             if(e instanceof Enemy_lactus)
                 LactusCount++;
             else if(e instanceof Enemy_fructus)

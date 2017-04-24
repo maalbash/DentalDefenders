@@ -24,6 +24,8 @@ public class Engine extends PApplet
     public static boolean LOGGER_MODE = true;
     public static int loopCtr = 0;
     public static int maxLoop = 10;
+    public static int showMessageTime = 5000;
+    public static int endGameTimer = 0;
 
 
     public static long beginTime;
@@ -40,6 +42,7 @@ public class Engine extends PApplet
     public static long timer;
     public static float currentHP, hpLastTime;
     public static boolean PLAYER_CURRENTLY_POWERED_UP;
+    public String gameEndText;
 
     public static void main(String[] args){
         PApplet.main("engine.Engine", args);
@@ -55,7 +58,7 @@ public class Engine extends PApplet
     {
         rectMode(PConstants.CENTER);
         beginTime = System.currentTimeMillis();
-        logData = new LinkedList<LogRecord>();
+        logData = new LinkedList<>();
 
         tooth = new Tooth(this);
         environment = new Environment(this);
@@ -109,7 +112,7 @@ public class Engine extends PApplet
 
         timer++;
         currentHP = player.getLife();
-        //difficultyAdjustment();
+        difficultyAdjustment();
 
         background(105, 183, 219);
 
@@ -120,8 +123,22 @@ public class Engine extends PApplet
         SpawnEnemies.update(this);
         enemyBehaviour();
 
-        if(player.getLife() <= 0 || tooth.tooth.getLife() <= 0){
-            EndGameandLog();
+        if((player.getLife() <= 0 || tooth.tooth.getLife() <= 0) )
+        {
+            gameEndText = " GAME OVER!\n GET A ROOT CANAL!\n Enemies killed : " + player.enemiesKilled + "\n Time survived : " + (System.currentTimeMillis()-beginTime)/1000 + " seconds";
+
+            if (endGameTimer == 0)
+            {
+                endGameTimer = millis();
+                drawText(gameEndText, width / 2, height / 2 - 100, this);
+            }
+            else if (millis() - endGameTimer < showMessageTime)
+                drawText(gameEndText, width / 2, height / 2 - 100, this);
+            else
+            {
+                endGameTimer = 0;
+                EndGameandLog();
+            }
 
         }
     }
@@ -151,7 +168,7 @@ public class Engine extends PApplet
 
     public void difficultyAdjustment()
     {
-        if(timer - 0 >= 100)
+        if(timer >= 100)
         {
             timer = 0;
             //TODO - check to see if the default hp loss value is adequate, maybe increase and decrease enemy spawn time
@@ -160,14 +177,14 @@ public class Engine extends PApplet
                 powerup();
             }
 
-            if(PLAYER_CURRENTLY_POWERED_UP && !HpBelow25percent())
+            if(!HpBelow25percent() && PLAYER_CURRENTLY_POWERED_UP)
             {
                 powerdown();
             }
 
             if (hpLastTime - currentHP >= GameConstants.MAJOR_HP_LOSS)
             {
-                hpLastTime = currentHP+10;
+                hpLastTime = currentHP + 10;
                 player.setLife((int) currentHP + 10);
                 player.BulletDamage = 20;
             }
@@ -192,6 +209,9 @@ public class Engine extends PApplet
     {
         PLAYER_CURRENTLY_POWERED_UP = true;
         player.setColor(0,0,0);
+        player.bulletInterval = 100;
+        player.setLife(player.getLife() + 10);
+
         for(Enemy e: Enemies){
             if(e instanceof Enemy_fructus)
                 ((Enemy_fructus) e).setFructusContactDamage(5);
@@ -207,7 +227,9 @@ public class Engine extends PApplet
 
     public void powerdown(){
         PLAYER_CURRENTLY_POWERED_UP = false;
-        player.setColor(0,0,0);
+        player.setColor(Player.color.x, Player.color.y, Player.color.z);
+        player.bulletInterval = 500;
+
         for(Enemy e: Enemies){
             if(e instanceof Enemy_fructus)
                 ((Enemy_fructus) e).setFructusContactDamage(15);
@@ -218,7 +240,7 @@ public class Engine extends PApplet
             if(e instanceof Enemy_enamelator)
                 ((Enemy_enamelator)e).setBulletDamage(10);
         }
-        player.BulletDamage=10;
+        player.BulletDamage = 10;
     }
 
     public void EndGameandLog()
@@ -227,8 +249,6 @@ public class Engine extends PApplet
         LogRecord newEntry = new LogRecord((now-beginTime),player.enemiesKilled,player.getLife(),tooth.tooth.getLife());
         logData.add(newEntry);
         newEntry.print();
-
-        drawText("GAME OVER", width/2, height/2, this);
 
         if(LOGGER_MODE)
         {

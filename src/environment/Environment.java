@@ -36,8 +36,8 @@ public class Environment
         obstacles = new ArrayList<>();
         bulletInvalidNodes = new HashSet<>();
 
-        createObstacles();
         toothNodes.addAll(Engine.tooth.getTileIndices());
+        createObstacles();
 
         gameGraph = new Graph();
         gameGraph.buildGraph(invalidNodes);
@@ -100,12 +100,14 @@ public class Environment
         obstacles.add(new Obstacle(app, new PVector(0.3f * numTiles.x, 0.7f * numTiles.y), new PVector(4, 15))); //bot left
         obstacles.add(new Obstacle(app, new PVector(0.7f * numTiles.x, 0.7f * numTiles.y), new PVector(4, 15))); //bot right
 
-        /* Tooth nodes are not considered invalid */
+        /* Tooth nodes are considered invalid */
 
         for (Obstacle obstacle : obstacles) {
             invalidNodes.addAll(obstacle.getTileIndices());
             bulletInvalidNodes.addAll(obstacle.getTilesWithoutpadding());
         }
+
+        invalidNodes.addAll(toothNodes);
     }
 
     private void drawObstacles()
@@ -119,10 +121,6 @@ public class Environment
 
         for (int i : invalidNodes)
             colorNode(i, new PVector(255, 0, 0), 255);
-
-        for (int i: toothNodes)
-            colorNode(i, new PVector(255, 0, 0), 255);
-
 
         app.rectMode(PConstants.CENTER);
 

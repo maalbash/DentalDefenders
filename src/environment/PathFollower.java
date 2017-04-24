@@ -4,6 +4,7 @@ import movement.Align;
 import movement.Seek;
 import objects.GameObject;
 import processing.core.PVector;
+import utility.GameConstants;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -59,8 +60,11 @@ public class PathFollower
         int endIndex = (int) (endNode.y * numTiles.y + endNode.x);
 
 
-        for (; Environment.invalidNodes.contains(endIndex); endIndex--);
-        for (; Environment.invalidNodes.contains(startIndex); startIndex--);
+        if (Environment.invalidNodes.contains(startIndex))
+            startIndex = checkNearestValidNode(startIndex, 1);
+
+        if (Environment.invalidNodes.contains(endIndex))
+            endIndex = checkNearestValidNode(endIndex, 1);
 
         try {
             pathIndices = search.aStarSearch(startIndex, endIndex, Environment.gameGraph);
@@ -77,6 +81,40 @@ public class PathFollower
         this.currentTarget = this.path.get(targetIndex);
 
         //renderSearch();
+    }
+
+    public int checkNearestValidNode(int index, int layer)
+    {
+        int nodeAbove = index - (int) (GameConstants.NUM_TILES.x * layer);
+        int nodeBelow = index + (int) (GameConstants.NUM_TILES.x * layer);
+
+        if (!Environment.invalidNodes.contains(nodeAbove))
+            return nodeAbove;
+
+        if (!Environment.invalidNodes.contains(nodeAbove - 1))
+            return (nodeAbove - 1);
+
+        if (!Environment.invalidNodes.contains(nodeAbove + 1))
+            return (nodeAbove + 1);
+
+        if (!Environment.invalidNodes.contains(nodeBelow))
+            return nodeBelow;
+
+        if (!Environment.invalidNodes.contains(nodeBelow - 1))
+            return (nodeBelow - 1);
+
+        if (!Environment.invalidNodes.contains(nodeBelow + 1))
+            return (nodeBelow + 1);
+
+        if (!Environment.invalidNodes.contains(index - layer))
+            return (index - 1);
+
+        if (!Environment.invalidNodes.contains(index + layer))
+            return (index + 1);
+
+        return checkNearestValidNode(index, layer+1);
+
+
     }
 
     public void followPath()
