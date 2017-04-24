@@ -58,14 +58,14 @@ public class SpawnEnemies
         if(LactusCount < MaxLactus)
             addLactus(app);
 
-        /*if(FructusCount < MaxFructus)
+        if(FructusCount < MaxFructus)
             addFructus(app);
 
         if(StreptusCount < MaxStreptus)
             addStreptus(app);
 
         if(EnamelatorCount < MaxEnamelator)
-            addEnamelator(app);*/
+            addEnamelator(app);
 
     }
 

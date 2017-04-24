@@ -228,6 +228,8 @@ public class Engine extends PApplet
         logData.add(newEntry);
         newEntry.print();
 
+        drawText("GAME OVER", width/2, height/2, this);
+
         if(LOGGER_MODE)
         {
             if(loopCtr < maxLoop)
@@ -248,6 +250,17 @@ public class Engine extends PApplet
             noLoop();
         }
     }
+
+    public static void drawText(String text, float positionX, float positionY, PApplet app)
+    {
+        app.pushMatrix();
+        app.textSize(GameConstants.TEXT_SIZE);
+        app.fill(GameConstants.TEXT_COLOR.x, GameConstants.TEXT_COLOR.y, GameConstants.TEXT_COLOR.z);
+        app.textAlign(PApplet.CENTER, PApplet.CENTER);
+        app.text(text, positionX, positionY, 5);
+        app.popMatrix();
+    }
+
 
     /*public void mouseMoved()
     {
