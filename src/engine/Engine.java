@@ -107,7 +107,7 @@ public class Engine extends PApplet
 
         timer++;
         currentHP = player.getLife();
-        difficultyAdjustment();
+        //difficultyAdjustment();
 
         background(105, 183, 219);
 
