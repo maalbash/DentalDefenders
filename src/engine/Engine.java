@@ -8,6 +8,7 @@ import environment.Obstacle;
 import objects.*;
 import processing.core.PApplet;
 import processing.core.PConstants;
+import processing.core.PFont;
 import processing.core.PVector;
 import sun.awt.image.ImageWatched;
 import utility.GameConstants;
@@ -26,6 +27,7 @@ public class Engine extends PApplet
     public static int maxLoop = 10;
     public static int showMessageTime = 5000;
     public static int endGameTimer = 0;
+    public static PFont font;
 
 
     public static long beginTime;
@@ -125,6 +127,9 @@ public class Engine extends PApplet
 
         if((player.getLife() <= 0 || tooth.tooth.getLife() <= 0) )
         {
+            if (font == null)
+                font = createFont("Arial",20,true);
+
             gameEndText = " GAME OVER!\n GET A ROOT CANAL!\n Enemies killed : " + player.enemiesKilled + "\n Time survived : " + (System.currentTimeMillis()-beginTime)/1000 + " seconds";
 
             if (endGameTimer == 0)
@@ -274,10 +279,10 @@ public class Engine extends PApplet
     public static void drawText(String text, float positionX, float positionY, PApplet app)
     {
         app.pushMatrix();
-        app.textSize(GameConstants.TEXT_SIZE);
+        app.textFont(font, 20);
         app.fill(GameConstants.TEXT_COLOR.x, GameConstants.TEXT_COLOR.y, GameConstants.TEXT_COLOR.z);
         app.textAlign(PApplet.CENTER, PApplet.CENTER);
-        app.text(text, positionX, positionY, 5);
+        app.text(text, positionX, positionY);
         app.popMatrix();
     }
 

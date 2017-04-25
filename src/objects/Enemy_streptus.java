@@ -23,7 +23,7 @@ public class Enemy_streptus extends Enemy
 {
     private static int life = 60;
     private static PVector color = new PVector(153,0,153);
-    private static int size = 20;
+    private static int size = 25;
     private static int PursueRadius = 200;
 
     private static float DEFAULT_STREPTUS_SPEED = 0.5f;

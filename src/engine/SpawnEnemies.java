@@ -15,8 +15,8 @@ public class SpawnEnemies
 
     private static int lactusSpawnInterval = 2000;
     private static int fructusSpawnInterval = 5000;
-    private static int streptusSpawnInterval = 7000;
-    private static int enamelatorSpawnInterval = 13000;
+    private static int streptusSpawnInterval = 8000;
+    private static int enamelatorSpawnInterval = 11000;
 
     private static int MaxLactus = 7;
     private static int MaxFructus = 5;
