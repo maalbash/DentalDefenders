@@ -7,6 +7,6 @@ Points are gained by combination of eliminating enemies and the total time that 
 Processing, which is required to run this game, can be downloaded from https://www.processing.org/.
 To run the program, one must have the core.jar library from the Processing installation directory added to the project structure. Once that is done, running the Engine.java class will create the canvas and run the interactive simulation.
 
-The detailed description of the game, code and evaluation results are covered in the pdf file titled "Game Paper".
+The detailed description of the game, code and evaluation results are covered in the pdf file titled "Game_Paper".
 
 Screencast : https://www.youtube.com/watch?v=-YpGK3fzKc8&feature=youtu.be
